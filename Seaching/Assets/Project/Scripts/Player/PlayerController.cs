@@ -9,12 +9,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float jumpForce = 20f;
 
+    [SerializeField]
+    private SmashCameraControl smashCameraControl;
+
     private Vector2 movementInput;
     private Rigidbody playerRigidbody;
     private GroundChecker groundChecker;
+    private PlayerInput playerInput;
 
-    [SerializeField]
-    private SmashCameraControl smashCameraControl;
 
     private bool IsGrounded()
     {
@@ -29,7 +31,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        var playerInput = new PlayerInput();
+        playerInput = new PlayerInput();
         playerInput.Player.Move.performed += OnMovePerformed;
         playerInput.Player.Move.canceled += OnMoveCanceled;
         playerInput.Player.Jump.started += OnJumpTriggered;
@@ -38,7 +40,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnDisable()
     {
-        var playerInput = new PlayerInput();
         playerInput.Player.Move.performed -= OnMovePerformed;
         playerInput.Player.Move.canceled -= OnMoveCanceled;
         playerInput.Player.Jump.started -= OnJumpTriggered;
@@ -57,8 +58,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnJumpTriggered(InputAction.CallbackContext context)
     {
-        Debug.Log("Jump triggered");
-        if (/*IsGrounded()*/true)
+        if (IsGrounded())
         {
             playerRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Aiming);
