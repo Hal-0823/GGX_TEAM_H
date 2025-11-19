@@ -486,7 +486,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 7
-  jumpForce: 25
+  jumpForce: 35
+  hoverDuration: 3
+  moveSpeedAir: 3
+  diveSpeed: 50
   smashCameraControl: {fileID: 330585549}
 --- !u!136 &479860370
 CapsuleCollider:
@@ -762,7 +765,7 @@ GameObject:
   - component: {fileID: 1424096611}
   - component: {fileID: 1424096610}
   - component: {fileID: 1424096609}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Ground
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -902,6 +905,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 489d9896d5b8e124ab61ad6bcafe6d2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  rayLength: 1
+  rayStartOffset: {x: 0, y: 0.05, z: 0}
 --- !u!1 &1595138057
 GameObject:
   m_ObjectHideFlags: 0
