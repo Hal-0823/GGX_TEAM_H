@@ -139,11 +139,12 @@ public class PlayerController : MonoBehaviour
         // 終了処理
         // -----------------------------------------
         // 着地時の振動や破壊処理をここで呼ぶ
-        // CameraShaker.Instance.Shake();
+        smashCameraControl.ShakeCamera();
         // DestructionManager.Explode(transform.position);
         
         //isActionActive = false;
         
+        yield return new WaitForSeconds(1.1f); // 少し待ってから通常モードへ
         smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Normal);
     }
 }
