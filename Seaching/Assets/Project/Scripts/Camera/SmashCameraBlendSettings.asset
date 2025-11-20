@@ -12,4 +12,102 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36baaa8bdcb9d8b49b9199833965d2c3, type: 3}
   m_Name: SmashCameraBlendSettings
   m_EditorClassIdentifier: 
-  CustomBlends: []
+  CustomBlends:
+  - From: vCam_Normal
+    To: vCam_Aiming
+    Blend:
+      Style: 7
+      Time: 1.5
+      CustomCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 7.59277
+          outSlope: 7.59277
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0.08513339
+        - serializedVersion: 3
+          time: 0.19577122
+          value: 0.71186566
+          inSlope: 0.7547271
+          outSlope: 0.7547271
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.48919967
+          outWeight: 0.22078562
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0.13856725
+          outSlope: 0.13856725
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.29013306
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  - From: vCam_Aiming
+    To: vCam_Falling
+    Blend:
+      Style: 2
+      Time: 0.8
+      CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - From: vCam_Falling
+    To: vCam_Impact
+    Blend:
+      Style: 2
+      Time: 0.5
+      CustomCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 1
+          outSlope: 3.6946778
+          tangentMode: 1
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 0.17224233
+        - serializedVersion: 3
+          time: 0.41992176
+          value: 0.79409623
+          inSlope: 0.5839241
+          outSlope: 0.5707499
+          tangentMode: 1
+          weightedMode: 0
+          inWeight: 0.7287303
+          outWeight: 0.428288
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0.100159556
+          outSlope: 0.100159556
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.44252777
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+  - From: vCam_Impact
+    To: vCam_Normal
+    Blend:
+      Style: 3
+      Time: 1
+      CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0

@@ -7,6 +7,7 @@ public class SmashCameraControl : MonoBehaviour
     [SerializeField] private CinemachineCamera vCamNormal;
     [SerializeField] private CinemachineCamera vCamAiming;
     [SerializeField] private CinemachineCamera vCamFalling;
+    [SerializeField] private CinemachineCamera vCamImpact;
 
     private CameraShaker cameraShaker;
 
@@ -15,32 +16,30 @@ public class SmashCameraControl : MonoBehaviour
 
     public void UpdateCameraState(SmashState state)
     {
+        vCamNormal.Priority = 5;
+        vCamAiming.Priority = 5;
+        vCamFalling.Priority = 5;
+        vCamImpact.Priority = 5;
+
         switch (state)
         {
             case SmashState.Normal:
                 vCamNormal.Priority = 10;
-                vCamAiming.Priority = 5;
-                vCamFalling.Priority = 5;
                 break;
             case SmashState.Jumping:
-                vCamNormal.Priority = 5;
                 vCamAiming.Priority = 10;
-                vCamFalling.Priority = 5;
                 break;
             case SmashState.Aiming:
-                vCamNormal.Priority = 5;
                 vCamAiming.Priority = 10;
-                vCamFalling.Priority = 5;
                 break;
             case SmashState.Falling:
-                vCamNormal.Priority = 5;
-                vCamAiming.Priority = 5;
                 vCamFalling.Priority = 10;
+                break;
+            case SmashState.Impact:
+                vCamImpact.Priority = 10;
                 break;
             default:
                 vCamNormal.Priority = 10;
-                vCamAiming.Priority = 5;
-                vCamFalling.Priority = 5;
                 break;
         }
     }
