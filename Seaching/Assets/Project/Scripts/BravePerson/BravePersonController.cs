@@ -7,12 +7,18 @@ public class BravePersonController : MonoBehaviour
     public float viewDistance = 10f;    //視野距離の限度
     public float moveSpeed = 3f;        //移動速度.
 
+    public float lifeMax = 10f;
+    private float life = 0f;
+
     private bool isChasing = false;
+
+    private Animator anim;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        anim = GetComponent<Animator>();
+        life = lifeMax;
     }
 
     // Update is called once per frame
@@ -30,8 +36,19 @@ public class BravePersonController : MonoBehaviour
         }
     }
 
+    //ダメージを受ける.
+    public void GetDamage(float damage)
+    {
+        life -= damage;
+
+        if(life < 0)
+        {
+            Die();
+        }
+    }
+
     //プレイヤーが見えるのか.
-    bool CanSeePlayer()
+    private bool CanSeePlayer()
     {
         //視野距離の限度より大きい場合、プレイヤーを見つけない.
         if (DistanceToPlayer() > viewDistance) return false;
@@ -44,12 +61,16 @@ public class BravePersonController : MonoBehaviour
     }
 
     //プレイヤーを見つけた時の動作.
-    void FindPlayer()
+    private void FindPlayer()
     {
         if (DistanceToPlayer() > 2f)
         {
             //移動.
             transform.position += moveSpeed * Time.deltaTime * DirectionToPlayer();
+        }
+        else
+        {
+            anim.SetBool("IsAttack", true);
         }
 
         //追跡中にプレイヤーの方を向く.
@@ -85,10 +106,16 @@ public class BravePersonController : MonoBehaviour
         playerPos.y = 0f;
 
         //プレイヤーとの差.
-        Vector3 diff = playerPos - transform.position;
+        Vector3 diff = playerPos - thisPos;
         //方向の正規化.
         Vector3 dir = diff.normalized;
 
         return dir;
+    }
+
+    //死亡時の動作.
+    private void Die()
+    {
+
     }
 }
