@@ -6,49 +6,35 @@ using UnityEngine.Events;
 /// </summary>
 public class BreakableObject : MonoBehaviour
 {
-    public bool IsBroken { get; private set; } = false;
-
     // 状態が変化したときに通知するイベント
     [HideInInspector]
     public UnityEvent OnStateChanged;
 
     [Header("見た目の設定")]
-    [SerializeField, Tooltip("通常状態の見た目")]
+    [SerializeField, Tooltip("通常状態のモデル")]
     private GameObject normalModel;
-    [SerializeField, Tooltip("破壊状態の見た目")]
+    [SerializeField, Tooltip("破壊状態のモデル")]
     private GameObject brokenModel;
 
-    [Header("当たり判定")]
-    [SerializeField, Tooltip("当たり判定用のコライダー")]
-    private Collider targetCollider;
-
-    // 破壊のメソッド
-    [ContextMenu("このターゲットを破壊する")]
-    public void Break()
+    // 破壊処理を行うメソッド
+    public void Shatter(Vector3 explosionCenter, float power, float radius)
     {
-        if (IsBroken) return;
+        Debug.Log($"BreakableObject.Shatter called on {gameObject.name}");
+        brokenModel.SetActive(true);
+        normalModel.SetActive(false);
 
-        SetBrokenState(true);
-    }
+        // 全ての破片を取得
+        Rigidbody[] rbs = brokenModel.GetComponentsInChildren<Rigidbody>();
 
-    // リセットや修復のためのメソッド
-    [ContextMenu("このターゲットを修復する")]
-    public void Repair()
-    {
-        SetBrokenState(false);
-    }
-    
-    private void SetBrokenState(bool isBroken)
-    {
-        IsBroken = isBroken;
+        foreach (Rigidbody rb in rbs)
+        {
+            // 破片に爆発力を加える
+            // AddExplosionForceは「中心からの距離」に応じて自動的に威力を減衰させてくれます
+            // upwardModifier（第4引数）を少し入れると、破片が地面を擦らずに少し浮き上がるので派手になります
+            rb.AddExplosionForce(power, explosionCenter, radius, 3.0f);
+        }
 
-        // モデルの切り替え
-        if (normalModel != null) normalModel.SetActive(!isBroken);
-        if (brokenModel != null) brokenModel.SetActive(isBroken);
-
-        if (targetCollider != null) targetCollider.enabled = !isBroken;
-
-        // 状態変化の通知
-        OnStateChanged?.Invoke();
+        // 状態変化イベントを発火
+        OnStateChanged.Invoke();
     }
 }
