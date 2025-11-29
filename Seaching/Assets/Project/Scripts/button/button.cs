@@ -9,9 +9,9 @@ public class startbutton_UI : MonoBehaviour,
     IPointerDownHandler,
     IPointerUpHandler
 {
-        [SerializeField] private CanvasGroup _canvasGroup; //Fadeとかを使う為に必要
-        [SerializeField] private Button _button;
-        [SerializeField] private TextMeshProUGUI _buttonText;//テキストを表示するためのもの
+        [SerializeField] protected CanvasGroup _canvasGroup; //Fadeとかを使う為に必要
+        [SerializeField] protected Button _button;
+        [SerializeField] protected TextMeshProUGUI _buttonText;//テキストを表示するためのもの
         private Image _image;
     
     void Awake()
@@ -35,11 +35,19 @@ public class startbutton_UI : MonoBehaviour,
 
         if (_buttonText != null)
         {
-        _buttonText.text = "start";    // ボタンの文字を変更
+
+            if (CompareTag("start"))
+            {
+            _buttonText.text = "start";    // ボタンの文字を変更
+            }
+            else if (CompareTag("result"))
+            {
+                _buttonText.text = "result";
+            }    
         }
         else
         {
-                   _buttonText = GetComponentInChildren<TextMeshProUGUI>();
+            _buttonText = GetComponentInChildren<TextMeshProUGUI>();
         }
     }
 
@@ -53,13 +61,21 @@ public class startbutton_UI : MonoBehaviour,
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        transform.DOScale(1.0f,0.24f).SetEase(Ease.OutCubic)//クリックが話されたらサイズを大きくする
-        .SetEase(Ease.OutCubic)
-        .OnComplete(() =>
+        GameObject clickedObject = eventData.pointerPress;
+
+        transform.DOScale(1.0f,0.24f).SetEase(Ease.OutCubic);//クリックが離されたらサイズを大きくする
+         _canvasGroup?.DOFade(1.0f,0.24f).SetEase(Ease.OutCubic);//クリックが離されたら透明度を下げる
+        
+        if (clickedObject.CompareTag("start"))
         {
-        SceneManager.LoadScene("PlayerTestScene");//シーン名を指定する 
-        });
-        _canvasGroup?.DOFade(1.0f,0.24f).SetEase(Ease.OutCubic);//クリックが離されたら透明度を下げる
+            SceneManager.LoadScene("timertest");//タイマー画面に移行する 
+        }
+        else if (clickedObject.CompareTag("result"))
+        {
+            SceneManager.LoadScene("title");//タイトルに戻る
+        }
+        
+       
     }
 
     public void OnPointerClick(PointerEventData eventData)
