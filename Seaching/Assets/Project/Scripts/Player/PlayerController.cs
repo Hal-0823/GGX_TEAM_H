@@ -18,6 +18,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private SmashCameraControl smashCameraControl;
 
+    [SerializeField]
+    private StompAttack stompAttack;
+
     private Vector2 movementInput;
     private Rigidbody rb;
     private GroundChecker groundChecker;
@@ -140,8 +143,7 @@ public class PlayerController : MonoBehaviour
         // -----------------------------------------
         // 着地時の振動や破壊処理をここで呼ぶ
         smashCameraControl.ShakeCamera();
-        // DestructionManager.Explode(transform.position);
-        
+        stompAttack.DoStomp();
         //isActionActive = false;
         smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Impact);
         
