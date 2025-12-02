@@ -1,14 +1,16 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 /// <summary>
 /// 破壊可能なターゲットを表すクラス
 /// </summary>
 public class BreakableObject : MonoBehaviour
 {
-    // 状態が変化したときに通知するイベント
-    [HideInInspector]
-    public UnityEvent OnStateChanged;
+    // 破壊状態への変化を通知するイベント
+    public static event Action<int> OnObjectBroken;
+
+    [SerializeField, Tooltip("スコア値")]
+    private int scoreValue = 100;
 
     [SerializeField, Tooltip("破壊状態のモデル")]
     private GameObject brokenModel;
@@ -37,7 +39,7 @@ public class BreakableObject : MonoBehaviour
         }
 
         // 状態変化イベントを発火
-        OnStateChanged.Invoke();
+        OnObjectBroken?.Invoke(scoreValue);
         Destroy(gameObject); // 元のオブジェクトを削除
     }
 }
