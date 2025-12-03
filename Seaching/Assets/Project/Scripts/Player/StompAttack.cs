@@ -5,6 +5,8 @@ public class StompAttack : MonoBehaviour
     [SerializeField] private float impactRadius = 10f; // 破壊半径
     [SerializeField] private float impactPower = 1000f; // 吹き飛ばす力
     [SerializeField] private LayerMask destructibleLayer; // 建物のレイヤー
+    [SerializeField] private ParticleSystem stompEffectPrefab; // 着地エフェクト
+    [SerializeField] private Transform stompEffectSpawnPoint; // エフェクトの生成位置
 
     // アニメーションのイベントや、着地判定から呼び出す
     public void DoStomp()
@@ -24,6 +26,11 @@ public class StompAttack : MonoBehaviour
         }
         
         // ここにカメラシェイクや土煙エフェクトの処理を追加
+        if (stompEffectPrefab != null)
+        {
+            var stompEffect = Instantiate(stompEffectPrefab, stompEffectSpawnPoint.position, Quaternion.identity);
+            stompEffect.Play();
+        }
     }
 
     // デバッグ用：エディタ上で範囲を表示
