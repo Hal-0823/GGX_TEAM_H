@@ -3,7 +3,47 @@ guid: 2fcecb8838906d64180ff57b27e84003
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BaseMaterial
+    second: {fileID: 2100000, guid: 0e972b33c9b477046be7e5c266d308e9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BlueMaterial
+    second: {fileID: 2100000, guid: 95c6187e3070b4b4e9a705a7b35fd931, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BootsMaterial
+    second: {fileID: 2100000, guid: 6ec09061206ffaa4181f44771c396286, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ClothMaterial
+    second: {fileID: 2100000, guid: b632b616d772ae249a87539f0e80e927, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: GoldMaterial
+    second: {fileID: 2100000, guid: 7d93452498ee1ef45b5a142138d1e625, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: HairMaterial
+    second: {fileID: 2100000, guid: 1929fa0803795a94280bb6cfc5eeff20, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PantsMaterial
+    second: {fileID: 2100000, guid: 989f5d519e60bf74589b4ff1ccc917a9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SwordMaterial
+    second: {fileID: 2100000, guid: 9dc968d0d4d6a7c47ac3ed8a23684ef0, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -29,152 +69,7 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Action"
-      takeName: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Action"
-      internalID: 7583080319782976921
-      firstFrame: 0
-      lastFrame: 0
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Walk"
-      takeName: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Walk"
-      internalID: -2054729920978899392
-      firstFrame: 0
-      lastFrame: 80
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 1
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2Action"
-      takeName: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2Action"
-      internalID: -6140374235425719669
-      firstFrame: 0
-      lastFrame: 0
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2Action.001"
-      takeName: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2Action.001"
-      internalID: -4834216788075965445
-      firstFrame: 0
-      lastFrame: 0
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
-      name: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2Action.002"
-      takeName: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2Action.002"
-      internalID: 8125854857852294858
-      firstFrame: 0
-      lastFrame: 0
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    clipAnimations: []
     isReadable: 0
   meshes:
     lODScreenPercentages: []
