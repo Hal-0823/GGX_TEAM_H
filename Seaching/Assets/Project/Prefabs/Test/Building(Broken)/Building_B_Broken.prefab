@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8534209765196560814}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Building_B_Broken
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,7 +52,7 @@ GameObject:
   - component: {fileID: 8421695269569573188}
   - component: {fileID: 8190561409301588793}
   - component: {fileID: 6547556569202769932}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Building_B_cell.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,7 +189,7 @@ GameObject:
   - component: {fileID: 4743846667243079050}
   - component: {fileID: 2998007476717938450}
   - component: {fileID: 1639241866824227586}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Building_B_cell.007
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -326,7 +326,7 @@ GameObject:
   - component: {fileID: 4104700518266308819}
   - component: {fileID: 158131990571756306}
   - component: {fileID: 3154183104958012393}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Building_B_cell.006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -463,7 +463,7 @@ GameObject:
   - component: {fileID: 6443267179607886091}
   - component: {fileID: 1489775652800491618}
   - component: {fileID: 2734459361732963241}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Building_B_cell.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -600,7 +600,7 @@ GameObject:
   - component: {fileID: 6142992501271727909}
   - component: {fileID: 550420085598712222}
   - component: {fileID: 1772071949398329244}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Building_B_cell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -737,7 +737,7 @@ GameObject:
   - component: {fileID: 4501389822255848475}
   - component: {fileID: 7930442257485485109}
   - component: {fileID: 4187708903497582291}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Building_B_cell.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -874,7 +874,7 @@ GameObject:
   - component: {fileID: 928289618101579996}
   - component: {fileID: 5667282939767626067}
   - component: {fileID: 2416855730669623238}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Building_B_cell.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1011,7 +1011,7 @@ GameObject:
   - component: {fileID: 2636630408650641461}
   - component: {fileID: 4525797508279218072}
   - component: {fileID: 8923185676728167855}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Building_B_cell.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
