@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2955291616981147235}
   - component: {fileID: 8907149654262415423}
   - component: {fileID: 3192689405415870261}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Building_D_cell.010
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 5351045231844439411}
   - component: {fileID: 3985443098360610740}
   - component: {fileID: 691178040583404456}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Building_D_cell.013
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 4850982641468105755}
   - component: {fileID: 4320796551104207313}
   - component: {fileID: 5004842848651942020}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Building_D_cell.006
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -424,7 +424,7 @@ GameObject:
   - component: {fileID: 3299541815355258814}
   - component: {fileID: 5358253748957381662}
   - component: {fileID: 4911708113550727805}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Building_D_cell.011
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -561,7 +561,7 @@ GameObject:
   - component: {fileID: 8127953845601752352}
   - component: {fileID: 6945010437080926632}
   - component: {fileID: 3251519000529146395}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Building_D_cell.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -698,7 +698,7 @@ GameObject:
   - component: {fileID: 6931574451752682837}
   - component: {fileID: 7150077802230601995}
   - component: {fileID: 3545261941217655149}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Building_D_cell.012
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -835,7 +835,7 @@ GameObject:
   - component: {fileID: 8147002890928006406}
   - component: {fileID: 2539290379108391306}
   - component: {fileID: 7668612781522590447}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Building_D_cell.005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -972,7 +972,7 @@ GameObject:
   - component: {fileID: 5880656286353826031}
   - component: {fileID: 3270569223152264755}
   - component: {fileID: 7256025555352620653}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Building_D_cell.008
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1109,7 +1109,7 @@ GameObject:
   - component: {fileID: 3967502682422580838}
   - component: {fileID: 3540069368238014487}
   - component: {fileID: 6514340588936375628}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Building_D_cell.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1242,7 +1242,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4558728518783512056}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Building_D_Broken
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1291,7 +1291,7 @@ GameObject:
   - component: {fileID: 8536530476546326859}
   - component: {fileID: 6548658490984520801}
   - component: {fileID: 5624085137815064177}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Building_D_cell.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1428,7 +1428,7 @@ GameObject:
   - component: {fileID: 3897369147476200349}
   - component: {fileID: 5815490915310357297}
   - component: {fileID: 9142485434262171762}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Building_D_cell.007
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1565,7 +1565,7 @@ GameObject:
   - component: {fileID: 7898667535195152115}
   - component: {fileID: 1657295482572247705}
   - component: {fileID: 7938637272573640633}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Building_D_cell.009
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1702,7 +1702,7 @@ GameObject:
   - component: {fileID: 2859113370874388008}
   - component: {fileID: 5614433909292038020}
   - component: {fileID: 1244979862454188616}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Building_D_cell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1839,7 +1839,7 @@ GameObject:
   - component: {fileID: 7000991506945307330}
   - component: {fileID: 1629586566533916344}
   - component: {fileID: 623847789196656631}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Building_D_cell.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}

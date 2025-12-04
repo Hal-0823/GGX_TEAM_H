@@ -245,7 +245,7 @@ GameObject:
   - component: {fileID: 99983729}
   - component: {fileID: 99983728}
   - component: {fileID: 99983727}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1559,7 +1559,9 @@ MonoBehaviour:
   impactPower: 1000
   destructibleLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 2048
+  stompEffectPrefab: {fileID: 8423376225423762548, guid: 9678237a4a2970e4a8d29df8d3e6de1d, type: 3}
+  stompEffectSpawnPoint: {fileID: 1586350410}
 --- !u!1001 &500303464
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3225,7 +3227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 3072
   rayLength: 1
   rayStartOffset: {x: 0, y: 0.05, z: 0}
 --- !u!1 &1595138057

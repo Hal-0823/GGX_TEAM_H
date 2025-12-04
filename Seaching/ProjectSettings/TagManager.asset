@@ -1,20 +1,23 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
----
-!u!78 &1
+--- !u!78 &1
 TagManager:
   serializedVersion: 3
   tags:
-    - Ground
-    - result
-    - start
+  - result
+  - start
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - 
   - Water
   - UI
+  - 
+  - 
+  - 
+  - 
+  - Ground
   - Building
   - 
   - 
@@ -36,15 +39,9 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-main
   m_SortingLayers:
-    - name: Default
-      uniqueID: 0
-      locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
   m_RenderingLayers:
-    - Default
+  - Default

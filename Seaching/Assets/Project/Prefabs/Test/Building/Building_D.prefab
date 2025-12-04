@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5881063889358704583}
   - component: {fileID: 8595596778684542072}
   - component: {fileID: 3391690278384917629}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: Building_D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,9 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f632296c147c81d49822fa5b7b5b52e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
+  scoreValue: 100
   brokenModel: {fileID: 5700026156178278565, guid: 73a929d6f5b49894c90292eecbc8ea47, type: 3}
 --- !u!65 &3391690278384917629
 BoxCollider:
