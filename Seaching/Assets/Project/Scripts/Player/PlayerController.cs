@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private bool isCharging = false;
     private float currentChargeTime = 0f;
+    private int currentJumpLevel = 0;
 
     private Rigidbody rb;
     private Animator animator;
@@ -130,19 +131,22 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Lv3: 最大ジャンプ！");
             finalForce = jumpForceLv3;
+            currentJumpLevel = 3;
         }
         else if (currentChargeTime >= stage1Threshold)
         {
             Debug.Log("Lv2: 中ジャンプ！");
             finalForce = jumpForceLv2;
+            currentJumpLevel = 2;
         }
         else
         {
             Debug.Log("Lv1: 小ジャンプ");
             finalForce = jumpForceLv1;
+            currentJumpLevel = 1;
         }
 
-        StartCoroutine(SmashActionSequence(finalForce));
+        StartCoroutine(SmashActionSequence(currentJumpLevel, finalForce));
     }
 
     private void ResetCharge()
@@ -169,7 +173,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // // 一連の動作を管理するコルーチン
-    private IEnumerator SmashActionSequence(float jumpForce)
+    private IEnumerator SmashActionSequence(int jumpLevel, float jumpForce)
     {
         //isActionActive = true;
 
@@ -235,7 +239,7 @@ public class PlayerController : MonoBehaviour
         // 着地時の振動や破壊処理をここで呼ぶ
         animator.SetTrigger("Land");
         smashCameraControl.ShakeCamera();
-        stompAttack.DoStomp();
+        StartCoroutine(stompAttack.DoStompCoroutine(currentJumpLevel));
         //isActionActive = false;
         smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Impact);
 
