@@ -24,7 +24,7 @@ public class StompAttack : MonoBehaviour
                 building.Shatter(transform.position, impactPower, impactRadius);
             }
         }
-        
+
         // ここにカメラシェイクや土煙エフェクトの処理を追加
         if (stompEffectPrefab != null)
         {
