@@ -3,37 +3,7 @@ guid: 39b8d3b809a21154f9037d7629cc33a0
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: BaseMaterial
-    second: {fileID: 2100000, guid: e207f764207850343a717ada8a68d4e5, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: ClawMaterial
-    second: {fileID: 2100000, guid: 8d907ff7979c0354581f81474d41f6a1, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: EarMaterial
-    second: {fileID: 2100000, guid: d9181afa71cec10429bf0b13690eb7dc, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: FaceMaterial
-    second: {fileID: 2100000, guid: aa561a9df0918c04c8e6ba2e1c27fbc6, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: FurMaterial
-    second: {fileID: 2100000, guid: 64993cd9943846747aaf870f72bfa3a2, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: HornMaterial
-    second: {fileID: 2100000, guid: 6a9e5c39f4799e44283dbbd12ccef415, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
