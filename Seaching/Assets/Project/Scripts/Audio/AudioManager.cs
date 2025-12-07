@@ -18,7 +18,10 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource seSource;
 
     public void PlayBGM(AudioClip clip)
-    {
+    {if (bgmSource.clip == clip )
+        {
+            return;
+        }
         bgmSource.clip = clip;
         bgmSource.loop = true;
         bgmSource.Play();
