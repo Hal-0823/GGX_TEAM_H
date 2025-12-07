@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BravePersonController : MonoBehaviour
 {
@@ -6,6 +7,8 @@ public class BravePersonController : MonoBehaviour
     public float viewAngle = 45f;       //視野角（左右の角度）
     public float viewDistance = 10f;    //視野距離の限度
     public float moveSpeed = 3f;        //移動速度.
+    public float wanderRadius = 5f;     //
+    public float wanderTimer = 3f;
 
     public float lifeMax = 10f;
     private float life = 0f;
@@ -13,12 +16,17 @@ public class BravePersonController : MonoBehaviour
     private bool isChasing = false;
 
     private Animator anim;
+    private NavMeshAgent agent;
+    private float timer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         anim = GetComponent<Animator>();
         life = lifeMax;
+
+        agent = GetComponent<NavMeshAgent>();
+        timer = wanderTimer;
     }
 
     // Update is called once per frame
@@ -34,6 +42,17 @@ public class BravePersonController : MonoBehaviour
         {
             FindPlayer();
         }
+        else
+        {
+            timer += Time.deltaTime;
+
+            if (timer >= wanderTimer)
+            {
+                Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
+                agent.SetDestination(newPos);
+                timer = 0;
+            }
+        }
     }
 
     //ダメージを受ける.
@@ -45,6 +64,16 @@ public class BravePersonController : MonoBehaviour
         {
             Die();
         }
+    }
+
+    //プレイヤーの動き.
+    public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
+    {
+        Vector3 randDirection = Random.insideUnitSphere * dist;
+        randDirection += origin;
+        NavMesh.SamplePosition(randDirection, out NavMeshHit navHit, dist, layermask);
+
+        return navHit.position;
     }
 
     //プレイヤーが見えるのか.
