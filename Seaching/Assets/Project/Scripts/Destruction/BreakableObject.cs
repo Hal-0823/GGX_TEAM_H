@@ -4,6 +4,7 @@ using UnityEngine;
 /// <summary>
 /// 破壊可能なターゲットを表すクラス
 /// </summary>
+[RequireComponent(typeof(Rigidbody))]
 public class BreakableObject : MonoBehaviour
 {
     // 破壊状態への変化を通知するイベント
