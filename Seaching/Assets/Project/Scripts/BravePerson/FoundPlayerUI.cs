@@ -23,13 +23,17 @@ public class FoundPlayerUI : MonoBehaviour
     }
 
     //プレイヤーを見つけたときの処理.
-    public void FoundPlayer()
+    public void FoundPlayer(GameObject person)
     {
         if (!isFoundPlayer)
         {   
             //アクティブにする.
             gameObject.SetActive(true);
             startTime = Time.time;
+
+            Vector3 personPos = person.transform.position;
+            personPos.y = 4f;
+            gameObject.transform.position = personPos;
 
             isFoundPlayer = true;
         }

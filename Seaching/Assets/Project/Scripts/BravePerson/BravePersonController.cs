@@ -3,7 +3,9 @@ using UnityEngine.AI;
 
 public class BravePersonController : MonoBehaviour
 {
-    public Transform player;            //プレイヤー.
+    public Transform        player;     //プレイヤー.
+    public FoundPlayerUI    foundUI;    //見つけた時のUI.
+  
     public float viewAngle = 45f;       //視野角（左右の角度）
     public float viewDistance = 10f;    //視野距離の限度
     public float moveSpeed = 3f;        //移動速度.
@@ -40,6 +42,7 @@ public class BravePersonController : MonoBehaviour
 
         if (isChasing)
         {
+            foundUI.FoundPlayer(this.gameObject);
             FindPlayer();
         }
         else
