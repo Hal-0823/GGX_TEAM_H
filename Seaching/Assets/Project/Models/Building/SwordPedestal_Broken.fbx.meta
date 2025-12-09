@@ -3,7 +3,27 @@ guid: f8c3c39816ca8c947a13995f68f009c1
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: GoldMaterial
+    second: {fileID: 2100000, guid: e2972078084f7374ab0bf8faa0ac5520, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pedestal
+    second: {fileID: 2100000, guid: aec0b97a34e5fb04d86eb26e080ff6ee, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Purple
+    second: {fileID: 2100000, guid: c74c7b28d3c0c81478647b44c1e931d4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: SwordMaterial
+    second: {fileID: 2100000, guid: df8fe89433c7a3346a67ccfd46887408, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
