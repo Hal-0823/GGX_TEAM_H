@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f632296c147c81d49822fa5b7b5b52e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreValue: 100
+  scoreValue: 3000
   brokenModel: {fileID: 2280692434904306601, guid: 5661235da208c5e44a7409e99fa267e8, type: 3}
 --- !u!65 &5467999203240380157
 BoxCollider:
