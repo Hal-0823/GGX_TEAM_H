@@ -37,6 +37,9 @@ public class BreakableObject : MonoBehaviour
             // 不完全な崩壊を防ぐため、建物の中心から、全パーツを少しだけ外に押し出す
             float internalForce = 100f; // 最低限崩すための力
             rb.AddExplosionForce(internalForce, transform.position, 5.0f, 1.0f);
+
+            // 破片管理マネージャーに登録して、一定時間後に固めてもらう
+            DebrisManager.Instance.RegisterDebris(rb, rb.GetComponent<Collider>());
         }
 
         // 状態変化イベントを発火

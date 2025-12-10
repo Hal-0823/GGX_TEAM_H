@@ -55,7 +55,7 @@ Material:
     m_Colors:
     - _ColorA: {r: 0.9421614, g: 0.9044428, b: 0.9924528, a: 1}
     - _ColorB: {r: 0.80693686, g: 0.82641506, b: 0.7032324, a: 1}
-    - _Tiling: {r: 10, g: 10, b: 0, a: 0}
+    - _Tiling: {r: 20, g: 20, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &7781383109691045218
