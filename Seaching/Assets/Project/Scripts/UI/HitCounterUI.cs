@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
-using DG.Tweening; // ★必須
+using DG.Tweening;
+using System.Collections.Generic;
 
 [RequireComponent(typeof(CanvasGroup))]
 public class HitCounterUI : MonoBehaviour
@@ -10,32 +11,40 @@ public class HitCounterUI : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private TextMeshProUGUI hitText;
     
-    [Header("Animation Settings")]
-    [SerializeField] private float punchStrength = 1.0f; // 大きくなる倍率（0.5～1.5くらい）
-    [SerializeField] private float duration = 0.2f;      // 演出にかかる時間
-    [SerializeField] private int vibrato = 10;           // 震える回数（ボヨンボヨン感）
-    [SerializeField] private float elasticity = 1.0f;    // 反発係数（大きいとビヨンと伸びる）
+    [Header("Rank Settings")]
+    [SerializeField] private List<HitColorRank> colorRanks = new List<HitColorRank>();
 
-    [Header("Logic")]
-    [SerializeField] private float comboResetTime = 1.5f; // 表示が消えるまでの待機時間
+    [System.Serializable]
+    public struct HitColorRank
+    {
+        public int threshold;        // 閾値
+        public float targetFontSize; // ★このランクでのフォントサイズ
+        public Color topColor;
+        public Color bottomColor;
+    }
+
+    [Header("Animation Settings")]
+    [SerializeField] private float fontChangeSpeed = 0.3f; // フォントサイズが変化する速さ
+    [SerializeField] private float punchScale = 1.2f;      // ヒット時の跳ねる大きさ
+    [SerializeField] private float comboResetTime = 2.0f;
 
     // 内部変数
     private int currentHits = 0;
     private float resetTimer = 0f;
     private CanvasGroup canvasGroup;
-    private Vector3 originalScale;
+    private Tween fontSizeTween; // フォントサイズのTween保存用
 
     private void Awake()
     {
         if (instance == null) instance = this;
-        
         canvasGroup = GetComponent<CanvasGroup>();
         
         if (hitText)
         {
-            originalScale = hitText.transform.localScale;
-            // 最初は透明にしておく
-            canvasGroup.alpha = 0f; 
+            canvasGroup.alpha = 0f;
+            hitText.enableVertexGradient = true;
+            // 重要：Auto SizeがONだとスクリプトからサイズ変更できないためOFFにする
+            hitText.enableAutoSizing = false; 
         }
     }
 
@@ -44,10 +53,7 @@ public class HitCounterUI : MonoBehaviour
         if (resetTimer > 0)
         {
             resetTimer -= Time.deltaTime;
-            if (resetTimer <= 0)
-            {
-                HideCounter();
-            }
+            if (resetTimer <= 0) HideCounter();
         }
     }
 
@@ -58,40 +64,66 @@ public class HitCounterUI : MonoBehaviour
 
         if (hitText)
         {
-            hitText.text = currentHits + "<size=70%>HITS!</size>";
+            hitText.text = currentHits + "<size=70%> HITS!</size>";
             
-            // ★DOTweenの演出パート
-            
-            // 1. 前のアニメーションがあれば強制停止してリセット（連打対応）
-            hitText.transform.DOKill(); 
-            hitText.transform.localScale = originalScale;
+            // 表示ON
             canvasGroup.DOKill();
-            canvasGroup.alpha = 1f; // 即座に表示
+            canvasGroup.alpha = 1f;
 
-            // 2. パンチ演出（ボヨンと拡大して戻る）
-            // DOPunchScale(強さ, 時間, 振動数, 弾力)
-            hitText.transform.DOPunchScale(Vector3.one * punchStrength, duration, vibrato, elasticity)
-                .SetEase(Ease.OutQuad); // 勢いよく飛び出るイージング
+            // --- 1. ランク情報の取得 ---
+            HitColorRank currentRank = GetCurrentRank(currentHits);
 
-            // 3. おまけ：文字色を一瞬光らせる（白から元の色へ）
-            // ※TextMeshProのvertex colorを使う場合
-            hitText.color = Color.white;
-            hitText.DOColor(Color.yellow, 0.1f); // 黄色に戻るなど
+            // --- 2. 色の更新 ---
+            hitText.colorGradient = new VertexGradient(
+                currentRank.topColor, currentRank.topColor, 
+                currentRank.bottomColor, currentRank.bottomColor
+            );
+
+            // --- 3. フォントサイズの変更（DOTween.Toを使用） ---
+            // いきなり変わるとカクつくので、滑らかに変化させる
+            if (hitText.fontSize != currentRank.targetFontSize)
+            {
+                // 前のサイズ変更アニメーションがあれば止める
+                if (fontSizeTween != null && fontSizeTween.IsActive()) fontSizeTween.Kill();
+
+                // 現在のサイズから目標サイズへアニメーション
+                // DOTween.To(getter, setter, endValue, duration)
+                fontSizeTween = DOTween.To(
+                    () => hitText.fontSize, 
+                    x => hitText.fontSize = x, 
+                    currentRank.targetFontSize, 
+                    fontChangeSpeed
+                ).SetEase(Ease.OutCubic);
+            }
+
+            // --- 4. パンチ演出（跳ねる動きはスケールで行う） ---
+            // ※フォントサイズを変えているので、スケールのベースは常に「1」でOK
+            hitText.transform.DOKill(); // 重複防止
+            hitText.transform.localScale = Vector3.one; // 一旦戻す
+            hitText.transform.DOPunchScale(Vector3.one * (punchScale - 1f), 0.2f, 10, 1f);
         }
+    }
+
+    private HitColorRank GetCurrentRank(int hits)
+    {
+        HitColorRank selectedRank = colorRanks[0];
+        foreach (var rank in colorRanks)
+        {
+            if (hits >= rank.threshold) selectedRank = rank;
+        }
+        return selectedRank;
     }
 
     public void ForceReset()
     {
         currentHits = 0;
         resetTimer = 0;
-        // スッと消す
         canvasGroup.DOFade(0f, 0.2f);
     }
 
     private void HideCounter()
     {
         currentHits = 0;
-        // フワッとフェードアウトさせて消す
         canvasGroup.DOFade(0f, 0.5f);
     }
 }
