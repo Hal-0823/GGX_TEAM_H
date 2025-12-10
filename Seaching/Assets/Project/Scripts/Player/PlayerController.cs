@@ -176,7 +176,10 @@ public class PlayerController : MonoBehaviour
     // // 一連の動作を管理するコルーチン
     private IEnumerator SmashActionSequence(int jumpLevel, float jumpForce)
     {
-        HitCounterUI.instance.ForceReset();
+        if (HitCounterUI.instance != null)
+        {
+            HitCounterUI.instance.ForceReset();
+        }
         //isActionActive = true;
 
         // -----------------------------------------

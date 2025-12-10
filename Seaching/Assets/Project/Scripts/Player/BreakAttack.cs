@@ -26,7 +26,10 @@ public class BreakAttack : MonoBehaviour
             if (building != null)
             {
                 // 破壊命令を出す（爆発の中心と威力を渡す）
-                HitCounterUI.instance.AddHit();
+                if (HitCounterUI.instance != null)
+                {
+                    HitCounterUI.instance.AddHit();
+                }
                 if (!isStopping)
                 {
                     // ヒットストップを開始

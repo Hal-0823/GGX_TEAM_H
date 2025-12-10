@@ -13866,53 +13866,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23eeb52841a98bc4288e933534be683c, type: 3}
---- !u!1 &1657680103
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1657680105}
-  - component: {fileID: 1657680104}
-  m_Layer: 0
-  m_Name: DebrisManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1657680104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1657680103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f02e6c641a7386b448df85a20ff1ee83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startDelay: 1
-  maxLifetime: 10
-  maxSolidDebrisCount: 1000
---- !u!4 &1657680105
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1657680103}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1660841727
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19108,6 +19061,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a41823ee60190714692fbb64d87ad6de, type: 3}
+--- !u!1001 &8657134989761142594
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 915028812674749692, guid: 522ee7dc35eca9a4faaa927b10ac808c, type: 3}
+      propertyPath: m_Name
+      value: DebrisManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3518442323772503729, guid: 522ee7dc35eca9a4faaa927b10ac808c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3518442323772503729, guid: 522ee7dc35eca9a4faaa927b10ac808c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3518442323772503729, guid: 522ee7dc35eca9a4faaa927b10ac808c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3518442323772503729, guid: 522ee7dc35eca9a4faaa927b10ac808c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3518442323772503729, guid: 522ee7dc35eca9a4faaa927b10ac808c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3518442323772503729, guid: 522ee7dc35eca9a4faaa927b10ac808c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3518442323772503729, guid: 522ee7dc35eca9a4faaa927b10ac808c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3518442323772503729, guid: 522ee7dc35eca9a4faaa927b10ac808c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3518442323772503729, guid: 522ee7dc35eca9a4faaa927b10ac808c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3518442323772503729, guid: 522ee7dc35eca9a4faaa927b10ac808c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 522ee7dc35eca9a4faaa927b10ac808c, type: 3}
 --- !u!1001 &8761731638004435920
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19254,5 +19264,5 @@ SceneRoots:
   - {fileID: 1904149223}
   - {fileID: 239993218}
   - {fileID: 1748244942}
-  - {fileID: 1657680105}
+  - {fileID: 8657134989761142594}
   - {fileID: 545152974}
