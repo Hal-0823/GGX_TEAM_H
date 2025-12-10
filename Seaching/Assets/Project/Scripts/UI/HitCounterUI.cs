@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using TMPro;
 using DG.Tweening;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 public class HitCounterUI : MonoBehaviour
 {
     public static HitCounterUI instance;
+    public static Action<int> OnCounterReset;
 
     [Header("UI References")]
     [SerializeField] private TextMeshProUGUI hitText;
@@ -116,14 +118,14 @@ public class HitCounterUI : MonoBehaviour
 
     public void ForceReset()
     {
-        currentHits = 0;
+
         resetTimer = 0;
-        canvasGroup.DOFade(0f, 0.2f);
     }
 
     private void HideCounter()
     {
-        currentHits = 0;
         canvasGroup.DOFade(0f, 0.5f);
+        OnCounterReset?.Invoke(currentHits);
+        currentHits = 0;
     }
 }
