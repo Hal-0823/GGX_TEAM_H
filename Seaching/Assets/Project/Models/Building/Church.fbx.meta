@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 63a3623599ffbaa43809b6288b70d5a0
+guid: d6e328841b3a2074fa220b89f46059a3
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,23 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Blue
-    second: {fileID: 2100000, guid: e4b9d1325099e45419a73f448b111ead, type: 2}
+      name: Gray
+    second: {fileID: 2100000, guid: b34fe58e3349883439d5c2d0f535c715, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: DarkWood
-    second: {fileID: 2100000, guid: 162f61ab24ca2b24baad9aabee0f15e8, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Glass
-    second: {fileID: 2100000, guid: 08bbaa8920c5ce7449e2af2ccd73673e, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Green
-    second: {fileID: 2100000, guid: dbe69e7006cb08a4fbd7828309d8ad8c, type: 2}
+      name: Pink
+    second: {fileID: 2100000, guid: 5eaaed04c4e1ad845a22aa2e65c5a8e8, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -32,13 +22,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Red
-    second: {fileID: 2100000, guid: f2728b7e42abc6f45bf612154188be34, type: 2}
+      name: White
+    second: {fileID: 2100000, guid: b367ac53a52625a4982de70dd8c3f474, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Wood.001
-    second: {fileID: 2100000, guid: b0693575207c8ba45bd58cbc8773b687, type: 2}
+      name: Yellow
+    second: {fileID: 2100000, guid: acc02357a6e11434d9861d729f4ddec1, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -68,7 +58,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 3.5
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -123,7 +113,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 3.5
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

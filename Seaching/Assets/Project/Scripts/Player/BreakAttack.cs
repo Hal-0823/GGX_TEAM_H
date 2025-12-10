@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class StompAttack : MonoBehaviour
+public class BreakAttack : MonoBehaviour
 {
     [SerializeField] private float firstImpactRadius = 5f; // 最初の衝撃波半径
     [SerializeField] private float secondImpactRadius = 10f; // 破壊半径
@@ -14,7 +14,7 @@ public class StompAttack : MonoBehaviour
     private bool isStopping = false;
 
     // アニメーションのイベントや、着地判定から呼び出す
-    private void DoStomp(float impactRadius)
+    public void DoBreak(float impactRadius, bool isPlayEffect)
     {
         // 指定範囲内のコライダを全て取得（SphereColliderを作る代わり）
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, impactRadius, destructibleLayer);
@@ -37,7 +37,7 @@ public class StompAttack : MonoBehaviour
         }
 
         // ここにカメラシェイクや土煙エフェクトの処理を追加
-        if (stompEffectPrefab != null)
+        if (isPlayEffect && stompEffectPrefab != null)
         {
             var stompEffect = Instantiate(stompEffectPrefab, stompEffectSpawnPoint.position, Quaternion.identity);
             stompEffect.Play();
@@ -47,13 +47,13 @@ public class StompAttack : MonoBehaviour
     public IEnumerator DoStompCoroutine(int level)
     {
 
-        DoStomp(firstImpactRadius);
+        DoBreak(firstImpactRadius, true);
         if (level < 2)  yield break;
         yield return new WaitForSeconds(0.2f); // 少し待ってから実行
-        DoStomp(secondImpactRadius);
+        DoBreak(secondImpactRadius, true);
         if (level < 3)  yield break;
         yield return new WaitForSeconds(0.2f); // 少し待ってから
-        DoStomp(thirdImpactRadius);
+        DoBreak(thirdImpactRadius, true);
     }
 
     private IEnumerator DoHitStop(float duration)
