@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using TMPro;
 using DG.Tweening; // ★必須
 
@@ -6,6 +7,9 @@ using DG.Tweening; // ★必須
 public class HitCounterUI : MonoBehaviour
 {
     public static HitCounterUI instance;
+
+    // 破壊状態への変化を通知するイベント
+    public static event Action<int> OnCounterReset;
 
     [Header("UI References")]
     [SerializeField] private TextMeshProUGUI hitText;
@@ -23,19 +27,29 @@ public class HitCounterUI : MonoBehaviour
     private int currentHits = 0;
     private float resetTimer = 0f;
     private CanvasGroup canvasGroup;
+<<<<<<< Updated upstream
     private Vector3 originalScale;
+=======
+    private Tween fontSizeTween; // フォントサイズのTween保存用 
+>>>>>>> Stashed changes
 
     private void Awake()
     {
         if (instance == null) instance = this;
         
         canvasGroup = GetComponent<CanvasGroup>();
-        
+
         if (hitText)
         {
+<<<<<<< Updated upstream
             originalScale = hitText.transform.localScale;
             // 最初は透明にしておく
             canvasGroup.alpha = 0f; 
+=======
+            canvasGroup.alpha = 0f;
+            hitText.enableVertexGradient = true;
+            hitText.enableAutoSizing = false;
+>>>>>>> Stashed changes
         }
     }
 
@@ -82,10 +96,14 @@ public class HitCounterUI : MonoBehaviour
 
     public void ForceReset()
     {
-        currentHits = 0;
         resetTimer = 0;
+<<<<<<< Updated upstream
         // スッと消す
         canvasGroup.DOFade(0f, 0.2f);
+=======
+        HideCounter();
+
+>>>>>>> Stashed changes
     }
 
     private void HideCounter()
@@ -93,5 +111,6 @@ public class HitCounterUI : MonoBehaviour
         currentHits = 0;
         // フワッとフェードアウトさせて消す
         canvasGroup.DOFade(0f, 0.5f);
+        OnCounterReset?.Invoke(currentHits);
     }
 }
