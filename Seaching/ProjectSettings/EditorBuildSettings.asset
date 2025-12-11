@@ -4,6 +4,15 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Project/Scenes/timertest.unity
+    guid: 3a122e30417964821a902b14d404782f
+  - enabled: 1
+    path: Assets/Project/Scenes/result.unity
+    guid: 602b9ff4622f44d029f337a36693b815
+  - enabled: 1
+    path: Assets/Project/Scenes/title.unity
+    guid: e86755380330e4d48aa0fa8e134dd02e
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
