@@ -9,6 +9,7 @@ public class InputChannel : ScriptableObject
 {
     public UnityAction OnRequestDialogueControl;
     public UnityAction OnRequestPlayerControl;
+    public UnityAction OnRequestNoneControl;
 
     public void SwitchToDialogue()
     {
@@ -18,5 +19,11 @@ public class InputChannel : ScriptableObject
     public void SwitchToPlayer()
     {
         OnRequestPlayerControl?.Invoke();
+    }
+
+    public void SwitchToNone()
+    {
+        // どちらの操作も無効化
+        OnRequestNoneControl?.Invoke();
     }
 }

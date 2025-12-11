@@ -63,6 +63,7 @@ public class PlayerController : MonoBehaviour
 
         inputChannel.OnRequestPlayerControl += EnableControl;
         inputChannel.OnRequestDialogueControl += DisableControl;
+        inputChannel.OnRequestNoneControl += DisableControl;
     }
 
     private void OnDisable()
@@ -70,6 +71,7 @@ public class PlayerController : MonoBehaviour
         playerInput.Dispose();
         inputChannel.OnRequestPlayerControl -= EnableControl;
         inputChannel.OnRequestDialogueControl -= DisableControl;
+        inputChannel.OnRequestNoneControl -= DisableControl;
     }
 
     // プレイヤーの操作を有効化

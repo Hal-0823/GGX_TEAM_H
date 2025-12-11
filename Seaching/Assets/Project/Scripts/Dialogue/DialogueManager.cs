@@ -36,6 +36,7 @@ public class DialogueManager : MonoBehaviour
 
         inputChannel.OnRequestPlayerControl += DisableControl;
         inputChannel.OnRequestDialogueControl += EnableControl;
+        inputChannel.OnRequestNoneControl += DisableControl;
 
         dialogueText.text = "";
     }
@@ -46,6 +47,7 @@ public class DialogueManager : MonoBehaviour
 
         inputChannel.OnRequestPlayerControl -= DisableControl;
         inputChannel.OnRequestDialogueControl -= EnableControl;
+        inputChannel.OnRequestNoneControl -= DisableControl;
     }
 
     private void EnableControl()

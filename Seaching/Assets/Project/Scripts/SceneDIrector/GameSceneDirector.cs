@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using TMPro;
 
 public class GameSceneDirector : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class GameSceneDirector : MonoBehaviour
     [SerializeField] private GameTimer gameTimer;
     [SerializeField] private InputChannel inputChannel;
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private TextMeshProUGUI timeUpText;
 
     private void Start()
     {
@@ -26,8 +28,12 @@ public class GameSceneDirector : MonoBehaviour
         StartCoroutine(playerController.SmashActionSequence(0, 0f));
 
         // 地面に着地するまで待機
-        yield return new WaitUntil(() => playerController.IsGrounded());    
-
-        
+        yield return new WaitUntil(() => playerController.IsGrounded());
+    }
+    
+    public void OnTimeOver()
+    {
+        // リザルトへ移行
+        inputChannel.SwitchToNone();
     }
 }
