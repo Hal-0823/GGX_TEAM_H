@@ -61,7 +61,10 @@ public class GameSceneDirector : MonoBehaviour
 
         yield return new WaitUntil(() => timeUpText.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBack).IsComplete());
 
-        yield return new WaitForSeconds(1f);
+        // ヒットカウンターリセット
+        HitCounterUI.instance.ForceReset();
+
+        yield return new WaitForSeconds(2f);
 
         // リザルト表示
 

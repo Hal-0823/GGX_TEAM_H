@@ -118,8 +118,9 @@ public class HitCounterUI : MonoBehaviour
 
     public void ForceReset()
     {
-
         resetTimer = 0;
+
+        HideCounter();
     }
 
     private void HideCounter()
