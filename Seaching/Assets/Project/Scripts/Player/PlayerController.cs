@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using Unity.VisualScripting;
 
-[RequireComponent(typeof(StompAttack))]
+[RequireComponent(typeof(BreakAttack))]
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
@@ -25,7 +26,7 @@ public class PlayerController : MonoBehaviour
     private SmashCameraControl smashCameraControl;
 
     [SerializeField]
-    private StompAttack stompAttack;
+    private BreakAttack breakAttack;
 
     private Vector2 movementInput;
 
@@ -175,6 +176,7 @@ public class PlayerController : MonoBehaviour
     // // 一連の動作を管理するコルーチン
     private IEnumerator SmashActionSequence(int jumpLevel, float jumpForce)
     {
+        HitCounterUI.instance.ForceReset();
         //isActionActive = true;
 
         // -----------------------------------------
@@ -182,7 +184,9 @@ public class PlayerController : MonoBehaviour
         // -----------------------------------------
         // 上方向への初速を与える
         // 方向が入力されていた場合、その方向にも少し速度を与える
-        rb.linearVelocity = Vector3.up * jumpForce + new Vector3(movementInput.x, 0, movementInput.y) * jumpForce / 10f;
+        //rb.linearVelocity = Vector3.up * jumpForce + new Vector3(movementInput.x, 0, movementInput.y) * jumpForce / 10f;
+
+        rb.linearVelocity = Vector3.up * jumpForce;
 
         smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Jumping);
         // 上昇中は待機（Y速度が落ちてくるまで、または一定時間）
@@ -239,12 +243,23 @@ public class PlayerController : MonoBehaviour
         // 着地時の振動や破壊処理をここで呼ぶ
         animator.SetTrigger("Land");
         smashCameraControl.ShakeCamera();
-        StartCoroutine(stompAttack.DoStompCoroutine(currentJumpLevel));
+        StartCoroutine(breakAttack.DoStompCoroutine(currentJumpLevel));
         //isActionActive = false;
         smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Impact);
 
         yield return new WaitForSeconds(1.1f); // 少し待ってから通常モードへ
         smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Normal);
         animator.SetTrigger("Standup");
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (IsGrounded()) return;
+        
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Debris"))
+        {
+            return;
+        }
+        breakAttack.DoBreak(1f, false);
     }
 }

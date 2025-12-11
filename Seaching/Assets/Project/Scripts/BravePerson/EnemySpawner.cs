@@ -7,7 +7,7 @@ public class EnemySpawner : MonoBehaviour
     public Transform[] spawnPoints;   //事前にステージに配置されたスポーンポイント.
     public GameObject enemyPrefab;
 
-    public float minSpawnDistance = 5f;   //出現する最小値.
+    public float minSpawnDistance = 10f;  //出現する最小値.
     public float maxSpawnDistance = 20f;  //出現する最大値.
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -21,19 +21,16 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       if(!a)
-        {
-            SpawnEnemy();
-            a = true;
-        }
     }
 
+    //スポーンしたいときに呼ぶ.
     public void SpawnEnemy()
     {
         List<Transform> validPoints = new List<Transform>();
         
         foreach (var p in spawnPoints)
         {
+            //プレイヤーとスポーンポイントの距離.
             float dist = Vector3.Distance(player.position, p.position);
 
             if (dist >= minSpawnDistance

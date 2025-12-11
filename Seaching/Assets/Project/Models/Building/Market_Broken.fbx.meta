@@ -3,7 +3,42 @@ guid: 31b64955dd1b8a84385f7531fcee2e1c
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Blue
+    second: {fileID: 2100000, guid: e4b9d1325099e45419a73f448b111ead, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DarkWood
+    second: {fileID: 2100000, guid: 162f61ab24ca2b24baad9aabee0f15e8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glass
+    second: {fileID: 2100000, guid: 08bbaa8920c5ce7449e2af2ccd73673e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Green
+    second: {fileID: 2100000, guid: dbe69e7006cb08a4fbd7828309d8ad8c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Purple
+    second: {fileID: 2100000, guid: 44aef338226c1db42a8959835821f731, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Red
+    second: {fileID: 2100000, guid: f2728b7e42abc6f45bf612154188be34, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood.001
+    second: {fileID: 2100000, guid: b0693575207c8ba45bd58cbc8773b687, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -33,7 +68,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 3
+    globalScale: 3.5
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -88,7 +123,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 3
+    globalScale: 3.5
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
