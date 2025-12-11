@@ -186,7 +186,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // // 一連の動作を管理するコルーチン
-    private IEnumerator SmashActionSequence(int jumpLevel, float jumpForce)
+    public IEnumerator SmashActionSequence(int jumpLevel, float jumpForce)
     {
         if (HitCounterUI.instance != null)
         {
@@ -222,17 +222,21 @@ public class PlayerController : MonoBehaviour
         // カメラをエイムモードに切り替え
         smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Aiming);
 
-        float timer = 0f;
-        while (timer < hoverDuration)
+        if (jumpLevel >= 1)
         {
-            timer += Time.deltaTime;
+            float timer = 0f;
+            while (timer < hoverDuration)
+            {
+                timer += Time.deltaTime;
 
 
-            // ボタンを離したら即落下などの処理を入れてもOK
-            // if (Input.GetKeyUp(KeyCode.Space)) break;
+                // ボタンを離したら即落下などの処理を入れてもOK
+                // if (Input.GetKeyUp(KeyCode.Space)) break;
 
-            yield return null;
+                yield return null;
+            }
         }
+
 
         // -----------------------------------------
         // 3. 急降下フェーズ (Dive)

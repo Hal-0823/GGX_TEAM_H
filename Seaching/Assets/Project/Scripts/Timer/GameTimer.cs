@@ -37,8 +37,6 @@ public class GameTimer : MonoBehaviour
             timerText.color = normalColor;
             timerText.text = previousDisplayTime.ToString();
         }
-        
-        StartTimer();
     }
 
     public void StartTimer() => isRunning = true;
