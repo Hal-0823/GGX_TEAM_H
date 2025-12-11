@@ -6,7 +6,8 @@ using Unity.VisualScripting;
 [RequireComponent(typeof(BreakAttack))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private InputChannel inputChannel;
+
     [SerializeField] private float hoverDuration = 1.5f;
     [SerializeField] private float moveSpeedAir = 3f;
     [SerializeField] private float diveSpeed = 30f;
@@ -30,7 +31,6 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 movementInput;
 
-    [SerializeField]
     private bool isCharging = false;
     private float currentChargeTime = 0f;
     private int currentJumpLevel = 0;
@@ -60,16 +60,28 @@ public class PlayerController : MonoBehaviour
         playerInput.Player.Move.canceled += OnMoveCanceled;
         playerInput.Player.Jump.started += OnJumpTriggered;
         playerInput.Player.Jump.canceled += OnJumpTriggered;
-        playerInput.Enable();
+
+        inputChannel.OnRequestPlayerControl += EnableControl;
+        inputChannel.OnRequestDialogueControl += DisableControl;
     }
 
     private void OnDisable()
     {
-        playerInput.Player.Move.performed -= OnMovePerformed;
-        playerInput.Player.Move.canceled -= OnMoveCanceled;
-        playerInput.Player.Jump.started -= OnJumpTriggered;
-        playerInput.Player.Jump.canceled -= OnJumpTriggered;
-        playerInput.Disable();
+        playerInput.Dispose();
+        inputChannel.OnRequestPlayerControl -= EnableControl;
+        inputChannel.OnRequestDialogueControl -= DisableControl;
+    }
+
+    // プレイヤーの操作を有効化
+    private void EnableControl()
+    {
+        playerInput.Player.Enable();
+    }
+
+    // プレイヤーの操作を無効化
+    private void DisableControl()
+    {
+        playerInput.Player.Disable();
     }
 
     private void OnMovePerformed(InputAction.CallbackContext context)
@@ -246,7 +258,7 @@ public class PlayerController : MonoBehaviour
         // 着地時の振動や破壊処理をここで呼ぶ
         animator.SetTrigger("Land");
         smashCameraControl.ShakeCamera();
-        StartCoroutine(breakAttack.DoStompCoroutine(currentJumpLevel));
+        StartCoroutine(breakAttack.DoStompCoroutine(jumpLevel));
         //isActionActive = false;
         smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Impact);
 
@@ -255,14 +267,20 @@ public class PlayerController : MonoBehaviour
         animator.SetTrigger("Standup");
     }
 
+    // 落下中に建物に衝突した場合の処理
     public void OnCollisionEnter(Collision collision)
     {
         if (IsGrounded()) return;
-        
+
         if (collision.gameObject.layer == LayerMask.NameToLayer("Debris"))
         {
             return;
         }
         breakAttack.DoBreak(1f, false);
+    }
+
+    public void EnablePlayerControl()
+    {
+        inputChannel.SwitchToPlayer();
     }
 }
