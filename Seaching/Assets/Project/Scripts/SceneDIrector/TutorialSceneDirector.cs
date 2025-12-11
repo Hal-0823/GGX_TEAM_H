@@ -47,6 +47,8 @@ public class TutorialSceneDirector : MonoBehaviour
         // フェードイン
         fadeCanvasGroup.DOFade(0f, 5f);
 
+        //AudioManager.Instance.PlayBGM("BGM_Tutorial1");
+
         // チュートリアル会話の開始
         string[] tutorialLines = new string[]
         {

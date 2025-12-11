@@ -18,8 +18,8 @@ public class AudioManager : MonoBehaviour
     private Dictionary<string, AudioData.AudioEntry> seMap = new Dictionary<string, AudioData.AudioEntry>();
 
     // 全体の音量（設定画面などで変更することを想定）
-    public float MasterVolume { get; set; } = 1.0f;
-    public float BgmVolume { get; set; } = 1.0f;
+    public float MasterVolume { get; set; } = 0.9f;
+    public float BgmVolume { get; set; } = 0.35f;
     public float SeVolume { get; set; } = 1.0f;
 
     private void Awake()

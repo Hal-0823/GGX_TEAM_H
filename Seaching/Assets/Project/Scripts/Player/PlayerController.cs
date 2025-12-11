@@ -147,18 +147,21 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Lv3: 最大ジャンプ！");
             finalForce = jumpForceLv3;
             currentJumpLevel = 3;
+            AudioManager.Instance.PlaySE("SE_JumpBig");
         }
         else if (currentChargeTime >= stage1Threshold)
         {
             Debug.Log("Lv2: 中ジャンプ！");
             finalForce = jumpForceLv2;
             currentJumpLevel = 2;
+            AudioManager.Instance.PlaySE("SE_JumpMid");
         }
         else
         {
             Debug.Log("Lv1: 小ジャンプ");
             finalForce = jumpForceLv1;
             currentJumpLevel = 1;
+            AudioManager.Instance.PlaySE("SE_JumpSmall1");
         }
 
         StartCoroutine(SmashActionSequence(currentJumpLevel, finalForce));
