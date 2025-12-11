@@ -93,13 +93,13 @@ public class score : MonoBehaviour
         {
             rectTransform = GetComponent<RectTransform>();
 
-                if (ScoreManager.Instance == null)
+                if (scoreManager == null)
         {
         Debug.LogError("ScoreManager がシーン内に見つかりません！");
         return;
         }
 
-            updateScore = ScoreManager.Instance.GetScore();
+            updateScore = scoreManager.CurrentTotalScore;
             scoredisplay();
         }
     }

@@ -28,6 +28,8 @@ public class ScoreManager : MonoBehaviour
 
     private Tween scoreTween;
 
+    public int CurrentTotalScore => currentTotalScore;
+
     private void Awake()
     {
         pendingScore = 0;
@@ -36,19 +38,6 @@ public class ScoreManager : MonoBehaviour
         currentTotalScoreText.text = "0";
         pendingScoreText.text = "";
         UpdateText();
-    }
-
-    private void Awake()
-    {
-        if (Instance == null)//シーンを跨いでも値を破棄しない
-        {
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
     }
 
     private void OnEnable()//score加算
