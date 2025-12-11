@@ -15,6 +15,8 @@ public class TutorialSceneDirector : MonoBehaviour
     [SerializeField] private GameObject maou;
 
     private bool buildingBreaked = false;
+    private Coroutine tutorialCoroutine;
+    private bool isFinished = false;
 
     public void OnBuildingBroken(int score)
     {
@@ -24,13 +26,20 @@ public class TutorialSceneDirector : MonoBehaviour
     private void Awake()
     {
         BreakableObject.OnObjectBroken += OnBuildingBroken;
+        dialogueManager.OnSkip += OnSkipTriggered;
         fadeCanvasGroup.alpha = 1f;
+    }
+
+    public void OnDestroy()
+    {
+        BreakableObject.OnObjectBroken -= OnBuildingBroken;
+        dialogueManager.OnSkip -= OnSkipTriggered;
     }
 
     private void Start()
     {
         tutorialCamera.Priority = 15;
-        StartCoroutine(TutorialSequence());
+        tutorialCoroutine = StartCoroutine(TutorialSequence());
     }
 
     private IEnumerator TutorialSequence()
@@ -134,6 +143,46 @@ public class TutorialSceneDirector : MonoBehaviour
 
         yield return null;
         yield return new WaitUntil(() => !dialogueManager.IsDialgoueActive());
+
+        StartCoroutine(FinishTutorial());
+    }
+
+    // チュートリアルのスキップ演出
+    private void OnSkipTriggered()
+    {
+        if (isFinished) return;
+
+        if (tutorialCoroutine != null)
+        {
+            StopCoroutine(tutorialCoroutine);
+            tutorialCoroutine = null;
+        }
+
+        StartCoroutine(SkipSequence());
+    }
+
+    private IEnumerator SkipSequence()
+    {
+        Debug.Log("チュートリアルスキップ開始", this);
+
+        yield return new WaitForSeconds(1.0f);
+        string[] skipLines = new string[]
+        {
+            "......む?",
+            "はやく いきたくて うずうず しているな。",
+            "よかろう!\"せいち\"の すべてを\nはかい するのだ!"
+        };
+
+        dialogueManager.StartDialogue(skipLines);
+        yield return null;
+        yield return new WaitUntil(() => !dialogueManager.IsDialgoueActive());
+
+        StartCoroutine(FinishTutorial());
+    }
+
+    private IEnumerator FinishTutorial()
+    {
+        isFinished = true;
 
         tutorialCamera.Priority = 15;
 

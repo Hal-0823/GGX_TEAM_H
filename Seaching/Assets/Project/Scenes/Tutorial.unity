@@ -1261,6 +1261,8 @@ MonoBehaviour:
   dialogueBox: {fileID: 559053047}
   dialogueText: {fileID: 64616159}
   typeSpeed: 0.05
+  requiredClicksToSkip: 8
+  skipResetTime: 1
 --- !u!4 &1844518176
 Transform:
   m_ObjectHideFlags: 0
@@ -1475,7 +1477,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5754831478122459507, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: field of view
-      value: 40
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 5754831478122459507, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: far clip plane
@@ -1503,27 +1505,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8287251485150333403, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 45.24613
+      value: 21.24613
       objectReference: {fileID: 0}
     - target: {fileID: 8287251485150333403, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -93.82543
+      value: 1.1745701
       objectReference: {fileID: 0}
     - target: {fileID: 8287251485150333403, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9930066
+      value: 0.8187387
       objectReference: {fileID: 0}
     - target: {fileID: 8287251485150333403, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.11805908
+      value: 0.57416636
       objectReference: {fileID: 0}
     - target: {fileID: 8287251485150333403, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0000000035066419
+      value: -0.00000007908526
       objectReference: {fileID: 0}
     - target: {fileID: 8287251485150333403, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 4.1690654e-10
+      value: 0.00000005546103
       objectReference: {fileID: 0}
     - target: {fileID: 8744719095426096057, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalPosition.x
