@@ -1,8 +1,14 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using DG.Tweening;
 
 public class BravePersonController : MonoBehaviour
 {
+    public static event Action<int> OnBraveDefeated;
+    [SerializeField] private int scoreValue = 100;
+
     private Transform        player;     //�v���C���[.
     private FoundPlayerUI    foundUI;    //����������UI.
   
@@ -11,9 +17,6 @@ public class BravePersonController : MonoBehaviour
     public float moveSpeed = 3f;        //�ړ����x.
     public float wanderRadius = 10f;    //���͂ɂǂꂾ��������.
     public float wanderTimerMax = 5f;      //���ɓ����܂ł̍ő厞��.
-
-    public float lifeMax = 10f;
-    private float life = 0f;
 
     private bool isChasing = false;
 
@@ -25,20 +28,20 @@ public class BravePersonController : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
-        life = lifeMax;
 
         agent = GetComponent<NavMeshAgent>();
 
         player = GameObject.FindGameObjectWithTag("Player").transform;
         foundUI = GetComponentInChildren<FoundPlayerUI>(true);
 
-        float walkTime = Random.Range(0, wanderTimerMax);
+        float walkTime = UnityEngine.Random.Range(0, wanderTimerMax);
         timer = walkTime;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (agent.enabled == false) return;
         //�v���C���[�������Ă���ꍇ.
         if (CanSeePlayer())
         {
@@ -58,20 +61,27 @@ public class BravePersonController : MonoBehaviour
     }
 
     //�_���[�W���󂯂�.
-    public void GetDamage(float damage)
+    public void GetDamage(Vector3 explosionCenter, float power, float radius)
     {
-        life -= damage;
+        agent.enabled = false; // NavMeshAgentを無効化
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.freezeRotation = false; // 回転の固定を解除
+        rb.AddExplosionForce(power, explosionCenter, radius, 3.0f);
+        rb.AddTorque(Vector3.up * power * 0.1f, ForceMode.Impulse);
 
-        if(life < 0)
+        OnBraveDefeated?.Invoke(scoreValue);
+
+        // このオブジェクトを一定時間後に削除
+        transform.DOScale(Vector3.zero, 2.0f).SetEase(Ease.InBack).OnComplete(() =>
         {
-            Die();
-        }
+            Destroy(gameObject);
+        });
     }
 
     //�v���C���[�̓���.
     public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
     {
-        Vector3 randDirection = Random.insideUnitSphere * dist;
+        Vector3 randDirection = UnityEngine.Random.insideUnitSphere * dist;
         randDirection += origin;
         NavMesh.SamplePosition(randDirection, out NavMeshHit navHit, dist, layermask);
 
@@ -159,11 +169,5 @@ public class BravePersonController : MonoBehaviour
             timer = 0;
         }
         anim.SetBool("IsAttack", false);
-    }
-
-    //���S���̓���.
-    private void Die()
-    {
-
     }
 }

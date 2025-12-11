@@ -43,12 +43,14 @@ public class ScoreManager : MonoBehaviour
     private void OnEnable()//score加算
     {
         BreakableObject.OnObjectBroken += AddScore;
+        BravePersonController.OnBraveDefeated += AddScore;
         HitCounterUI.OnCounterReset += FinalizeCombo;
     }
 
         private void OnDisable()//score減少
     {
         BreakableObject.OnObjectBroken -= AddScore;
+        BravePersonController.OnBraveDefeated -= AddScore;
         HitCounterUI.OnCounterReset -= FinalizeCombo;
     }
 

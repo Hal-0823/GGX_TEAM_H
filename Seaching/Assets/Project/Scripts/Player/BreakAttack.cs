@@ -7,7 +7,7 @@ public class BreakAttack : MonoBehaviour
     [SerializeField] private float secondImpactRadius = 10f; // 破壊半径
     [SerializeField] private float thirdImpactRadius = 20f; // 外側の衝撃波半径 
     [SerializeField] private float impactPower = 1000f; // 吹き飛ばす力
-    [SerializeField] private LayerMask destructibleLayer; // 建物のレイヤー
+    [SerializeField] private LayerMask destructibleLayer; // 建物と勇者のレイヤー
     [SerializeField] private ParticleSystem stompEffectPrefab; // 着地エフェクト
     [SerializeField] private Transform stompEffectSpawnPoint; // エフェクトの生成位置
 
@@ -36,6 +36,24 @@ public class BreakAttack : MonoBehaviour
                     StartCoroutine(DoHitStop(0.1f)); // 0.6秒間ヒットストップ
                 }
                 building.Shatter(transform.position, impactPower, impactRadius);
+                continue;
+            }
+
+            // 相手が「勇者」か確認
+            var brave = hit.GetComponent<BravePersonController>();
+            if (brave != null)
+            {
+                if (HitCounterUI.instance != null)
+                {
+                    HitCounterUI.instance.AddHit();
+                }
+                if (!isStopping)
+                {
+                    // ヒットストップを開始
+                    StartCoroutine(DoHitStop(0.1f)); // 0.6秒間ヒットストップ
+                }
+                brave.GetDamage(transform.position, impactPower, impactRadius);
+                continue;
             }
         }
 
