@@ -38,13 +38,26 @@ public class ScoreManager : MonoBehaviour
         UpdateText();
     }
 
-    private void OnEnable()
+    private void Awake()
+    {
+        if (Instance == null)//シーンを跨いでも値を破棄しない
+        {
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnEnable()//score加算
     {
         BreakableObject.OnObjectBroken += AddScore;
         HitCounterUI.OnCounterReset += FinalizeCombo;
     }
 
-        private void OnDisable()
+        private void OnDisable()//score減少
     {
         BreakableObject.OnObjectBroken -= AddScore;
         HitCounterUI.OnCounterReset -= FinalizeCombo;
