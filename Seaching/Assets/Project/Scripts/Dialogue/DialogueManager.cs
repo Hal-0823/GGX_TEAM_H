@@ -94,6 +94,7 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     private void OnNextPressed(InputAction.CallbackContext context)
     {
+        AudioManager.Instance.PlaySE("SE_Click4");
         // スキップ処理
         if (!isSkipped)
         {

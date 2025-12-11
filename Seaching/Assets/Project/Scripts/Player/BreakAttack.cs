@@ -39,6 +39,8 @@ public class BreakAttack : MonoBehaviour
             }
         }
 
+        AudioManager.Instance.PlaySE("SE_Destroy1");
+
         // ここにカメラシェイクや土煙エフェクトの処理を追加
         if (isPlayEffect && stompEffectPrefab != null)
         {

@@ -3,14 +3,14 @@ using UnityEngine.AI;
 
 public class BravePersonController : MonoBehaviour
 {
-    public Transform        player;     //ƒvƒŒƒCƒ„[.
-    public FoundPlayerUI    foundUI;    //Œ©‚Â‚¯‚½‚ÌUI.
+    private Transform        player;     //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[.
+    private FoundPlayerUI    foundUI;    //ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½UI.
   
-    public float viewAngle = 45f;       //‹–ìŠpi¶‰E‚ÌŠp“xj
-    public float viewDistance = 10f;    //‹–ì‹——£‚ÌŒÀ“x
-    public float moveSpeed = 3f;        //ˆÚ“®‘¬“x.
-    public float wanderRadius = 10f;    //üˆÍ‚É‚Ç‚ê‚¾‚¯“®‚­‚©.
-    public float wanderTimerMax = 5f;      //Ÿ‚É“®‚­‚Ü‚Å‚ÌÅ‘åŠÔ.
+    public float viewAngle = 45f;       //ï¿½ï¿½ï¿½ï¿½pï¿½iï¿½ï¿½ï¿½Eï¿½ÌŠpï¿½xï¿½j
+    public float viewDistance = 10f;    //ï¿½ï¿½ï¿½ì‹—ï¿½ï¿½ï¿½ÌŒï¿½ï¿½x
+    public float moveSpeed = 3f;        //ï¿½Ú“ï¿½ï¿½ï¿½ï¿½x.
+    public float wanderRadius = 10f;    //ï¿½ï¿½ï¿½Í‚É‚Ç‚ê‚¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
+    public float wanderTimerMax = 5f;      //ï¿½ï¿½ï¿½É“ï¿½ï¿½ï¿½ï¿½Ü‚Å‚ÌÅ‘åï¿½ï¿½.
 
     public float lifeMax = 10f;
     private float life = 0f;
@@ -29,6 +29,9 @@ public class BravePersonController : MonoBehaviour
 
         agent = GetComponent<NavMeshAgent>();
 
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        foundUI = GetComponentInChildren<FoundPlayerUI>(true);
+
         float walkTime = Random.Range(0, wanderTimerMax);
         timer = walkTime;
     }
@@ -36,7 +39,7 @@ public class BravePersonController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //ƒvƒŒƒCƒ„[‚ªŒ©‚¦‚Ä‚¢‚éê‡.
+        //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ê‡.
         if (CanSeePlayer())
         {
             isChasing = true;
@@ -54,7 +57,7 @@ public class BravePersonController : MonoBehaviour
         }
     }
 
-    //ƒ_ƒ[ƒW‚ğó‚¯‚é.
+    //ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½ï¿½ï¿½ó‚¯‚ï¿½.
     public void GetDamage(float damage)
     {
         life -= damage;
@@ -65,7 +68,7 @@ public class BravePersonController : MonoBehaviour
         }
     }
 
-    //ƒvƒŒƒCƒ„[‚Ì“®‚«.
+    //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ì“ï¿½ï¿½ï¿½.
     public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layermask)
     {
         Vector3 randDirection = Random.insideUnitSphere * dist;
@@ -75,35 +78,35 @@ public class BravePersonController : MonoBehaviour
         return navHit.position;
     }
 
-    //ƒvƒŒƒCƒ„[‚ªŒ©‚¦‚é‚Ì‚©.
+    //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½.
     private bool CanSeePlayer()
     {
-        //‹–ì‹——£‚ÌŒÀ“x‚æ‚è‘å‚«‚¢ê‡AƒvƒŒƒCƒ„[‚ğŒ©‚Â‚¯‚È‚¢.
+        //ï¿½ï¿½ï¿½ì‹—ï¿½ï¿½ï¿½ÌŒï¿½ï¿½xï¿½ï¿½ï¿½å‚«ï¿½ï¿½ï¿½ê‡ï¿½Aï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½È‚ï¿½.
         if (DistanceToPlayer() > viewDistance) return false;
 
-        //³–Ê‚Æ‚ÌŠp“x.
+        //ï¿½ï¿½ï¿½Ê‚Æ‚ÌŠpï¿½x.
         float angle = Vector3.Angle(transform.forward, DirectionToPlayer());
 
-        //‹–ìŠp‚Ì”ÍˆÍ“à‚Ìê‡AŒ©‚Â‚¯‚½.
+        //ï¿½ï¿½ï¿½ï¿½pï¿½Ì”ÍˆÍ“ï¿½ï¿½Ìê‡ï¿½Aï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½.
         return angle < viewAngle;
     }
 
-    //ƒvƒŒƒCƒ„[‚ğŒ©‚Â‚¯‚½‚Ì“®ì.
+    //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì“ï¿½ï¿½ï¿½.
     private void FindPlayer()
     {
-        //UŒ‚‹——£ˆÈŠO‚È‚çƒvƒŒƒCƒ„[‚ğ’Ç‚¤.
+        //ï¿½Uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÈŠOï¿½È‚ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½Ç‚ï¿½.
         if (DistanceToPlayer() > 2f)
         {
-            agent.SetDestination(player.position);  //NavMeshAgent‚Å’ÇÕ.
+            agent.SetDestination(player.position);  //NavMeshAgentï¿½Å’Çï¿½.
             anim.SetBool("IsAttack", false);
         }
         else
         {
-            agent.ResetPath(); // ‹ß‚Ã‚¢‚½‚ç~‚ß‚é
+            agent.ResetPath(); // ï¿½ß‚Ã‚ï¿½ï¿½ï¿½ï¿½ï¿½~ï¿½ß‚ï¿½
             anim.SetBool("IsAttack", true);
         }
 
-        // ƒvƒŒƒCƒ„[‚Ì•ûŒü‚ğŒü‚­
+        // ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ì•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         transform.rotation = Quaternion.Slerp(
             transform.rotation,
             Quaternion.LookRotation(DirectionToPlayer()),
@@ -111,7 +114,7 @@ public class BravePersonController : MonoBehaviour
         );
     }
 
-    //ƒvƒŒƒCƒ„[‚Ö‚Ì‹——£.
+    //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ö‚Ì‹ï¿½ï¿½ï¿½.
     private float DistanceToPlayer()
     {
         Vector3 thisPos = transform.position;
@@ -119,15 +122,15 @@ public class BravePersonController : MonoBehaviour
         Vector3 playerPos = player.position;
         playerPos.y = 0f;
 
-        //ƒvƒŒƒCƒ„[‚Æ‚Ì·.
+        //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Æ‚Ìï¿½.
         Vector3 diff = playerPos - thisPos;
-        //ƒvƒŒƒCƒ„[‚Æ‚Ì‹——£.
+        //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Æ‚Ì‹ï¿½ï¿½ï¿½.
         float distance = diff.magnitude;
 
         return distance;
     }
 
-    //ƒvƒŒƒCƒ„[‚Ö‚Ì•ûŒü.
+    //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ö‚Ì•ï¿½ï¿½ï¿½.
     private Vector3 DirectionToPlayer()
     {
         Vector3 thisPos = transform.position;
@@ -135,20 +138,20 @@ public class BravePersonController : MonoBehaviour
         Vector3 playerPos = player.position;
         playerPos.y = 0f;
 
-        //ƒvƒŒƒCƒ„[‚Æ‚Ì·.
+        //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Æ‚Ìï¿½.
         Vector3 diff = playerPos - thisPos;
-        //•ûŒü‚Ì³‹K‰».
+        //ï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½Kï¿½ï¿½.
         Vector3 dir = diff.normalized;
 
         return dir;
     }
 
-    //¢ŠE‚ğ©—R‚É•à‚Ş.
+    //ï¿½ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½Rï¿½É•ï¿½ï¿½ï¿½.
     private void Wander()
     {
         timer += Time.deltaTime;
 
-        //ŠÔ‚ª‚«‚½‚çŸ‚Ì“®‚«.
+        //ï¿½ï¿½ï¿½Ô‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½çŸï¿½Ì“ï¿½ï¿½ï¿½.
         if (timer >= wanderTimerMax)
         {
             Vector3 newPos = RandomNavSphere(transform.position, wanderRadius, -1);
@@ -158,7 +161,7 @@ public class BravePersonController : MonoBehaviour
         anim.SetBool("IsAttack", false);
     }
 
-    //€–S‚Ì“®ì.
+    //ï¿½ï¿½ï¿½Sï¿½ï¿½ï¿½Ì“ï¿½ï¿½ï¿½.
     private void Die()
     {
 

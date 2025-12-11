@@ -35,7 +35,10 @@ public class GameSceneDirector : MonoBehaviour
         yield return new WaitUntil(() => playerController.IsGrounded());
 
         // タイマー開始
+        AudioManager.Instance.PlaySE("SE_GameStart1");
         gameTimer.StartTimer();
+
+        AudioManager.Instance.PlayBGM("BGM_Game1");
     }
 
     public void OnTimeOver()
@@ -49,13 +52,19 @@ public class GameSceneDirector : MonoBehaviour
         inputChannel.SwitchToNone();
         playerController.gameObject.GetComponent<Rigidbody>().isKinematic = true;
 
+        // タイムアップ表示
         timeUpText.gameObject.SetActive(true);
         timeUpText.text = "TIME UP!";
         timeUpText.transform.localScale = Vector3.zero;
 
+        AudioManager.Instance.PlaySE("SE_GameFinish");
+
         yield return new WaitUntil(() => timeUpText.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBack).IsComplete());
 
-        yield return new WaitForSeconds(1f);
+        // ヒットカウンターリセット
+        HitCounterUI.instance.ForceReset();
+
+        yield return new WaitForSeconds(2f);
 
         // リザルト表示
 
