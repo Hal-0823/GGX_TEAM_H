@@ -24,6 +24,11 @@ public class DialogueManager : MonoBehaviour
     // プレイヤーのInput制御用
     private PlayerInput playerInput;
 
+    public bool IsDialgoueActive()
+    {
+        return dialogueBox.activeSelf;
+    }
+
     private void OnEnable()
     {
         playerInput = new PlayerInput();

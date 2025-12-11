@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     private PlayerInput playerInput;
 
 
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
         return groundChecker.IsGrounded();
     }
