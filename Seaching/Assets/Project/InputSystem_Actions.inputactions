@@ -476,6 +476,56 @@
             ]
         },
         {
+            "name": "Dialogue",
+            "id": "c4e2ce4d-1c6a-43e9-a933-53e70c7f0000",
+            "actions": [
+                {
+                    "name": "Next",
+                    "type": "Button",
+                    "id": "b99ad682-0022-453a-861c-b1f752d969aa",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "53fafd8a-46b0-4b53-b7b1-b441aa270471",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Next",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "27436baa-38d6-4724-8e8d-907032bb63f6",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Next",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3b657ae8-0578-4e3a-8a9b-f779e527fe9a",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Next",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
             "name": "UI",
             "id": "272f6d14-89ba-496f-b7ff-215263d3219f",
             "actions": [

@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using Unity.VisualScripting;
 
-[RequireComponent(typeof(StompAttack))]
+[RequireComponent(typeof(BreakAttack))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private InputChannel inputChannel;
+
     [SerializeField] private float hoverDuration = 1.5f;
     [SerializeField] private float moveSpeedAir = 3f;
     [SerializeField] private float diveSpeed = 30f;
@@ -25,11 +27,10 @@ public class PlayerController : MonoBehaviour
     private SmashCameraControl smashCameraControl;
 
     [SerializeField]
-    private StompAttack stompAttack;
+    private BreakAttack breakAttack;
 
     private Vector2 movementInput;
 
-    [SerializeField]
     private bool isCharging = false;
     private float currentChargeTime = 0f;
     private int currentJumpLevel = 0;
@@ -40,7 +41,7 @@ public class PlayerController : MonoBehaviour
     private PlayerInput playerInput;
 
 
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
         return groundChecker.IsGrounded();
     }
@@ -59,16 +60,30 @@ public class PlayerController : MonoBehaviour
         playerInput.Player.Move.canceled += OnMoveCanceled;
         playerInput.Player.Jump.started += OnJumpTriggered;
         playerInput.Player.Jump.canceled += OnJumpTriggered;
-        playerInput.Enable();
+
+        inputChannel.OnRequestPlayerControl += EnableControl;
+        inputChannel.OnRequestDialogueControl += DisableControl;
+        inputChannel.OnRequestNoneControl += DisableControl;
     }
 
     private void OnDisable()
     {
-        playerInput.Player.Move.performed -= OnMovePerformed;
-        playerInput.Player.Move.canceled -= OnMoveCanceled;
-        playerInput.Player.Jump.started -= OnJumpTriggered;
-        playerInput.Player.Jump.canceled -= OnJumpTriggered;
-        playerInput.Disable();
+        playerInput.Dispose();
+        inputChannel.OnRequestPlayerControl -= EnableControl;
+        inputChannel.OnRequestDialogueControl -= DisableControl;
+        inputChannel.OnRequestNoneControl -= DisableControl;
+    }
+
+    // プレイヤーの操作を有効化
+    private void EnableControl()
+    {
+        playerInput.Player.Enable();
+    }
+
+    // プレイヤーの操作を無効化
+    private void DisableControl()
+    {
+        playerInput.Player.Disable();
     }
 
     private void OnMovePerformed(InputAction.CallbackContext context)
@@ -173,8 +188,12 @@ public class PlayerController : MonoBehaviour
     }
 
     // // 一連の動作を管理するコルーチン
-    private IEnumerator SmashActionSequence(int jumpLevel, float jumpForce)
+    public IEnumerator SmashActionSequence(int jumpLevel, float jumpForce)
     {
+        if (HitCounterUI.instance != null)
+        {
+            HitCounterUI.instance.ForceReset();
+        }
         //isActionActive = true;
 
         // -----------------------------------------
@@ -182,7 +201,9 @@ public class PlayerController : MonoBehaviour
         // -----------------------------------------
         // 上方向への初速を与える
         // 方向が入力されていた場合、その方向にも少し速度を与える
-        rb.linearVelocity = Vector3.up * jumpForce + new Vector3(movementInput.x, 0, movementInput.y) * jumpForce / 10f;
+        //rb.linearVelocity = Vector3.up * jumpForce + new Vector3(movementInput.x, 0, movementInput.y) * jumpForce / 10f;
+
+        rb.linearVelocity = Vector3.up * jumpForce;
 
         smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Jumping);
         // 上昇中は待機（Y速度が落ちてくるまで、または一定時間）
@@ -203,17 +224,21 @@ public class PlayerController : MonoBehaviour
         // カメラをエイムモードに切り替え
         smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Aiming);
 
-        float timer = 0f;
-        while (timer < hoverDuration)
+        if (jumpLevel >= 1)
         {
-            timer += Time.deltaTime;
+            float timer = 0f;
+            while (timer < hoverDuration)
+            {
+                timer += Time.deltaTime;
 
 
-            // ボタンを離したら即落下などの処理を入れてもOK
-            // if (Input.GetKeyUp(KeyCode.Space)) break;
+                // ボタンを離したら即落下などの処理を入れてもOK
+                // if (Input.GetKeyUp(KeyCode.Space)) break;
 
-            yield return null;
+                yield return null;
+            }
         }
+
 
         // -----------------------------------------
         // 3. 急降下フェーズ (Dive)
@@ -239,12 +264,29 @@ public class PlayerController : MonoBehaviour
         // 着地時の振動や破壊処理をここで呼ぶ
         animator.SetTrigger("Land");
         smashCameraControl.ShakeCamera();
-        StartCoroutine(stompAttack.DoStompCoroutine(currentJumpLevel));
+        StartCoroutine(breakAttack.DoStompCoroutine(jumpLevel));
         //isActionActive = false;
         smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Impact);
 
         yield return new WaitForSeconds(1.1f); // 少し待ってから通常モードへ
         smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Normal);
         animator.SetTrigger("Standup");
+    }
+
+    // 落下中に建物に衝突した場合の処理
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (IsGrounded()) return;
+
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Debris"))
+        {
+            return;
+        }
+        breakAttack.DoBreak(1f, false);
+    }
+
+    public void EnablePlayerControl()
+    {
+        inputChannel.SwitchToPlayer();
     }
 }

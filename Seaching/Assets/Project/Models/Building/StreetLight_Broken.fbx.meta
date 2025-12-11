@@ -3,7 +3,22 @@ guid: 5df7a590c4f480f45b150205fcfe2bd2
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: StreetLightBaseMaterial
+    second: {fileID: 2100000, guid: 01c6cf9122925034bbe2fa8d6b249b74, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: StreetLightMaterial
+    second: {fileID: 2100000, guid: 11d3c2abac3d1654abe86ce5ace54d8a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: StreetLightStandMaterial
+    second: {fileID: 2100000, guid: e9f7eca28d5c27c4f9978ac9e1089ee4, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
