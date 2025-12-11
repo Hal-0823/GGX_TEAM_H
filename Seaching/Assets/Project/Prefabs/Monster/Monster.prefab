@@ -231,7 +231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52cbeaa9f31a60d459a97f5754797a8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 7
+  inputChannel: {fileID: 11400000, guid: f4c0f13b0fc12ba45b186b8161e2e1af, type: 2}
   hoverDuration: 0.1
   moveSpeedAir: 6
   diveSpeed: 50
@@ -242,7 +242,6 @@ MonoBehaviour:
   jumpForceLv3: 40
   smashCameraControl: {fileID: 0}
   breakAttack: {fileID: 1713283152154113117}
-  isCharging: 0
 --- !u!114 &1713283152154113117
 MonoBehaviour:
   m_ObjectHideFlags: 0
