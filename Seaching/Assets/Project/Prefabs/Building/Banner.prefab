@@ -135,5 +135,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f632296c147c81d49822fa5b7b5b52e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreValue: 100
-  brokenModel: {fileID: 0}
+  scoreValue: 300
+  brokenModel: {fileID: 6282309487331244850, guid: 68176dbc53854f74497cb380c1fbf151, type: 3}
