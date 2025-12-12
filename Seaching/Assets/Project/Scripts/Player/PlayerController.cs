@@ -208,7 +208,10 @@ public class PlayerController : MonoBehaviour
 
         rb.linearVelocity = Vector3.up * jumpForce;
 
-        smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Jumping);
+        if (smashCameraControl != null)
+        {
+            smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Jumping);
+        }
         // 上昇中は待機（Y速度が落ちてくるまで、または一定時間）
         // ここでは簡易的に「Y速度が0に近づくまで」待ちます
         while (rb.linearVelocity.y > 0.5f)
@@ -225,7 +228,10 @@ public class PlayerController : MonoBehaviour
         animator.SetTrigger("Fall");
 
         // カメラをエイムモードに切り替え
-        smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Aiming);
+        if (smashCameraControl != null)
+        {
+            smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Aiming);
+        }
 
         if (jumpLevel >= 1)
         {
@@ -251,7 +257,10 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = Vector3.down * diveSpeed;
 
         // カメラを落下モードに切り替え
-        smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Falling);
+        if (smashCameraControl != null)
+        {
+            smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Falling);
+        }
 
         // 着地するまで待機（接地判定はCollisionなどを利用しても良い）
         // 今回は簡易的に「Y座標が一定以下」または「速度が0になる」までとします
@@ -266,13 +275,23 @@ public class PlayerController : MonoBehaviour
         // -----------------------------------------
         // 着地時の振動や破壊処理をここで呼ぶ
         animator.SetTrigger("Land");
-        smashCameraControl.ShakeCamera();
+
+        if (smashCameraControl != null)
+        {
+            smashCameraControl.ShakeCamera();
+        }
         StartCoroutine(breakAttack.DoStompCoroutine(jumpLevel));
         //isActionActive = false;
-        smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Impact);
+        if (smashCameraControl != null)
+        {
+            smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Impact);
+        }
 
         yield return new WaitForSeconds(1.1f); // 少し待ってから通常モードへ
-        smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Normal);
+        if (smashCameraControl != null)
+        {
+            smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Normal);
+        }
         animator.SetTrigger("Standup");
     }
 

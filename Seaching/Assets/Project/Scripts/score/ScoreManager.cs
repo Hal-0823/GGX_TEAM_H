@@ -5,6 +5,8 @@ using DG.Tweening;
 
 public class ScoreManager : MonoBehaviour
 {
+    [SerializeField] private GameSessionData sessionData;
+
     [Header("UI References")]
     [SerializeField] private TextMeshProUGUI currentTotalScoreText;
     [SerializeField] private TextMeshProUGUI pendingScoreText;
@@ -32,6 +34,7 @@ public class ScoreManager : MonoBehaviour
 
     private void Awake()
     {
+        sessionData.ResetScore();
         pendingScore = 0;
         currentTotalScore = 0;
         displayedTotalScore = 0;
@@ -58,6 +61,7 @@ public class ScoreManager : MonoBehaviour
     {
         // 1. 目標スコアを更新
         currentTotalScore += amount;
+        sessionData.currentScore = currentTotalScore;
 
         // 2. 前のアニメーションが途中なら止める（これがないと動きがおかしくなる）
         if (scoreTween != null && scoreTween.IsActive())
