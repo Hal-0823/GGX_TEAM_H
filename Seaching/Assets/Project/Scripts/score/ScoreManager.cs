@@ -34,15 +34,7 @@ public class ScoreManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)//シーンを跨いでも値を破棄しない
-        {
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        sessionData.ResetScore();
         pendingScore = 0;
         currentTotalScore = 0;
         displayedTotalScore = 0;
