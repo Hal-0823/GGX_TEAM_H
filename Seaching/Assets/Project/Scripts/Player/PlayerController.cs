@@ -2,10 +2,14 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using Unity.VisualScripting;
+using System;
 
 [RequireComponent(typeof(BreakAttack))]
 public class PlayerController : MonoBehaviour
 {
+    // 着地時のイベント
+    public event Action OnLanded;
+
     [SerializeField] private InputChannel inputChannel;
 
     [SerializeField] private float hoverDuration = 1.5f;
@@ -275,6 +279,7 @@ public class PlayerController : MonoBehaviour
         // -----------------------------------------
         // 着地時の振動や破壊処理をここで呼ぶ
         animator.SetTrigger("Land");
+        OnLanded?.Invoke(); // 着地イベントを発火
 
         if (smashCameraControl != null)
         {

@@ -3,55 +3,62 @@ using System.Collections.Generic;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public Transform player;
-    public Transform[] spawnPoints;   //–‘O‚ÉƒXƒe[ƒW‚É”z’u‚³‚ê‚½ƒXƒ|[ƒ“ƒ|ƒCƒ“ƒg.
+    public Transform[] spawnPoints;   //ï¿½ï¿½ï¿½Oï¿½ÉƒXï¿½eï¿½[ï¿½Wï¿½É”zï¿½uï¿½ï¿½ï¿½ê‚½ï¿½Xï¿½|ï¿½[ï¿½ï¿½ï¿½|ï¿½Cï¿½ï¿½ï¿½g.
     public GameObject enemyPrefab;
 
-    public float minSpawnDistance = 10f;  //oŒ»‚·‚éÅ¬’l.
-    public float maxSpawnDistance = 20f;  //oŒ»‚·‚éÅ‘å’l.
+    public float minSpawnDistance = 10f;  //ï¿½oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Åï¿½ï¿½l.
+    public float maxSpawnDistance = 20f;  //ï¿½oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å‘ï¿½l.
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private Transform player;
+    private PlayerController playerController;
+
+    void Awake()
     {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        playerController = player.GetComponent<PlayerController>();
+        playerController.OnLanded += SpawnEnemy;
     }
 
-    //ƒeƒXƒg—p.
-    bool a = false;
+    void OnDestroy()
+    {
+        if (playerController != null)
+        {
+            playerController.OnLanded -= SpawnEnemy;
+        }
+    }
 
     // Update is called once per frame
     void Update()
     {
     }
 
-    //ƒXƒ|[ƒ“‚µ‚½‚¢‚Æ‚«‚ÉŒÄ‚Ô.
+    //ï¿½Xï¿½|ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½ÉŒÄ‚ï¿½.
     public void SpawnEnemy()
     {
         List<Transform> validPoints = new List<Transform>();
         
         foreach (var p in spawnPoints)
         {
-            //ƒvƒŒƒCƒ„[‚ÆƒXƒ|[ƒ“ƒ|ƒCƒ“ƒg‚Ì‹——£.
+            //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÆƒXï¿½|ï¿½[ï¿½ï¿½ï¿½|ï¿½Cï¿½ï¿½ï¿½gï¿½Ì‹ï¿½ï¿½ï¿½.
             float dist = Vector3.Distance(player.position, p.position);
 
             if (dist >= minSpawnDistance
                 && dist <= maxSpawnDistance)
             {
-                //ğŒ‚É‡‚¤êŠ‚ª‚ ‚ê‚ÎƒXƒ|[ƒ“.
+                //ï¿½ï¿½ï¿½ï¿½ï¿½Éï¿½ï¿½ï¿½ï¿½êŠï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎƒXï¿½|ï¿½[ï¿½ï¿½.
                 validPoints.Add(p);
             }
         }
 
-        //ğŒ‚É‡‚¤ƒXƒ|[ƒ“’n“_‚ª‚È‚¯‚ê‚ÎI—¹.
+        //ï¿½ï¿½ï¿½ï¿½ï¿½Éï¿½ï¿½ï¿½ï¿½Xï¿½|ï¿½[ï¿½ï¿½ï¿½nï¿½_ï¿½ï¿½ï¿½È‚ï¿½ï¿½ï¿½ÎIï¿½ï¿½.
         if (validPoints.Count == 0)
         {
-            Debug.Log("ƒXƒ|[ƒ“‰Â”\‚ÈˆÊ’u‚ª‚ ‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
             return;
         }
 
-        //ƒ‰ƒ“ƒ_ƒ€‚É1‚Â‚ğ‘I‚Ô.
-        Transform point = validPoints[Random.Range(0, validPoints.Count)];
+        int randomIndex = Random.Range(0, validPoints.Count);
+        Instantiate(enemyPrefab, validPoints[randomIndex].position, Quaternion.identity);
+        Instantiate(enemyPrefab, validPoints[(randomIndex + Random.Range(1, validPoints.Count)) % validPoints.Count].position, Quaternion.identity);
 
-        //ƒXƒ|[ƒ“.
-        Instantiate(enemyPrefab, point.position, point.rotation);
     }
 }

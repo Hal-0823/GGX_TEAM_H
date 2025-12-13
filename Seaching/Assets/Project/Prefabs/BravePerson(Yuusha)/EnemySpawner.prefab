@@ -13,7 +13,7 @@ GameObject:
   m_Layer: 0
   m_Name: EnemySpawner
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -44,9 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc94af3d78c457f46a3d65012621e302, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   spawnPoints:
   - {fileID: 0}
   enemyPrefab: {fileID: 5914840288858427526, guid: 71135593bdf3527429d61a35ec0117cd, type: 3}
-  minSpawnDistance: 10
-  maxSpawnDistance: 20
+  minSpawnDistance: 20
+  maxSpawnDistance: 50
