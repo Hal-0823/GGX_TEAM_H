@@ -44,7 +44,7 @@ public class EnemySpawner : MonoBehaviour
         //�����ɍ����X�|�[���n�_���Ȃ���ΏI��.
         if (validPoints.Count == 0)
         {
-            Debug.Log("�X�|�[���\�Ȉʒu������܂���ł���");
+            Debug.Log("�X�|�[���/�Ȉʒu������܂���ł���");
             return;
         }
 
