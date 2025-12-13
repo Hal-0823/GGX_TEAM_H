@@ -2,64 +2,80 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
-public class score : MonoBehaviour
+public class ScoreDisplay : MonoBehaviour
 {
-        public ScoreManager scoreManager;
-        [SerializeField] TextMeshProUGUI scoreText;
-        private int nowScore = 0;
-        private int updateScore = 0;
-        [SerializeField] TextMeshProUGUI rankText;
-        
-        private RectTransform rectTransform;
-        private string currentRank = "";
+    public event Action OnRankUp;
+    public bool IsCompleted => isCompleted;
+    private bool isCompleted;
+
+    [SerializeField] private GameSessionData sessionData;
+
+    [Header("UI References")]
+    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] TextMeshProUGUI rankText;
+
+    [Header("Count Up Settings")]
+    [SerializeField] private float countUpSpeed = 5f;
+
+    private bool isStarted = false;
+    private int nowScore = 0;
+    private int updateScore = 0;
+    private string currentRank = "";
 
 
-        private void scoredisplay()//リザルト画面上に表示する
+    public void ShowResult()//リザルト画面上に表示する
     {
+        isStarted = true;
         //指定した値までカウントアップ
-        DOTween.To(() => nowScore,(n) => nowScore = n,updateScore,5f).OnUpdate(() => scoreText.text = nowScore.ToString("#,0"));
+        DOTween.To(() => nowScore,(n) => nowScore = n,updateScore, Mathf.Min(updateScore * 0.001f / countUpSpeed, 9f)).OnUpdate(() => scoreText.text = "Score:" +nowScore.ToString("D6")).OnComplete(() => isCompleted = true);
     }
 
     private void rankdisplay()
     {
         string newRank = "";
-        if (nowScore < 10000)//E
+        if (nowScore < 10000)//F
         {
-        newRank = "E";
+            newRank = "F";
         }
-        else if (10000 < nowScore && nowScore < 20000)//D
+        else if (10000 <= nowScore && nowScore < 30000)//E
+        {
+            newRank = "E";
+        }
+        else if (30000 < nowScore && nowScore < 60000)//D
         {
             newRank = "D";
         }
-        else if (20000 <= nowScore && nowScore < 40000)//C
+        else if (60000 <= nowScore && nowScore < 90000)//C
         {
-        newRank = "C";
+            newRank = "C";
         }
-        else if (40000 <= nowScore && nowScore < 60000)//B
+        else if (90000 <= nowScore && nowScore < 120000)//B
         {
-        newRank = "B";
+            newRank = "B";
         }
-        else if (60000 < nowScore && nowScore < 80000)//A
+        else if (120000 < nowScore && nowScore < 150000)//A
         {
-        newRank = "A";
+            newRank = "A";
         }
-        else if (80000 < nowScore&& nowScore<90000 )//S
+        else if (150000 < nowScore && nowScore < 180000)//S
         {
-        newRank = "S";
+            newRank = "S";
         }
-                else if (90000 < nowScore&& nowScore<99900 )//SS
+        else if (180000 < nowScore && nowScore < 200000)//SS
         {
-        newRank = "SS";
+            newRank = "SS";
         }
-                else if (99900 < nowScore)//SSS
+        else if (200000 < nowScore)//SSS
         {
-        newRank = "SSS";
+            newRank = "SSS";
         }
 
         //ランクが変わった時だけ処理する
         if (newRank != currentRank)
         {
+            OnRankUp?.Invoke();
             currentRank  = newRank;
 
             //色を変える
@@ -88,26 +104,19 @@ public class score : MonoBehaviour
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
-        {
-            rectTransform = GetComponent<RectTransform>();
-
-                if (scoreManager == null)
-        {
-        Debug.LogError("ScoreManager がシーン内に見つかりません！");
-        return;
-        }
-
-            updateScore = scoreManager.CurrentTotalScore;
-            scoredisplay();
-        }
+        isStarted = false;
+        nowScore = 0;
+        scoreText.text = "Score:000000";
+        rankText.text = "";
+        updateScore = sessionData.currentScore;
     }
 
     // Update is called once per frame
     void Update()
     {
-            rankdisplay();
-        
+        if (!isStarted || nowScore >= updateScore) return;
+        rankdisplay();
     }
 }

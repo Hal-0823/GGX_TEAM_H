@@ -1,11 +1,14 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class GameSceneDirector : MonoBehaviour
 {
     [SerializeField] private CanvasGroup fadeCanvasGroup;
+    [SerializeField] private Image whitePanel;
     [SerializeField] private Transform startPoint;
     [SerializeField] private GameTimer gameTimer;
     [SerializeField] private InputChannel inputChannel;
@@ -16,6 +19,7 @@ public class GameSceneDirector : MonoBehaviour
     {
         timeUpText.gameObject.SetActive(false);
         fadeCanvasGroup.alpha = 1f;
+        whitePanel.gameObject.SetActive(false);
         playerController.transform.position = startPoint.position;
         StartCoroutine(GameStartSequence());
     }
@@ -51,22 +55,35 @@ public class GameSceneDirector : MonoBehaviour
         // 操作無効化
         inputChannel.SwitchToNone();
         playerController.gameObject.GetComponent<Rigidbody>().isKinematic = true;
+        yield return new WaitForSeconds(0.5f);
 
         // タイムアップ表示
         timeUpText.gameObject.SetActive(true);
         timeUpText.text = "TIME UP!";
         timeUpText.transform.localScale = Vector3.zero;
 
+        AudioManager.Instance.StopBGM();
         AudioManager.Instance.PlaySE("SE_GameFinish");
 
-        yield return new WaitUntil(() => timeUpText.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBack).IsComplete());
+        timeUpText.transform.DOScale(1f, 0.5f).SetEase(Ease.OutBack);
 
         // ヒットカウンターリセット
         HitCounterUI.instance.ForceReset();
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2.5f);
 
-        // リザルト表示
+        // 最初は白パネルを非表示・透明にしておく
+        whitePanel.gameObject.SetActive(true);
+        whitePanel.color = new Color(1, 1, 1, 0);
 
+        Sequence seq = DOTween.Sequence();
+
+        seq.Join(whitePanel.DOFade(1.0f, 0.5f).SetUpdate(true));
+
+        // 3. 完全に白くなったらシーン遷移
+        seq.OnComplete(() => 
+        {
+            SceneManager.LoadScene("ResultScene");
+        });
     }
 }

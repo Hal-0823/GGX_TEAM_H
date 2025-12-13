@@ -118,6 +118,7 @@ public class HitCounterUI : MonoBehaviour
 
     public void ForceReset()
     {
+        if (currentHits == 0) return;
         resetTimer = 0;
 
         HideCounter();
@@ -125,6 +126,7 @@ public class HitCounterUI : MonoBehaviour
 
     private void HideCounter()
     {
+        if (currentHits == 0) return;
         canvasGroup.DOFade(0f, 0.5f);
         OnCounterReset?.Invoke(currentHits);
         currentHits = 0;

@@ -264,7 +264,7 @@ MonoBehaviour:
   impactPower: 10000
   destructibleLayer:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 2560
   stompEffectPrefab: {fileID: 8423376225423762548, guid: 9678237a4a2970e4a8d29df8d3e6de1d, type: 3}
   stompEffectSpawnPoint: {fileID: 7765756766160841804}
 --- !u!136 &3545210909242772500

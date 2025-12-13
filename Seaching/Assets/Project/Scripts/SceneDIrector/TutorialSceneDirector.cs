@@ -45,7 +45,7 @@ public class TutorialSceneDirector : MonoBehaviour
     private IEnumerator TutorialSequence()
     {
         // フェードイン
-        fadeCanvasGroup.DOFade(0f, 5f);
+        fadeCanvasGroup.DOFade(0f, 5f).SetEase(Ease.InCubic);
 
         //AudioManager.Instance.PlayBGM("BGM_Tutorial1");
 
@@ -202,6 +202,6 @@ public class TutorialSceneDirector : MonoBehaviour
         Debug.Log("チュートリアルシーケンス終了", this);
 
         // シーン遷移
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Map");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("GameScene");
     }
 }
