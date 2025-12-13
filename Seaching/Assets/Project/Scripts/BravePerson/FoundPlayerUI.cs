@@ -3,7 +3,7 @@ using UnityEngine;
 public class FoundPlayerUI : MonoBehaviour
 {
     float startTime = 0f;
-    float duration = 2f;
+    float duration = 10f;
 
     bool isFoundPlayer = false;
 
@@ -22,12 +22,12 @@ public class FoundPlayerUI : MonoBehaviour
         }
     }
 
-    //ƒvƒŒƒCƒ„[‚ğŒ©‚Â‚¯‚½‚Æ‚«‚Ìˆ—.
+    //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½Ìï¿½ï¿½ï¿½.
     public void FoundPlayer(GameObject person)
     {
         if (!isFoundPlayer)
         {   
-            //ƒAƒNƒeƒBƒu‚É‚·‚é.
+            //ï¿½Aï¿½Nï¿½eï¿½Bï¿½uï¿½É‚ï¿½ï¿½ï¿½.
             gameObject.SetActive(true);
             startTime = Time.time;
 

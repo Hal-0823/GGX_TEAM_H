@@ -14,12 +14,14 @@ public class Audiotest : MonoBehaviour, IPointerEnterHandler
     }
     void PlaySE()
     {
-        AudioManager.Instance.PlaySE(clip1);
+        // 再生方式が変わったためコメントアウト
+        //AudioManager.Instance.PlaySE(clip1);
         SceneManager.LoadScene("TestScene");
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        AudioManager.Instance.PlaySE(clip2);
+        // 再生方式が変わったためコメントアウト
+        //AudioManager.Instance.PlaySE(clip2);
     }
 }

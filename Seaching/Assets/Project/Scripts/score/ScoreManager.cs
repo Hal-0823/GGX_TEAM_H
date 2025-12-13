@@ -28,6 +28,8 @@ public class ScoreManager : MonoBehaviour
 
     private Tween scoreTween;
 
+    public int CurrentTotalScore => currentTotalScore;
+
     private void Awake()
     {
         pendingScore = 0;
@@ -38,13 +40,13 @@ public class ScoreManager : MonoBehaviour
         UpdateText();
     }
 
-    private void OnEnable()
+    private void OnEnable()//score加算
     {
         BreakableObject.OnObjectBroken += AddScore;
         HitCounterUI.OnCounterReset += FinalizeCombo;
     }
 
-        private void OnDisable()
+        private void OnDisable()//score減少
     {
         BreakableObject.OnObjectBroken -= AddScore;
         HitCounterUI.OnCounterReset -= FinalizeCombo;
