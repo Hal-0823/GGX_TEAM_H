@@ -57,6 +57,7 @@ public class ScoreManager : MonoBehaviour
         HitCounterUI.OnCounterReset -= FinalizeCombo;
     }
 
+    // トータルスコアに合算する
     private void AddTotalScore(int amount)
     {
         // 1. 目標スコアを更新
@@ -88,6 +89,7 @@ public class ScoreManager : MonoBehaviour
         currentTotalScoreText.transform.DOPunchScale(Vector3.one * 0.3f, 0.2f); // 0.2秒だけ大きく跳ねる
     }
 
+    // 保留中のスコアを加算する
     private void AddScore(int amount)
     {
         pendingScoreCanvasGroup.DOKill();
@@ -100,13 +102,55 @@ public class ScoreManager : MonoBehaviour
         pendingScoreText.transform.localScale = Vector3.one; // リセット
         pendingScoreText.transform.DOPunchScale(Vector3.one * 0.3f, 0.2f); // 0.2秒だけ大きく跳ねる
     }
+
+    // 保留中のスコアに倍率をかけて確定させる
+    private void MulScore(float multiplier)
+    {
+        int finalAddScore = Mathf.FloorToInt(pendingScore * multiplier);
+
+        Sequence seq = DOTween.Sequence();
+
+        seq.AppendCallback(() =>
+        {
+            pendingScoreText.text = $"+{pendingScore} × {multiplier:F1}"; 
+        });
+
+        seq.AppendInterval(0.7f);
+
+        seq.Append(pendingScoreText.transform.DOPunchScale(Vector3.one * 0.5f, 0.2f));
+
+        seq.InsertCallback(0.2f + 0.7f, () => 
+        {
+            pendingScoreText.color = Color.yellow;
+            pendingScoreText.text = $"+{finalAddScore}";
+        });
+
+        seq.AppendInterval(0.5f);
+
+        seq.AppendCallback(() => AddTotalScore(finalAddScore));
+
+        seq.OnComplete(() => 
+        {
+            pendingScoreText.transform.localScale = Vector3.one;
+            pendingScoreText.color = Color.white;
+            // UIを消す演出
+            pendingScoreCanvasGroup.DOFade(0f, 0.5f);
+
+            // 溜め込み表示をリセット
+            pendingScore = 0;
+        });
+
+        seq.Play();
+    }
     
     // コンボ終了時に保留中のスコアを確定させる
     private void FinalizeCombo(int hitCount)
     {
+        float bonusMultiplier = 1.0f + hitCount * 0.1f; // 例: ヒット数に応じて10%ずつボーナス
         if (pendingScore > 0)
         {
-            AddTotalScore(pendingScore);
+            MulScore(bonusMultiplier);
+            return;
         }
 
         // UIを消す演出

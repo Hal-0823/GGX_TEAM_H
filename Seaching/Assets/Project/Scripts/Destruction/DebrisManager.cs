@@ -93,10 +93,7 @@ public class DebrisManager : MonoBehaviour
             // DOTweenで小さくして消す（パッと消えると不自然なので）
             if (oldDebris != null)
             {
-                oldDebris.transform
-                    .DOScale(0f, 1.0f)     // 1秒かけてサイズ0へ
-                    .SetEase(Ease.InBack)  // ちょっと縮んでから消える演出
-                    .OnComplete(() => Destroy(oldDebris)); // 終わったら本当の削除
+                oldDebris.AddComponent<DebrisShrinker>();
             }
         }
     }

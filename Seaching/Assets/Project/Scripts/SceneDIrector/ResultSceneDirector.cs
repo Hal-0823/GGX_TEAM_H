@@ -42,9 +42,9 @@ public class ResultSceneDirector : MonoBehaviour
     private IEnumerator ResultSequence()
     {
         // フェードイン
-        yield return fadeCanvasGroup.DOFade(0f, 1f).WaitForCompletion();
+        fadeCanvasGroup.DOFade(0f, 1.5f);
 
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(2.0f);
 
         scoreDisplay.ShowResult();
 

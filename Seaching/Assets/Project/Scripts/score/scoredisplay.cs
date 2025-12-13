@@ -29,45 +29,45 @@ public class ScoreDisplay : MonoBehaviour
     {
         isStarted = true;
         //指定した値までカウントアップ
-        DOTween.To(() => nowScore,(n) => nowScore = n,updateScore, updateScore / 10000 / countUpSpeed).OnUpdate(() => scoreText.text = "Score:" +nowScore.ToString("D6")).OnComplete(() => isCompleted = true);
+        DOTween.To(() => nowScore,(n) => nowScore = n,updateScore, Mathf.Min(updateScore * 0.001f / countUpSpeed, 9f)).OnUpdate(() => scoreText.text = "Score:" +nowScore.ToString("D6")).OnComplete(() => isCompleted = true);
     }
 
     private void rankdisplay()
     {
         string newRank = "";
-        if (nowScore < 10000)//E
+        if (nowScore < 10000)//F
         {
             newRank = "F";
         }
-        else if (10000 <= nowScore && nowScore < 20000)//E
+        else if (10000 <= nowScore && nowScore < 30000)//E
         {
             newRank = "E";
         }
-        else if (20000 < nowScore && nowScore < 30000)//D
+        else if (30000 < nowScore && nowScore < 60000)//D
         {
             newRank = "D";
         }
-        else if (20000 <= nowScore && nowScore < 40000)//C
+        else if (60000 <= nowScore && nowScore < 90000)//C
         {
             newRank = "C";
         }
-        else if (40000 <= nowScore && nowScore < 60000)//B
+        else if (90000 <= nowScore && nowScore < 120000)//B
         {
             newRank = "B";
         }
-        else if (60000 < nowScore && nowScore < 80000)//A
+        else if (120000 < nowScore && nowScore < 150000)//A
         {
             newRank = "A";
         }
-        else if (80000 < nowScore && nowScore < 90000)//S
+        else if (150000 < nowScore && nowScore < 180000)//S
         {
             newRank = "S";
         }
-        else if (90000 < nowScore && nowScore < 99900)//SS
+        else if (180000 < nowScore && nowScore < 200000)//SS
         {
             newRank = "SS";
         }
-        else if (99900 < nowScore)//SSS
+        else if (200000 < nowScore)//SSS
         {
             newRank = "SSS";
         }
@@ -104,7 +104,7 @@ public class ScoreDisplay : MonoBehaviour
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         isStarted = false;
         nowScore = 0;

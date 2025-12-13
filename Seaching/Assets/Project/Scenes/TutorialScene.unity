@@ -352,7 +352,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 2, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &89227315
 CanvasGroup:
@@ -1477,7 +1477,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5754831478122459507, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: field of view
-      value: 30
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 5754831478122459507, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: far clip plane
@@ -1505,27 +1505,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8287251485150333403, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 20.24613
+      value: 45.24613
       objectReference: {fileID: 0}
     - target: {fileID: 8287251485150333403, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -23.82543
+      value: -93.82543
       objectReference: {fileID: 0}
     - target: {fileID: 8287251485150333403, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.973249
+      value: 0.9930066
       objectReference: {fileID: 0}
     - target: {fileID: 8287251485150333403, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.22975299
+      value: 0.11805908
       objectReference: {fileID: 0}
     - target: {fileID: 8287251485150333403, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000011047509
+      value: -0.0000000035066419
       objectReference: {fileID: 0}
     - target: {fileID: 8287251485150333403, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000026079634
+      value: 4.1690654e-10
       objectReference: {fileID: 0}
     - target: {fileID: 8744719095426096057, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalPosition.x
