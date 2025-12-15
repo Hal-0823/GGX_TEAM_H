@@ -16,6 +16,7 @@ public class BreakAttack : MonoBehaviour
     // アニメーションのイベントや、着地判定から呼び出す
     public void DoBreak(float impactRadius, bool isPlayEffect)
     {
+        int breakCount = 0;
         // 指定範囲内のコライダを全て取得（SphereColliderを作る代わり）
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, impactRadius, destructibleLayer);
 
@@ -36,6 +37,7 @@ public class BreakAttack : MonoBehaviour
                     StartCoroutine(DoHitStop(0.1f)); // 0.6秒間ヒットストップ
                 }
                 building.Shatter(transform.position, impactPower, impactRadius);
+                breakCount++;
                 continue;
             }
 
@@ -64,6 +66,7 @@ public class BreakAttack : MonoBehaviour
         {
             var stompEffect = Instantiate(stompEffectPrefab, stompEffectSpawnPoint.position, Quaternion.identity);
             stompEffect.Play();
+            
         }
     }
 

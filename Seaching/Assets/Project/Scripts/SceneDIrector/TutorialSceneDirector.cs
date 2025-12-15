@@ -27,7 +27,6 @@ public class TutorialSceneDirector : MonoBehaviour
     {
         BreakableObject.OnObjectBroken += OnBuildingBroken;
         dialogueManager.OnSkip += OnSkipTriggered;
-        fadeCanvasGroup.alpha = 1f;
     }
 
     public void OnDestroy()
@@ -38,6 +37,7 @@ public class TutorialSceneDirector : MonoBehaviour
 
     private void Start()
     {
+        fadeCanvasGroup.alpha = 1f;
         tutorialCamera.Priority = 15;
         tutorialCoroutine = StartCoroutine(TutorialSequence());
     }
@@ -47,7 +47,7 @@ public class TutorialSceneDirector : MonoBehaviour
         // フェードイン
         fadeCanvasGroup.DOFade(0f, 5f).SetEase(Ease.InCubic);
 
-        //AudioManager.Instance.PlayBGM("BGM_Tutorial1");
+        AudioManager.Instance.PlayBGM("BGM_Tutorial");
 
         // チュートリアル会話の開始
         string[] tutorialLines = new string[]
@@ -96,7 +96,7 @@ public class TutorialSceneDirector : MonoBehaviour
         string[] concludingLines = new string[]
         {
             "よし、うまくやったな。",
-            "ジャンプの あいだは じゆうに うごけるぞ",
+            "ジャンプの あいだは じゆうに うごけるぞ。",
             "ためしに あのたてもの まで とんで いってみろ。"
         };
 
@@ -113,7 +113,7 @@ public class TutorialSceneDirector : MonoBehaviour
             string[] breakLines = new string[]
             {
                 "よし、うまくやったな。",
-                "たかい ジャンプ を すれば \n よりたくさん の ものを こわせるぞ"
+                "たかい ジャンプ を すれば\nよりたくさん の ものを こわせるぞ。"
             };
 
             dialogueManager.StartDialogue(breakLines);
@@ -138,7 +138,7 @@ public class TutorialSceneDirector : MonoBehaviour
         string[] endingLines = new string[]
         {
             "これで とっくんは おわりだ。",
-            "さあ、にんげんかい の \"せいち\" へ\nむかい すべて はかい するのだ!"
+            "さあ、にんげんかい の \"せいち\"へ\nむかい すべて はかい するのだ !"
         };
 
         dialogueManager.StartDialogue(endingLines);
@@ -190,8 +190,12 @@ public class TutorialSceneDirector : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
+        AudioManager.Instance.StopBGM();
+
         // 魔王を跳ねさせて、着地させる
         yield return maou.transform.DOLocalJump(maou.transform.localPosition + new Vector3(0, 0f, 0f), 100f, 1, 3.8f).WaitForCompletion();
+        AudioManager.Instance.PlaySE("SE_Land7");
+        AudioManager.Instance.PlaySE("SE_Impact");
         // 着地後、カメラに振動を加える
         cameraShaker.Shake();
         // プレイヤーは反動で画面外上まで飛ばされる

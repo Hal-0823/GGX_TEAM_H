@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4379897970747870314}
   - component: {fileID: 1191220508644796507}
   m_Layer: 0
-  m_Name: StompEffect
+  m_Name: StompEffect(Tutorial)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4781,7 +4781,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b7f7973e685c76f4dbd65cc994f4d913, type: 2}
+  - {fileID: 2100000, guid: fcaf9726859976048b7afead1e3d5bf4, type: 2}
   - {fileID: 2100000, guid: e823cd5b5d27c0f4b8256e7c12ee3e6d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0

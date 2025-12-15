@@ -1,16 +1,21 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class ResultSceneDirector : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private InputChannel inputChannel;
-    [SerializeField] private CanvasGroup fadeCanvasGroup;
+    [SerializeField] private Image fadePanel;
     [SerializeField] ScoreDisplay scoreDisplay;
     [SerializeField] private List<BreakableObject> buildings;
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private GameObject firstSelectedButton;
+    [SerializeField] private GameObject secondSelectedButton;
 
     [Header("Building Appearance Settings")]
     [SerializeField] private float buildingAppearDuration = 0.4f;
@@ -25,12 +30,15 @@ public class ResultSceneDirector : MonoBehaviour
         inputChannel.SwitchToNone();
         playerController.gameObject.SetActive(false);
         buildings.ForEach(b => originalScales[b] = b.transform.localScale);
+
+        firstSelectedButton.SetActive(false);
+        secondSelectedButton.SetActive(false);
     }
 
     private void Start()
     {
         buildings.ForEach(b => b.gameObject.SetActive(false));
-        fadeCanvasGroup.alpha = 1f;
+        fadePanel.color = new Color(1, 1f, 1f, 1f); // 白
         StartCoroutine(ResultSequence());
     }
 
@@ -42,18 +50,34 @@ public class ResultSceneDirector : MonoBehaviour
     private IEnumerator ResultSequence()
     {
         // フェードイン
-        fadeCanvasGroup.DOFade(0f, 1.5f);
+        fadePanel.DOFade(0f, 1.5f).OnComplete(() =>
+        {
+            fadePanel.gameObject.SetActive(false);
+        });
 
         yield return new WaitForSeconds(2.0f);
 
         scoreDisplay.ShowResult();
 
         yield return new WaitUntil(() => scoreDisplay.IsCompleted);
+        yield return new WaitForSeconds(1.1f);
+        scoreDisplay.ConfirmRank();
 
         playerController.gameObject.SetActive(true);
         StartCoroutine(playerController.SmashActionSequence(1, 0));
+        yield return new WaitForSeconds(1.5f);
+
+        AudioManager.Instance.PlayBGM("BGM_Result");
+
+        firstSelectedButton.SetActive(true);
+        secondSelectedButton.SetActive(true);
+
+        if (firstSelectedButton != null)
+        {
+            EventSystem.current.SetSelectedGameObject(firstSelectedButton);
+        }
     }
-    
+
     /// <summary>
     /// 建物を出現させる
     /// </summary>
@@ -69,5 +93,34 @@ public class ResultSceneDirector : MonoBehaviour
             .SetEase(buildingAppearEase);
 
         currentBuildingIndex++;
+
+        AudioManager.Instance.PlaySE("SE_Pop");
     }
+
+    public void OnRetryButtonPressed()
+    {
+        AudioManager.Instance.PlaySE("SE_Click5");
+        Transition("GameScene");
+    }
+
+    public void OnTitleButtonPressed()
+    {
+        AudioManager.Instance.PlaySE("SE_Click5");
+        Transition("TitleScene");
+    }
+
+    private void Transition(string sceneName)
+    {
+        AudioManager.Instance.StopBGM(2.0f);
+        fadePanel.gameObject.SetActive(true);
+        fadePanel.color = new Color(0f, 0f, 0f, 0f);
+
+        Sequence seq = DOTween.Sequence();
+        seq.Join(fadePanel.DOFade(1.0f, 3.0f).SetUpdate(true));
+        seq.OnComplete(() =>
+        {
+            SceneManager.LoadScene(sceneName);
+        });
+    }
+
 }   

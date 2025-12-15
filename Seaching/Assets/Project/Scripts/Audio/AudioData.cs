@@ -24,6 +24,7 @@ public class AudioData : ScriptableObject
         public string key;
         public AudioClip clip;
         [Range(0f, 1f)] public float volume = 1.0f;
+        [Range(-3f, 3f)] public float pitch = 1.0f;
     }
 
     // =================================================================
@@ -60,7 +61,8 @@ public class AudioData : ScriptableObject
                 {
                     key = clip.name, // ファイル名をそのまま呼び出しキーにする
                     clip = clip,
-                    volume = 1.0f
+                    volume = 1.0f,
+                    pitch = 1.0f
                 });
             }
             else

@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
     private bool isCharging = false;
     private float currentChargeTime = 0f;
     private int currentJumpLevel = 0;
+    private int lastJumpLevel = 0;
 
     private Rigidbody rb;
     private Animator animator;
@@ -109,6 +110,8 @@ public class PlayerController : MonoBehaviour
             {
                 isCharging = true;
                 currentChargeTime = 0f;
+                currentJumpLevel = 1;
+                lastJumpLevel = 1;
             }
             else if (context.canceled)
             {
@@ -128,7 +131,26 @@ public class PlayerController : MonoBehaviour
         if (isCharging)
         {
             currentChargeTime += Time.deltaTime;
-            UpdateVisuals(); // チャージ中の見た目更新
+
+            if (currentChargeTime >= stage2Threshold)
+            {
+                currentJumpLevel = 3;
+            }
+            else if (currentChargeTime >= stage1Threshold)
+            {
+                currentJumpLevel = 2;
+            }
+            else
+            {
+                currentJumpLevel = 1;
+            }
+
+            if (currentJumpLevel != lastJumpLevel)
+            {
+                UpdateVisuals(currentJumpLevel); // チャージ中の見た目更新
+                PlayChargeSE(currentJumpLevel); // チャージ音再生
+                lastJumpLevel = currentJumpLevel;
+            }
         }
     }
 
@@ -175,22 +197,27 @@ public class PlayerController : MonoBehaviour
     {
         isCharging = false;
         currentChargeTime = 0f;
-        UpdateVisuals();
+        currentJumpLevel = 1;
+        lastJumpLevel = 1;
+        UpdateVisuals(1);
     }
 
-    private void UpdateVisuals()
+    private void UpdateVisuals(int jumpLevel)
     {
-        if (currentChargeTime >= stage2Threshold)
+        switch (jumpLevel)
         {
-            transform.localScale = new Vector3(1f, 0.5f, 1f);
+            case 1: transform.localScale = Vector3.one; break;
+            case 2: transform.localScale = new Vector3(1f, 0.75f, 1f); break;
+            case 3: transform.localScale = new Vector3(1f, 0.5f, 1f); break;
         }
-        else if (currentChargeTime >= stage1Threshold)
+    }
+
+    private void PlayChargeSE(int jumpLevel)
+    {
+        switch (jumpLevel)
         {
-            transform.localScale = new Vector3(1f, 0.75f, 1f);
-        }
-        else
-        {
-            transform.localScale = Vector3.one;
+            case 2: AudioManager.Instance.PlaySE("SE_Charge2", 0.65f); break;
+            case 3: AudioManager.Instance.PlaySE("SE_Charge2", 1.1f); break;
         }
     }
 

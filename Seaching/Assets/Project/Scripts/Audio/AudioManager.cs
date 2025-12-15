@@ -43,20 +43,79 @@ public class AudioManager : MonoBehaviour
         foreach (var entry in audioData.seList) seMap[entry.key] = entry;
     }
 
-    // ==========================================================
-    // SE再生（ワンショット）
-    // ==========================================================
+    /// <summary>
+    /// SE再生
+    /// </summary>
+    /// <param name="key"></param>
     public void PlaySE(string key)
     {
         if (seMap.TryGetValue(key, out var entry))
         {
             float finalVol = entry.volume * SeVolume * MasterVolume;
-            seSource.PlayOneShot(entry.clip, finalVol);
+            // ピッチが1.0（標準）なら、いつもの軽い方法で再生
+            if (Mathf.Approximately(entry.pitch, 1.0f))
+            {
+                seSource.pitch = 1.0f;
+                seSource.PlayOneShot(entry.clip, finalVol);
+            }
+            else
+            {
+                // ピッチが違う場合は、音が混ざらないように「使い捨てAudioSource」を作る
+                PlayClipWithVariablePitch(entry.clip, finalVol, entry.pitch);
+            }
         }
         else
         {
             Debug.LogWarning($"SE Not Found: {key}");
         }
+    }
+
+    /// <summary>
+    /// ピッチ指定付きSE再生
+    /// </summary>
+    /// <param name="key"></param>
+    /// <param name="pitch"></param>
+    public void PlaySE(string key, float pitch)
+    {
+        if (seMap.TryGetValue(key, out var entry))
+        {
+            float finalVol = entry.volume * SeVolume * MasterVolume;
+            // ピッチが1.0（標準）なら、いつもの軽い方法で再生
+            if (Mathf.Approximately(pitch, 1.0f))
+            {
+                seSource.pitch = 1.0f;
+                seSource.PlayOneShot(entry.clip, finalVol);
+            }
+            else
+            {
+                // ピッチが違う場合は、音が混ざらないように「使い捨てAudioSource」を作る
+                PlayClipWithVariablePitch(entry.clip, finalVol, pitch);
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"SE Not Found: {key}");
+        }
+    }
+
+    // 使い捨てのAudioSourceを作って鳴らすヘルパー関数
+    private void PlayClipWithVariablePitch(AudioClip clip, float volume, float pitch)
+    {
+        // 空のオブジェクトを作る
+        GameObject tempObj = new GameObject("TempSE");
+        tempObj.transform.position = Camera.main.transform.position; // カメラ位置で鳴らす（2D的に聞こえるように）
+
+        // AudioSourceをつけて設定
+        AudioSource tempSource = tempObj.AddComponent<AudioSource>();
+        tempSource.clip = clip;
+        tempSource.volume = volume;
+        tempSource.pitch = pitch;
+        
+        // 再生！
+        tempSource.Play();
+
+        // 鳴り終わった頃にオブジェクトごと削除する (クリップの長さ / ピッチ = 再生時間)
+        Destroy(tempObj, clip.length / pitch + 0.1f);
     }
 
     // ==========================================================
@@ -89,6 +148,7 @@ public class AudioManager : MonoBehaviour
         seq.AppendCallback(() => 
         {
             bgmSource.clip = entry.clip;
+            bgmSource.pitch = entry.pitch;
             bgmSource.Play();
         });
 

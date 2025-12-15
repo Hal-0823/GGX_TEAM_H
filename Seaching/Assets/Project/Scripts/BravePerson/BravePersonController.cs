@@ -69,6 +69,8 @@ public class BravePersonController : MonoBehaviour
         rb.AddExplosionForce(power, explosionCenter, radius, 3.0f);
         rb.AddTorque(Vector3.up * power * 0.1f, ForceMode.Impulse);
 
+        //AudioManager.Instance.PlaySE("SE_PlayerDamage1");
+
         OnBraveDefeated?.Invoke(scoreValue);
 
         // このオブジェクトを一定時間後に削除

@@ -4,9 +4,11 @@ using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using Unity.Cinemachine;
 
 public class GameSceneDirector : MonoBehaviour
 {
+    [SerializeField] private GameOverZone gameOverZone;
     [SerializeField] private CanvasGroup fadeCanvasGroup;
     [SerializeField] private Image whitePanel;
     [SerializeField] private Transform startPoint;
@@ -14,6 +16,16 @@ public class GameSceneDirector : MonoBehaviour
     [SerializeField] private InputChannel inputChannel;
     [SerializeField] private PlayerController playerController;
     [SerializeField] private TextMeshProUGUI timeUpText;
+
+    private void Awake()
+    {
+        gameOverZone.OnGameOver += OnGameOver;
+    }
+
+    private void OnDestroy()
+    {
+        gameOverZone.OnGameOver -= OnGameOver;
+    }
 
     private void Start()
     {
@@ -49,7 +61,7 @@ public class GameSceneDirector : MonoBehaviour
     {
         StartCoroutine(OnTimeOverSequence());
     }
-    
+
     private IEnumerator OnTimeOverSequence()
     {
         // 操作無効化
@@ -81,7 +93,41 @@ public class GameSceneDirector : MonoBehaviour
         seq.Join(whitePanel.DOFade(1.0f, 0.5f).SetUpdate(true));
 
         // 3. 完全に白くなったらシーン遷移
-        seq.OnComplete(() => 
+        seq.OnComplete(() =>
+        {
+            SceneManager.LoadScene("ResultScene");
+        });
+    }
+
+    private void OnGameOver()
+    {
+        StartCoroutine(OnGameOverSequence());
+    }
+    
+    private IEnumerator OnGameOverSequence()
+    {
+        // 操作無効化
+        inputChannel.SwitchToNone();
+
+        
+        yield return new WaitForSeconds(0.5f);
+
+        AudioManager.Instance.StopBGM();
+        AudioManager.Instance.PlaySE("SE_GameFinish");
+
+        // ヒットカウンターリセット
+        HitCounterUI.instance.ForceReset();
+
+        // 最初は白パネルを非表示・透明にしておく
+        whitePanel.gameObject.SetActive(true);
+        whitePanel.color = new Color(1, 1, 1, 0);
+
+        Sequence seq = DOTween.Sequence();
+
+        seq.Join(whitePanel.DOFade(1.0f, 0.5f).SetUpdate(true));
+
+        // 3. 完全に白くなったらシーン遷移
+        seq.OnComplete(() =>
         {
             SceneManager.LoadScene("ResultScene");
         });
