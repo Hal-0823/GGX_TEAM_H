@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3889020434799286717}
   - component: {fileID: 8423376225423762548}
   - component: {fileID: 4379897970747870314}
+  - component: {fileID: 1191220508644796507}
   m_Layer: 0
   m_Name: StompEffect
   m_TagString: Untagged
@@ -4780,7 +4781,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2679816a759a345489e096bac49bbfd6, type: 2}
+  - {fileID: 2100000, guid: b7f7973e685c76f4dbd65cc994f4d913, type: 2}
   - {fileID: 2100000, guid: e823cd5b5d27c0f4b8256e7c12ee3e6d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -4834,3 +4835,20 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &1191220508644796507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8723805465129444352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c58ff65a07512044abec112dcbd1985, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emissionMultiplier: 1
+  minParticles: 0
+  maxParticles: 0
+  scaleSizeWithImpact: 0
+  baseSize: 2.5

@@ -11,6 +11,7 @@ public class ScoreDisplay : MonoBehaviour
     private bool isCompleted;
 
     [SerializeField] private GameSessionData sessionData;
+    [SerializeField] private RankData rankData;
 
     [Header("UI References")]
     [SerializeField] TextMeshProUGUI scoreText;
@@ -18,105 +19,105 @@ public class ScoreDisplay : MonoBehaviour
 
     [Header("Count Up Settings")]
     [SerializeField] private float countUpSpeed = 5f;
+    [SerializeField] private float soundInterval = 0.08f;
+    [SerializeField] private int aimScore = 300000;
+    [SerializeField] private float pitchRandomRange = 0.1f;
 
     private bool isStarted = false;
     private int nowScore = 0;
     private int updateScore = 0;
     private string currentRank = "";
+    private float lastSoundTime = 0f; // 最後に鳴らした時間を記録
+    private int nextRankIndex;
 
-
-    public void ShowResult()//リザルト画面上に表示する
-    {
-        isStarted = true;
-        //指定した値までカウントアップ
-        DOTween.To(() => nowScore,(n) => nowScore = n,updateScore, Mathf.Min(updateScore * 0.001f / countUpSpeed, 9f)).OnUpdate(() => scoreText.text = "Score:" +nowScore.ToString("D6")).OnComplete(() => isCompleted = true);
-    }
-
-    private void rankdisplay()
-    {
-        string newRank = "";
-        if (nowScore < 10000)//F
-        {
-            newRank = "F";
-        }
-        else if (10000 <= nowScore && nowScore < 30000)//E
-        {
-            newRank = "E";
-        }
-        else if (30000 < nowScore && nowScore < 60000)//D
-        {
-            newRank = "D";
-        }
-        else if (60000 <= nowScore && nowScore < 90000)//C
-        {
-            newRank = "C";
-        }
-        else if (90000 <= nowScore && nowScore < 120000)//B
-        {
-            newRank = "B";
-        }
-        else if (120000 < nowScore && nowScore < 150000)//A
-        {
-            newRank = "A";
-        }
-        else if (150000 < nowScore && nowScore < 180000)//S
-        {
-            newRank = "S";
-        }
-        else if (180000 < nowScore && nowScore < 200000)//SS
-        {
-            newRank = "SS";
-        }
-        else if (200000 < nowScore)//SSS
-        {
-            newRank = "SSS";
-        }
-
-        //ランクが変わった時だけ処理する
-        if (newRank != currentRank)
-        {
-            OnRankUp?.Invoke();
-            currentRank  = newRank;
-
-            //色を変える
-            switch (newRank)
-            {
-            case "E": rankText.DOColor(Color.gray, 0.1f); break;
-            case "D": rankText.DOColor(Color.blue, 0.1f); break;
-            case "C": rankText.DOColor(Color.green, 0.1f); break;
-            case "B": rankText.DOColor(Color.red, 0.1f); break;
-            case "A": rankText.DOColor(new Color(1f, 0.84f, 0f), 0.1f); break; // gold
-            case "S": rankText.DOColor(new Color(0.70f, 0.78f, 0.90f), 0.1f); break; // blue-gold
-            case "SS": rankText.DOColor(new Color(0.70f, 0.78f, 0.90f), 0.1f); break; // blue-gold
-            case "SSS": rankText.DOColor(new Color(0.70f, 0.78f, 0.90f), 0.1f); break; // blue-gold
-            }
-        //テキストを更新
-        rankText.text = newRank;
-
-        //大きさを変えるアニメーション
-        rankText.transform.DOScale(1.3f, 0.1f).From(1f).OnComplete(() =>
-         {
-             rankText.transform.DOScale(1f,0.1f);
-         });
-        }
-
-
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         isStarted = false;
         nowScore = 0;
         scoreText.text = "Score:000000";
-        rankText.text = "";
+        rankText.color = rankData.ranks[0].rankColor;
+        rankText.text = rankData.ranks[0].rankName;
+        nextRankIndex = 1;
         updateScore = sessionData.currentScore;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!isStarted || nowScore >= updateScore) return;
         rankdisplay();
+    }
+
+    public void ShowResult()//リザルト画面上に表示する
+    {
+        isStarted = true;
+        //指定した値までカウントアップ
+        DOTween.To(
+            () => nowScore,
+            (n) =>
+            {
+                nowScore = n;
+                scoreText.text = "Score:" + nowScore.ToString("D6");
+                TryPlayTickSound(n, aimScore);
+            },
+            updateScore,
+            Mathf.Clamp(updateScore * 0.0001f / countUpSpeed, 2f, 10f))
+            .OnComplete(() =>
+            {
+                isCompleted = true;
+            });
+    }
+
+    // ランク確定時に呼び出す
+    public void ConfirmRank()
+    {
+        AudioManager.Instance.PlaySE("SE_RankDisplay");
+        rankText.transform.DOPunchScale(Vector3.one * 1.2f, 1.0f);
+    }
+
+    private void rankdisplay()
+    {
+        if (nextRankIndex >= rankData.ranks.Count) return;
+
+        var nextRank = rankData.ranks[nextRankIndex];
+
+        if (nowScore >= nextRank.threshold)
+        {
+            OnRankUp?.Invoke();
+
+            rankText.color = nextRank.rankColor;
+            rankText.text = nextRank.rankName;
+
+            //大きさを変えるアニメーション
+            rankText.transform.DOScale(1.3f, 0.1f).From(1f).OnComplete(() =>
+             {
+                 rankText.transform.DOScale(1f, 0.1f);
+             });
+
+             nextRankIndex++;
+        }
+    }
+
+    private void TryPlayTickSound(int current, int target)
+    {
+        // 前回の音から「指定した間隔」以上経過していたら鳴らす
+        if (Time.unscaledTime - lastSoundTime >= soundInterval)
+        {
+            float pitch = 1.0f;
+
+            // ゴールに近づくにつれて音程を高くする
+            float progress = (float)current / target; // 0.0 ~ 1.0
+            pitch = 0.8f + (progress * 0.3f); // 0.8 ~ 1.3倍まで上がる
+
+            // // ピッチをランダムに変化させる
+            // pitch += UnityEngine.Random.Range(-pitchRandomRange, pitchRandomRange);
+
+
+            // 音を鳴らす (PlaySEWithPitchメソッドがある前提)
+            // ない場合は PlaySE(countSeKey) だけでOK
+            AudioManager.Instance.PlaySE("SE_Tick1", pitch); 
+            // ※もしPlaySEWithPitchの引数が(key, range)ではなく(key, pitch)ならそちらに合わせてください
+
+            lastSoundTime = Time.unscaledTime;
+        }
     }
 }

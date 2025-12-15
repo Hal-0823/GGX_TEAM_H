@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db1e5339d71d27b4299cc8f8ac353ee4, type: 3}
+  m_Name: RankData
+  m_EditorClassIdentifier: 
+  ranks:
+  - rankName: G
+    threshold: 0
+    rankColor: {r: 1, g: 1, b: 1, a: 1}
+  - rankName: F
+    threshold: 30000
+    rankColor: {r: 0, g: 0.26229477, b: 1, a: 1}
+  - rankName: E
+    threshold: 60000
+    rankColor: {r: 0, g: 0.2627451, b: 1, a: 1}
+  - rankName: D
+    threshold: 90000
+    rankColor: {r: 0, g: 0.2627451, b: 1, a: 1}
+  - rankName: C
+    threshold: 120000
+    rankColor: {r: 1, g: 0.2784314, b: 0, a: 1}
+  - rankName: B
+    threshold: 150000
+    rankColor: {r: 1, g: 0.2784314, b: 0, a: 1}
+  - rankName: A
+    threshold: 200000
+    rankColor: {r: 1, g: 0.27789742, b: 0, a: 1}
+  - rankName: S
+    threshold: 250000
+    rankColor: {r: 1, g: 0.7537736, b: 0.2783019, a: 1}
+  - rankName: SS
+    threshold: 300000
+    rankColor: {r: 1, g: 0.75294125, b: 0.2784314, a: 1}
+  - rankName: SSS
+    threshold: 350000
+    rankColor: {r: 1, g: 0.75294125, b: 0.2784314, a: 1}
+  - rankName: DEVIL
+    threshold: 400000
+    rankColor: {r: 0.7490196, g: 0, b: 0.3254902, a: 1}
