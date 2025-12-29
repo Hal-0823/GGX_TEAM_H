@@ -64,7 +64,7 @@ public class ResultSceneDirector : MonoBehaviour
         scoreDisplay.ConfirmRank();
 
         playerController.gameObject.SetActive(true);
-        StartCoroutine(playerController.SmashActionSequence(1, 0));
+        StartCoroutine(playerController.StompActionCoroutine(1, 0));
         yield return new WaitForSeconds(1.5f);
 
         AudioManager.Instance.PlayBGM("BGM_Result");

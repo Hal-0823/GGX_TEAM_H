@@ -45,7 +45,7 @@ public class GameSceneDirector : MonoBehaviour
         inputChannel.SwitchToPlayer();
 
         // プレイヤーの落下からスタート
-        StartCoroutine(playerController.SmashActionSequence(0, 0f));
+        StartCoroutine(playerController.StompActionCoroutine(0, 0f));
 
         // 地面に着地するまで待機
         yield return new WaitUntil(() => playerController.IsGrounded());
