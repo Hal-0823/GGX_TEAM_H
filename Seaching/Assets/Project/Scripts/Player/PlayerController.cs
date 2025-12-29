@@ -39,6 +39,8 @@ public class PlayerController : MonoBehaviour
     private float currentChargeTime = 0f;
     private int currentJumpLevel = 0;
     private int lastJumpLevel = 0;
+    private bool isJumping = false;
+    private bool isStompTriggered = false;
 
     private Rigidbody rb;
     private Animator animator;
@@ -65,6 +67,7 @@ public class PlayerController : MonoBehaviour
         playerInput.Player.Move.canceled += OnMoveCanceled;
         playerInput.Player.Jump.started += OnJumpTriggered;
         playerInput.Player.Jump.canceled += OnJumpTriggered;
+        playerInput.Player.Stomp.started += OnStompTriggered;
 
         inputChannel.OnRequestPlayerControl += EnableControl;
         inputChannel.OnRequestDialogueControl += DisableControl;
@@ -126,6 +129,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnStompTriggered(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            if (isJumping)
+            {
+                Debug.Log("Stomp Triggered");
+                isStompTriggered = true;
+            }
+        }
+    }
+
     private void Update()
     {
         if (isCharging)
@@ -170,27 +185,24 @@ public class PlayerController : MonoBehaviour
         // チャージ時間に応じた力の決定
         if (currentChargeTime >= stage2Threshold)
         {
-            Debug.Log("Lv3: 最大ジャンプ！");
             finalForce = jumpForceLv3;
             currentJumpLevel = 3;
             AudioManager.Instance.PlaySE("SE_JumpBig");
         }
         else if (currentChargeTime >= stage1Threshold)
         {
-            Debug.Log("Lv2: 中ジャンプ！");
             finalForce = jumpForceLv2;
             currentJumpLevel = 2;
             AudioManager.Instance.PlaySE("SE_JumpMid");
         }
         else
         {
-            Debug.Log("Lv1: 小ジャンプ");
             finalForce = jumpForceLv1;
             currentJumpLevel = 1;
             AudioManager.Instance.PlaySE("SE_JumpSmall1");
         }
 
-        StartCoroutine(SmashActionSequence(currentJumpLevel, finalForce));
+        StartCoroutine(StompActionCoroutine(currentJumpLevel, finalForce));
     }
 
     private void ResetCharge()
@@ -222,8 +234,27 @@ public class PlayerController : MonoBehaviour
     }
 
     // // 一連の動作を管理するコルーチン
-    public IEnumerator SmashActionSequence(int jumpLevel, float jumpForce)
+    public IEnumerator StompActionCoroutine(int jumpLevel, float jumpForce)
     {
+        Coroutine jumpCoroutine = StartCoroutine(JumpCoroutine(jumpLevel, jumpForce));
+
+        // ジャンプが完了するか、ストンプがトリガーされるまで待機
+        yield return new WaitUntil(() => isJumping == false || isStompTriggered == true);
+
+        // ストンプがトリガーされた場合、ジャンプコルーチンを停止
+        if (isJumping && isStompTriggered)
+        {
+            StopCoroutine(jumpCoroutine);
+            isJumping = false;
+            isStompTriggered = false;
+        }
+
+        yield return StartCoroutine(DiveCoroutine(jumpLevel));
+    }
+
+    private IEnumerator JumpCoroutine(int jumpLevel, float jumpForce)
+    {
+        isJumping = true;
         if (HitCounterUI.instance != null)
         {
             HitCounterUI.instance.ForceReset();
@@ -234,9 +265,6 @@ public class PlayerController : MonoBehaviour
         // 1. 上昇フェーズ (Jump)
         // -----------------------------------------
         // 上方向への初速を与える
-        // 方向が入力されていた場合、その方向にも少し速度を与える
-        //rb.linearVelocity = Vector3.up * jumpForce + new Vector3(movementInput.x, 0, movementInput.y) * jumpForce / 10f;
-
         rb.linearVelocity = Vector3.up * jumpForce;
 
         if (smashCameraControl != null)
@@ -256,7 +284,6 @@ public class PlayerController : MonoBehaviour
         // 物理演算の「嘘」をつくパート
         rb.useGravity = false;    // 重力を切る
         rb.linearVelocity = Vector3.zero; // 慣性を消してピタッと止める
-        animator.SetTrigger("Fall");
 
         // カメラをエイムモードに切り替え
         if (smashCameraControl != null)
@@ -271,15 +298,16 @@ public class PlayerController : MonoBehaviour
             {
                 timer += Time.deltaTime;
 
-
-                // ボタンを離したら即落下などの処理を入れてもOK
-                // if (Input.GetKeyUp(KeyCode.Space)) break;
-
                 yield return null;
             }
         }
+        isJumping = false;
+    }
 
-
+    private IEnumerator DiveCoroutine(int jumpLevel)
+    {
+        Debug.Log("Dive Start");
+        animator.SetTrigger("Fall");
         // -----------------------------------------
         // 3. 急降下フェーズ (Dive)
         // -----------------------------------------
