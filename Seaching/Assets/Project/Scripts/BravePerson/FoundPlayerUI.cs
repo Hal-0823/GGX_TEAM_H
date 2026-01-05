@@ -3,7 +3,7 @@ using UnityEngine;
 public class FoundPlayerUI : MonoBehaviour
 {
     float startTime = 0f;
-    float duration = 10f;
+    float duration = 5f;
 
     bool isFoundPlayer = false;
 
@@ -16,18 +16,19 @@ public class FoundPlayerUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        var cam = Camera.main;
+        transform.LookAt(cam.transform);
+        
         if (Time.time - startTime > duration)
         {
             gameObject.SetActive(false);
         }
     }
 
-    //�v���C���[���������Ƃ��̏���.
     public void FoundPlayer(GameObject person)
     {
         if (!isFoundPlayer)
         {   
-            //�A�N�e�B�u�ɂ���.
             gameObject.SetActive(true);
             startTime = Time.time;
 

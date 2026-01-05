@@ -144,14 +144,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a35739e92323a94496961c79e5de380, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  foundUI: {fileID: 3673007970815359574}
+  scoreValue: 100
   viewAngle: 360
   viewDistance: 20
-  moveSpeed: 3
+  moveSpeed: 7
   wanderRadius: 5
   wanderTimerMax: 5
-  lifeMax: 10
 --- !u!1001 &6200823310895109760
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -511,17 +509,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5719194c2077e944b78cf01f4630905, type: 3}
---- !u!114 &3673007970815359574 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6498843391844560616, guid: f5719194c2077e944b78cf01f4630905, type: 3}
-  m_PrefabInstance: {fileID: 7550745367854879934}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35d626a68e282dd4cbb6e84607fd6766, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &5139181669230323666 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3430520911806509932, guid: f5719194c2077e944b78cf01f4630905, type: 3}
