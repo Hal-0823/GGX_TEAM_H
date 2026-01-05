@@ -2,27 +2,39 @@ using UnityEngine;
 
 public class Magnet : MonoBehaviour
 {
-    [SerializeField] private Transform target;//近づきたい相手
-    [SerializeField] private float itemspeed = 3f;//移動速度
-    public float stopdistance = 2f;//この距離まで近づいたら実行
-
+    private Transform target;//近づきたい相手
+    [SerializeField] private float itemspeed = 15f;//移動速度
+    private MagnetManager magnetmanager;
 
     void Start()
     {
-        
+       GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+       if (playerObj != null)
+        {
+            target = playerObj.transform;
+        }
+
+        magnetmanager = FindObjectOfType<MagnetManager>();
     }
 
     void Update()
     {
-       float distance =Vector3.Distance(transform.position, target.position);
+       if(target == null) return;
+       if(magnetmanager == null) return;
 
-       if (distance < stopdistance)//一定の距離まで近づいたら実行する
+       if (DistanceToTarget <= magnetmanager.draindistance)//一定の距離まで近づいたら実行する
         {
             Mag();
         }
 
-
+        if(DistanceToTarget < 1f)
+        {
+            BrokenObjecttach();
+            magnetmanager.GetMp();
+        }
     }
+
+
 
     void Mag() //吸収される判定
     {
@@ -33,16 +45,22 @@ public class Magnet : MonoBehaviour
             );
     }
 
-    void OnTriggerEnter(Collider target)//破片とプレイヤーが触れた時の判定
+    public float DistanceToTarget
+    {
+        get
+        {
+            if(target == null) return float.MaxValue;
+            return Vector3.Distance(transform.position, target.position);
+        }
+    }
+
+    void BrokenObjecttach()//破片とプレイヤーが触れた時の判定
     {
         Debug.Log("MPと触れたよ");
         Destroy(gameObject);
     }
 
-       public void GetMagnet()
-    {
-        stopdistance = 7f;
-    }
+
 
 
 }
