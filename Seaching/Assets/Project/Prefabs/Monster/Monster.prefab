@@ -237,13 +237,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputChannel: {fileID: 11400000, guid: f4c0f13b0fc12ba45b186b8161e2e1af, type: 2}
   hoverDuration: 0.1
-  moveSpeedAir: 6
+  moveSpeedAir: 7
   diveSpeed: 50
   stage1Threshold: 0.8
   stage2Threshold: 1.8
-  jumpForceLv1: 20
-  jumpForceLv2: 30
-  jumpForceLv3: 40
+  jumpForceLv1: 25
+  jumpForceLv2: 33
+  jumpForceLv3: 45
   smashCameraControl: {fileID: 0}
   breakAttack: {fileID: 1713283152154113117}
 --- !u!114 &1713283152154113117
@@ -258,8 +258,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb05d8e275bd7a245a4068474ad5e3f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstImpactRadius: 5
-  secondImpactRadius: 8
+  firstImpactRadius: 6
+  secondImpactRadius: 9
   thirdImpactRadius: 13
   impactPower: 10000
   destructibleLayer:
