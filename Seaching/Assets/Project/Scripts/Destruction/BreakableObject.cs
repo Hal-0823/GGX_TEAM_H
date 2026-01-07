@@ -31,8 +31,6 @@ public class BreakableObject : MonoBehaviour
 
         foreach (Rigidbody rb in rbs)
         {
-            // Magnetスクリプトを破片に追加する
-            Magnet mag = rb.gameObject.AddComponent<Magnet>();
             // 破片に爆発力を加える
             // AddExplosionForceは「中心からの距離」に応じて自動的に威力を減衰させてくれます
             // upwardModifier（第4引数）を少し入れると、破片が地面を擦らずに少し浮き上がるので派手になります
