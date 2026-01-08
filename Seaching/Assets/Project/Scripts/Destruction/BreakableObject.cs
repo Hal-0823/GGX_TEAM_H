@@ -7,8 +7,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody)), RequireComponent(typeof(BoxCollider))]
 public class BreakableObject : MonoBehaviour
 {
-
-
     // 破壊状態への変化を通知するイベント
     public static event Action<int> OnObjectBroken;
 
@@ -17,6 +15,9 @@ public class BreakableObject : MonoBehaviour
 
     [SerializeField, Tooltip("破壊状態のモデル")]
     private GameObject brokenModel;
+
+    [SerializeField, Tooltip("破壊時に生成される経験値数")]
+    private int expCount = 3;
 
     // 破壊処理を行うメソッド
     public void Shatter(Vector3 explosionCenter, float power, float radius)
@@ -46,6 +47,14 @@ public class BreakableObject : MonoBehaviour
 
         // 状態変化イベントを発火
         OnObjectBroken?.Invoke(scoreValue);
+        // EXPを生成
+        for (int i = 0; i < expCount; i++)
+        {
+            // 少しランダムな位置にスポーンさせる（Y軸は元のオブジェクトと同じ高さにする）
+            Vector3 spawnPos = transform.position + UnityEngine.Random.insideUnitSphere * 0.5f;
+            ExpSpawner.Instance.SpawnExpEntity(new Vector3(spawnPos.x, transform.position.y, spawnPos.z));
+            
+        }
         Destroy(gameObject); // 元のオブジェクトを削除
     }
 }

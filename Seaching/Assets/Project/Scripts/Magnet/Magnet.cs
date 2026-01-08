@@ -1,7 +1,13 @@
 using UnityEngine;
+using System;
 
 public class Magnet : MonoBehaviour
 {
+    /// <summary>
+    /// 収集されたときのイベント
+    /// </summary>
+    public event Action OnCollected;
+
     private Transform target;//近づきたい相手
     [SerializeField] private float itemspeed = 15f;//移動速度
     private MagnetManager magnetmanager;
@@ -29,8 +35,7 @@ public class Magnet : MonoBehaviour
 
         if(DistanceToTarget < 1f)
         {
-            BrokenObjecttach();
-            magnetmanager.GetMp();
+            OnCollected?.Invoke();
         }
     }
 
@@ -53,14 +58,4 @@ public class Magnet : MonoBehaviour
             return Vector3.Distance(transform.position, target.position);
         }
     }
-
-    void BrokenObjecttach()//破片とプレイヤーが触れた時の判定
-    {
-        Debug.Log("MPと触れたよ");
-        Destroy(gameObject);
-    }
-
-
-
-
 }
