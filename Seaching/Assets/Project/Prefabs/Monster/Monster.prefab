@@ -90,15 +90,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 39b8d3b809a21154f9037d7629cc33a0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.38
+      value: -12.56114
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 39b8d3b809a21154f9037d7629cc33a0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.2552674
+      value: 5.704134
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 39b8d3b809a21154f9037d7629cc33a0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.2958198
+      value: -11.06609
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 39b8d3b809a21154f9037d7629cc33a0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -127,6 +127,10 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 39b8d3b809a21154f9037d7629cc33a0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 39b8d3b809a21154f9037d7629cc33a0, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -6009402685795178371, guid: 39b8d3b809a21154f9037d7629cc33a0, type: 3}
       propertyPath: m_Layer
@@ -236,14 +240,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputChannel: {fileID: 11400000, guid: f4c0f13b0fc12ba45b186b8161e2e1af, type: 2}
-  hoverDuration: 0.1
-  moveSpeedAir: 7
-  diveSpeed: 50
-  stage1Threshold: 0.8
-  stage2Threshold: 1.8
-  jumpForceLv1: 25
-  jumpForceLv2: 33
-  jumpForceLv3: 45
+  baseHoverDuration: 1
+  baseMoveSpeedAir: 7
+  baseDiveSpeed: 60
+  baseStage1Threshold: 0.5
+  baseStage2Threshold: 1.5
+  baseChargeScaleLv1: {x: 1, y: 1, z: 1}
+  baseChargeScaleLv2: {x: 1, y: 0.75, z: 1}
+  baseChargeScaleLv3: {x: 1, y: 0.5, z: 1}
+  baseJumpForceLv1: 15
+  baseJumpForceLv2: 30
+  baseJumpForceLv3: 55
+  feverJumpMultiplier: 1.5
+  feverMoveSpeedMultiplier: 2
+  feverDiveSpeedMultiplier: 1.4
+  feverJumpForceMultiplier: 1.5
+  feverPlayerScaleMultiplier: 1.5
   smashCameraControl: {fileID: 0}
   breakAttack: {fileID: 1713283152154113117}
 --- !u!114 &1713283152154113117

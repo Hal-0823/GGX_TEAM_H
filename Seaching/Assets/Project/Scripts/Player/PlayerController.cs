@@ -12,20 +12,32 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private InputChannel inputChannel;
 
-    [SerializeField] private float hoverDuration = 1.5f;
-    [SerializeField] private float moveSpeedAir = 3f;
-    [SerializeField] private float diveSpeed = 30f;
+    [Header("空中移動")]
+    [SerializeField] private float baseHoverDuration = 1.5f;
+    [SerializeField] private float baseMoveSpeedAir = 3f;
+    [SerializeField] private float baseDiveSpeed = 30f;
 
-    [Header("Charge Settings")]
+    [Header("チャージ時間")]
     [Tooltip("1段階目のチャージ完了に必要な時間（秒）")]
-    [SerializeField] private float stage1Threshold = 0.5f;
+    [SerializeField] private float baseStage1Threshold = 0.5f;
     [Tooltip("2段階目のチャージ完了に必要な時間（秒）")]
-    [SerializeField] private float stage2Threshold = 1.5f;
+    [SerializeField] private float baseStage2Threshold = 1.5f;
+
+    [Header("チャージ中の大きさ")]
+    [SerializeField] private Vector3 baseChargeScaleLv1 = Vector3.one;
+    [SerializeField] private Vector3 baseChargeScaleLv2 = new Vector3(1f, 0.75f, 1f);
+    [SerializeField] private Vector3 baseChargeScaleLv3 = new Vector3(1f, 0.5f, 1f);
 
     [Header("ジャンプ力")]
-    [SerializeField] private float jumpForceLv1 = 5f;  // 即押し・小ジャンプ
-    [SerializeField] private float jumpForceLv2 = 10f; // 中ジャンプ
-    [SerializeField] private float jumpForceLv3 = 15f; // 最大ジャンプ
+    [SerializeField] private float baseJumpForceLv1 = 5f;  // 即押し・小ジャンプ
+    [SerializeField] private float baseJumpForceLv2 = 10f; // 中ジャンプ
+    [SerializeField] private float baseJumpForceLv3 = 15f; // 最大ジャンプ
+
+    [Header("フィーバー中の強化倍率")]
+    [SerializeField] private float feverMoveSpeedMultiplier = 1.5f;
+    [SerializeField] private float feverDiveSpeedMultiplier = 1.2f;
+    [SerializeField] private float feverJumpForceMultiplier = 1.5f;
+    [SerializeField] private float feverPlayerScaleMultiplier = 1.5f;
 
     [SerializeField]
     private SmashCameraControl smashCameraControl;
@@ -47,6 +59,20 @@ public class PlayerController : MonoBehaviour
     private GroundChecker groundChecker;
     private PlayerInput playerInput;
 
+    // パラメータの取得プロパティ（フィーバー中は強化版を返す）
+    private bool isFever = false;
+    private float hoverDuration => isFever ? baseHoverDuration * feverMoveSpeedMultiplier : baseHoverDuration;
+    private float moveSpeedAir => isFever ? baseMoveSpeedAir * feverMoveSpeedMultiplier : baseMoveSpeedAir;
+    private float diveSpeed => isFever ? baseDiveSpeed * feverDiveSpeedMultiplier : baseDiveSpeed;
+    private float stage1Threshold => isFever ? baseStage1Threshold * 0.8f : baseStage1Threshold;
+    private float stage2Threshold => isFever ? baseStage2Threshold * 0.8f : baseStage2Threshold;
+    private float jumpForceLv1 => isFever ? baseJumpForceLv1 * feverJumpForceMultiplier : baseJumpForceLv1;
+    private float jumpForceLv2 => isFever ? baseJumpForceLv2 * feverJumpForceMultiplier : baseJumpForceLv2;
+    private float jumpForceLv3 => isFever ? baseJumpForceLv3 * feverJumpForceMultiplier : baseJumpForceLv3;
+    private Vector3 chargeScaleLv1 => isFever ? baseChargeScaleLv1 * feverPlayerScaleMultiplier : baseChargeScaleLv1;
+    private Vector3 chargeScaleLv2 => isFever ? baseChargeScaleLv2 * feverPlayerScaleMultiplier : baseChargeScaleLv2;
+    private Vector3 chargeScaleLv3 => isFever ? baseChargeScaleLv3 * feverPlayerScaleMultiplier : baseChargeScaleLv3;
+
 
     public bool IsGrounded()
     {
@@ -58,6 +84,11 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         groundChecker = GetComponentInChildren<GroundChecker>();
+        FeverManager.OnFeverModeChanged += (feverState) =>
+        {
+            isFever = feverState;
+            UpdateVisuals(currentJumpLevel);
+        };
     }
 
     private void OnEnable()
@@ -218,9 +249,9 @@ public class PlayerController : MonoBehaviour
     {
         switch (jumpLevel)
         {
-            case 1: transform.localScale = Vector3.one; break;
-            case 2: transform.localScale = new Vector3(1f, 0.75f, 1f); break;
-            case 3: transform.localScale = new Vector3(1f, 0.5f, 1f); break;
+            case 1: transform.localScale = chargeScaleLv1; break;
+            case 2: transform.localScale = chargeScaleLv2; break;
+            case 3: transform.localScale = chargeScaleLv3; break;
         }
     }
 

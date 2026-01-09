@@ -137,3 +137,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreValue: 700
   brokenModel: {fileID: 9058072010293103594, guid: 64b33ba5b2576074982385a805a0273f, type: 3}
+  expCount: 1

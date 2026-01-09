@@ -3,15 +3,31 @@ using System.Collections;
 
 public class BreakAttack : MonoBehaviour
 {
-    [SerializeField] private float firstImpactRadius = 5f; // 最初の衝撃波半径
-    [SerializeField] private float secondImpactRadius = 10f; // 破壊半径
-    [SerializeField] private float thirdImpactRadius = 20f; // 外側の衝撃波半径 
+    [SerializeField] private float baseFirstImpactRadius = 6f; // 最初の衝撃波半径
+    [SerializeField] private float baseSecondImpactRadius = 9f; // 破壊半径
+    [SerializeField] private float baseThirdImpactRadius = 13f; // 外側の衝撃波半径 
     [SerializeField] private float impactPower = 1000f; // 吹き飛ばす力
     [SerializeField] private LayerMask destructibleLayer; // 建物と勇者のレイヤー
     [SerializeField] private ParticleSystem stompEffectPrefab; // 着地エフェクト
     [SerializeField] private Transform stompEffectSpawnPoint; // エフェクトの生成位置
 
+    [Header("フィーバー中の強化倍率")]
+    [SerializeField] private float feverImpactRadiusMultiplier = 1.5f;
+
+    private bool isFever = false;
+    private float firstImpactRadius => isFever ? baseFirstImpactRadius * feverImpactRadiusMultiplier : baseFirstImpactRadius;
+    private float secondImpactRadius => isFever ? baseSecondImpactRadius * feverImpactRadiusMultiplier : baseSecondImpactRadius;
+    private float thirdImpactRadius => isFever ? baseThirdImpactRadius * feverImpactRadiusMultiplier : baseThirdImpactRadius;
+
     private bool isStopping = false;
+    
+    private void Start()
+    {
+        FeverManager.OnFeverModeChanged += (feverState) =>
+        {
+            isFever = feverState;
+        };
+    }
 
     // アニメーションのイベントや、着地判定から呼び出す
     public void DoBreak(float impactRadius, bool isPlayEffect)

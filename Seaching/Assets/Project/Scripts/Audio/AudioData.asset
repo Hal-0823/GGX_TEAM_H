@@ -428,3 +428,11 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 6b82e91ed227f79458d90f2a808646e4, type: 3}
     volume: 1
     pitch: 1
+  - key: SE_ExpGet1
+    clip: {fileID: 8300000, guid: fce0ecc01c02ea24aa24591ff07020d2, type: 3}
+    volume: 1
+    pitch: 1.5
+  - key: SE_ExpGet2
+    clip: {fileID: 8300000, guid: f84370366bc2b4247a4baf67c96bd586, type: 3}
+    volume: 1
+    pitch: 1

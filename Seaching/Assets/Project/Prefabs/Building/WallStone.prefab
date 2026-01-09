@@ -116,6 +116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreValue: 500
   brokenModel: {fileID: 8457510370637730788, guid: b8a887869d1441544983306f8ddcdcd0, type: 3}
+  expCount: 1
 --- !u!65 &6749475633396550649
 BoxCollider:
   m_ObjectHideFlags: 0
