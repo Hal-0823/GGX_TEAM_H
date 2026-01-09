@@ -47,13 +47,23 @@ public class BreakableObject : MonoBehaviour
 
         // 状態変化イベントを発火
         OnObjectBroken?.Invoke(scoreValue);
+
         // EXPを生成
         for (int i = 0; i < expCount; i++)
         {
+            // ExpSpawnerが存在しない場合は生成をスキップ
+            if (ExpSpawner.Instance == null) break;
+
             // 少しランダムな位置にスポーンさせる（Y軸は元のオブジェクトと同じ高さにする）
-            Vector3 spawnPos = transform.position + UnityEngine.Random.insideUnitSphere * 0.5f;
-            ExpSpawner.Instance.SpawnExpEntity(new Vector3(spawnPos.x, transform.position.y, spawnPos.z));
-            
+            Vector3 spawnPos = transform.position + UnityEngine.Random.insideUnitSphere * 0.8f;
+            var exp = ExpSpawner.Instance.SpawnExpEntity(new Vector3(spawnPos.x, transform.position.y + 1.0f, spawnPos.z));
+
+            if (exp.TryGetComponent<Rigidbody>(out Rigidbody rb))
+            {
+                rb.WakeUp();
+                rb.AddForce(Vector3.up * UnityEngine.Random.Range(5f, 8f), ForceMode.Impulse);
+            }
+
         }
         Destroy(gameObject); // 元のオブジェクトを削除
     }

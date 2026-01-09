@@ -305,5 +305,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioData: {fileID: 11400000, guid: 52140ed6394a2d0408d566758b50a8ab, type: 2}
-  bgmSource: {fileID: 0}
-  seSource: {fileID: 0}
+  bgmSource: {fileID: 8696023719163113310}
+  seSource: {fileID: 9190600546594062619}

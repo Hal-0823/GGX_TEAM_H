@@ -14,13 +14,13 @@ public class ExpEntity : MonoBehaviour
     public static event Action<int> OnExpCollected;
 
     [SerializeField] private int expValue = 1;
+    [SerializeField] private Magnet magnet;
 
     // 自分が所属しているプール
     private IObjectPool<ExpEntity> pool;
-
+    
     private void Start()
     {
-        Magnet magnet = GetComponent<Magnet>();
         magnet.OnCollected += HandleCollected;  // Magnetクラスの収集イベントに登録
     }
 
@@ -54,7 +54,11 @@ public class ExpEntity : MonoBehaviour
     /// <param name="position"></param>
     public void SpawnAt(Vector3 position)
     {
+        magnet.enabled = false; // 最初は磁力を無効化
         transform.position = position;
+
+        // 1.5秒後に磁力を有効化
+        Invoke(nameof(EnableMagnet), 1.5f);
     }
 
     /// <summary>
@@ -62,9 +66,23 @@ public class ExpEntity : MonoBehaviour
     /// </summary>
     private void HandleCollected()
     {
+        AudioManager.Instance.PlaySE("SE_ExpGet1");
         OnExpCollected?.Invoke(expValue);
-        Destroy(gameObject);
+        pool.Release(this);
     }
 
+    private void EnableMagnet()
+    {
+        magnet.enabled = true;
+    }
 
+    private void OnDisable()
+    {
+        CancelInvoke(nameof(EnableMagnet));
+    }
+
+    private void OnDestroy()
+    {
+        magnet.OnCollected -= HandleCollected; // イベント登録解除
+    }
 }

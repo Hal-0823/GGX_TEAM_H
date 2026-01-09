@@ -13,6 +13,8 @@ public class ExpSpawner : MonoBehaviour
     [SerializeField] private int defaultCapacity = 30;
     [SerializeField] private int maxCapacity = 100;
 
+    private bool canSpawn = true;
+
     // オブジェクトプール
     private IObjectPool<ExpEntity> expPool;
 
@@ -35,6 +37,15 @@ public class ExpSpawner : MonoBehaviour
             defaultCapacity: defaultCapacity,
             maxSize: maxCapacity
         );
+    }
+
+    /// <summary>
+    /// スポーン可能か設定する
+    /// </summary>
+    /// <param name="value"></param>
+    public void SetCanSpawn(bool value)
+    {
+        canSpawn = value;
     }
 
     // 新規作成時の処理
@@ -61,13 +72,30 @@ public class ExpSpawner : MonoBehaviour
     // 破棄時の処理
     private void OnDestroyExpEntity(ExpEntity exp)
     {
+        if (exp == null) return;
         Destroy(exp.gameObject);
     }
 
     // EXPエンティティを指定位置にスポーンする
-    public void SpawnExpEntity(Vector3 position)
+    public ExpEntity SpawnExpEntity(Vector3 position)
     {
         var exp = expPool.Get();
         exp.SpawnAt(position);
+        return exp;
+    }
+
+    // クリーンアップ
+    private void OnDestroy()
+    {
+        if (expPool != null)
+        {
+            expPool.Clear();
+            expPool = null;
+        }
+
+        if (Instance == this)
+        {
+            Instance = null;
+        }
     }
 }

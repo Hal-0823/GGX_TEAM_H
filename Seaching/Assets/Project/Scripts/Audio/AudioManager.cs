@@ -145,7 +145,7 @@ public class AudioManager : MonoBehaviour
         }
 
         // 2. 曲を入れ替えて再生開始
-        seq.AppendCallback(() => 
+        seq.AppendCallback(() =>
         {
             bgmSource.clip = entry.clip;
             bgmSource.pitch = entry.pitch;
@@ -154,9 +154,39 @@ public class AudioManager : MonoBehaviour
 
         // 3. フェードイン
         seq.Append(bgmSource.DOFade(targetVolume, fadeDuration));
-        
+
         // ※シーン遷移などでオブジェクトが消えてもエラーにならないようLinkしておく
-        seq.SetLink(gameObject); 
+        seq.SetLink(gameObject);
+    }
+    
+    /// <summary>
+    /// BGMのピッチを変更する（フェード付き）
+    /// </summary>
+    /// <param name="newPitch"></param>
+    /// <param name="fadeDuration"></param>
+    public void ChangeBGMPitch(float newPitch, float fadeDuration = 0.5f)
+    {
+        // DOTweenシーケンスで「フェードアウト → ピッチ変更 → フェードイン」
+        Sequence seq = DOTween.Sequence();
+
+        // 1. フェードアウト
+        if (bgmSource.isPlaying)
+        {
+            seq.Append(bgmSource.DOFade(0f, fadeDuration));
+        }
+
+        // 2. ピッチ変更
+        seq.AppendCallback(() =>
+        {
+            bgmSource.pitch = newPitch;
+        });
+
+        // 3. フェードイン
+        float targetVolume = BgmVolume * MasterVolume;
+        seq.Append(bgmSource.DOFade(targetVolume, fadeDuration));
+
+        // ※シーン遷移などでオブジェクトが消えてもエラーにならないようLinkしておく
+        seq.SetLink(gameObject);
     }
 
     // BGM停止

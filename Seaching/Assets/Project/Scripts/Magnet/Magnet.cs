@@ -11,24 +11,31 @@ public class Magnet : MonoBehaviour
     private Transform target;//近づきたい相手
     [SerializeField] private float itemspeed = 15f;//移動速度
     private MagnetManager magnetmanager;
+    private bool isCollected = false;
 
     void Start()
     {
-       GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
-       if (playerObj != null)
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
         {
             target = playerObj.transform;
         }
 
         magnetmanager = FindObjectOfType<MagnetManager>();
     }
+    
+    void OnEnable()
+    {
+        isCollected = false;
+    }
 
     void Update()
     {
-       if(target == null) return;
-       if(magnetmanager == null) return;
+        if(isCollected) return;
+        if(target == null) return;
+        if(magnetmanager == null) return;
 
-       if (DistanceToTarget <= magnetmanager.draindistance)//一定の距離まで近づいたら実行する
+        if (DistanceToTarget <= magnetmanager.draindistance)//一定の距離まで近づいたら実行する
         {
             Mag();
         }
@@ -36,6 +43,7 @@ public class Magnet : MonoBehaviour
         if(DistanceToTarget < 1f)
         {
             OnCollected?.Invoke();
+            isCollected = true;
         }
     }
 
