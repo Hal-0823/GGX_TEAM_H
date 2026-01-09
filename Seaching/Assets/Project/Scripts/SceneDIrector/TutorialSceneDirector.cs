@@ -2,6 +2,7 @@ using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.InputSystem;
 
 public class TutorialSceneDirector : MonoBehaviour
 {
@@ -49,20 +50,38 @@ public class TutorialSceneDirector : MonoBehaviour
 
         AudioManager.Instance.PlayBGM("BGM_Tutorial");
 
-        // チュートリアル会話の開始
-        string[] tutorialLines = new string[]
+        if (Gamepad.current != null)
         {
-            "...で...というわけだ...",
-            "...おい...きいているか...",
-            "...むすこ...よ...",
-            "...きいて...おるのか!?",
-            "はぁ...まったく...",
-            "いいか? もういちどだけ いうぞ。",
-            "Spaceキー か Aボタンで ジャンプだ。",
-            "まずは ちいさく ジャンプしてみろ。"
-        };
+            string[] introLines = new string[]
+            {
+                "...で...というわけだ...",
+                "...おい...きいているか...",
+                "...むすこ...よ...",
+                "...きいて...おるのか!?",
+                "はぁ...まったく...",
+                "いいか? もういちどだけ いうぞ。",
+                "<sprite=94>か<sprite=96>で ジャンプだ。",
+                "まずは ちいさく ジャンプしてみろ。"
+            };
 
-        dialogueManager.StartDialogue(tutorialLines);
+            dialogueManager.StartDialogue(introLines);
+        }
+        else
+        {
+            string[] introLines = new string[]
+            {
+                "...で...というわけだ...",
+                "...おい...きいているか...",
+                "...むすこ...よ...",
+                "...きいて...おるのか!?",
+                "はぁ...まったく...",
+                "いいか? もういちどだけ いうぞ。",
+                "Spaceキー で ジャンプだ。",
+                "まずは ちいさく ジャンプしてみろ。"
+            };
+
+            dialogueManager.StartDialogue(introLines);
+        }
 
         yield return null;
         yield return new WaitUntil(() => !dialogueManager.IsDialgoueActive());
@@ -75,14 +94,26 @@ public class TutorialSceneDirector : MonoBehaviour
         yield return new WaitUntil(() => playerController.IsGrounded());
         Debug.Log("プレイヤーが地面に着地しました", this);
 
-        string[] followUpLines = new string[]
+        if (Gamepad.current != null)
         {
-            "よし、うまくやったな。",
-            "つぎは ながく ジャンプするぞ。",
-            "Spaceキー か Aボタンを\nおしっぱなしに してみろ。"
-        };
-
-        dialogueManager.StartDialogue(followUpLines);
+            string[] followUpLines = new string[]
+            {
+                "よし、うまくやったな。",
+                "つぎは ながく ジャンプするぞ。",
+                "<sprite=94>か<sprite=96>を おしっぱなしに してみろ。"
+            };
+            dialogueManager.StartDialogue(followUpLines);
+        }
+        else
+        {
+            string[] followUpLines = new string[]
+            {
+                "よし、うまくやったな。",
+                "つぎは ながく ジャンプするぞ。",
+                "Spaceキー を おしっぱなしに してみろ。"
+            };
+            dialogueManager.StartDialogue(followUpLines);
+        }
 
         yield return null;
         yield return new WaitUntil(() => !dialogueManager.IsDialgoueActive());

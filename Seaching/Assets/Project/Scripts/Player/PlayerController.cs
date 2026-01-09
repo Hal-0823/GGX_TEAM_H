@@ -84,11 +84,6 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         groundChecker = GetComponentInChildren<GroundChecker>();
-        FeverManager.OnFeverModeChanged += (feverState) =>
-        {
-            isFever = feverState;
-            UpdateVisuals(currentJumpLevel);
-        };
     }
 
     private void OnEnable()
@@ -103,6 +98,8 @@ public class PlayerController : MonoBehaviour
         inputChannel.OnRequestPlayerControl += EnableControl;
         inputChannel.OnRequestDialogueControl += DisableControl;
         inputChannel.OnRequestNoneControl += DisableControl;
+
+        FeverManager.OnFeverModeChanged += SetIsFever;
     }
 
     private void OnDisable()
@@ -111,6 +108,7 @@ public class PlayerController : MonoBehaviour
         inputChannel.OnRequestPlayerControl -= EnableControl;
         inputChannel.OnRequestDialogueControl -= DisableControl;
         inputChannel.OnRequestNoneControl -= DisableControl;
+        FeverManager.OnFeverModeChanged -= SetIsFever;
     }
 
     // プレイヤーの操作を有効化
@@ -401,5 +399,11 @@ public class PlayerController : MonoBehaviour
     public void EnablePlayerControl()
     {
         inputChannel.SwitchToPlayer();
+    }
+
+    private void SetIsFever(bool value)
+    {
+        isFever = value;
+        UpdateVisuals(currentJumpLevel);
     }
 }

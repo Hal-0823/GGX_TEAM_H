@@ -157,18 +157,35 @@ public class DialogueManager : MonoBehaviour
     }
 
     // 文字送りのコルーチン
-    private IEnumerator TypeSentence(string sentence)
+    private IEnumerator TypeSentence(string fullText)
     {
         isTyping = true;
-        dialogueText.text = "";
-
-        foreach (char letter in sentence.ToCharArray())
+        string currentText = "";
+        int i = 0;
+        while (i < fullText.Length)
         {
-            dialogueText.text += letter;
-            // 1フレーム待つか、指定時間待つか
+            char c = fullText[i];
+
+            // タグの開始を検知
+            if (c == '<')
+            {
+                int tagCloseIndex = fullText.IndexOf('>', i);
+                if (tagCloseIndex != -1)
+                {
+                    // タグの終わりまでを一気に現在の文字列に加える
+                    currentText += fullText.Substring(i, tagCloseIndex - i + 1);
+                    i = tagCloseIndex + 1;
+                }
+            }
+            else
+            {
+                currentText += c;
+                i++;
+            }
+
+            dialogueText.text = currentText;
             yield return new WaitForSeconds(typeSpeed);
         }
-
         isTyping = false;
     }
 
