@@ -1,4 +1,5 @@
 using System;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 /// <summary>
@@ -19,6 +20,19 @@ public class BreakableObject : MonoBehaviour
     [SerializeField, Tooltip("破壊時に生成される経験値数")]
     private int expCount = 3;
 
+
+    [SerializeField] NavMeshSurface navMeshSurface;
+    private static int breakenCount = 0;
+    private const int breakenMax = 10;
+
+    void Start()
+    {
+        if (navMeshSurface == null)
+        {
+            navMeshSurface = FindFirstObjectByType<NavMeshSurface>();
+        }
+    }
+    
     // 破壊処理を行うメソッド
     public void Shatter(Vector3 explosionCenter, float power, float radius)
     {
@@ -66,5 +80,15 @@ public class BreakableObject : MonoBehaviour
 
         }
         Destroy(gameObject); // 元のオブジェクトを削除
+
+        breakenCount++;
+        
+        if(breakenCount > breakenMax)
+        {        
+            //NavMesh 再生成.
+            navMeshSurface.BuildNavMesh();
+
+            breakenCount = 0;
+        } 
     }
 }
