@@ -241,7 +241,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u3080\u3059\u3053\u3088..."
+  m_text: "\u3080\u3059\u3053\u3088...<sprite=94><sprite=96>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8cfdfdba231093048b234059bf742cce, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: ebfe15811fd93494ea3475da540cc434, type: 2}
@@ -260,7 +260,7 @@ MonoBehaviour:
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
+  m_spriteAsset: {fileID: 11400000, guid: e0b0118412071304da927e898e0d8a1d, type: 2}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
   m_TextStyleHashCode: -1183493901
@@ -366,7 +366,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 89227313}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -1264,9 +1264,9 @@ MonoBehaviour:
   inputChannel: {fileID: 11400000, guid: f4c0f13b0fc12ba45b186b8161e2e1af, type: 2}
   dialogueBox: {fileID: 559053047}
   dialogueText: {fileID: 64616159}
-  typeSpeed: 0.05
-  requiredClicksToSkip: 3
-  skipResetTime: 0.3
+  typeSpeed: 0.04
+  requiredClicksToSkip: 6
+  skipResetTime: 0.2
 --- !u!4 &1844518176
 Transform:
   m_ObjectHideFlags: 0
@@ -1481,7 +1481,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5754831478122459507, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: field of view
-      value: 40
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 5754831478122459507, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: far clip plane
@@ -1509,27 +1509,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8287251485150333403, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 45.24613
+      value: 21.24613
       objectReference: {fileID: 0}
     - target: {fileID: 8287251485150333403, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -93.82543
+      value: 2.17457
       objectReference: {fileID: 0}
     - target: {fileID: 8287251485150333403, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9930066
+      value: 0.77334213
       objectReference: {fileID: 0}
     - target: {fileID: 8287251485150333403, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.11805908
+      value: 0.633989
       objectReference: {fileID: 0}
     - target: {fileID: 8287251485150333403, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0000000035066419
+      value: 0.00000012676074
       objectReference: {fileID: 0}
     - target: {fileID: 8287251485150333403, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 4.1690654e-10
+      value: -0.00000010391897
       objectReference: {fileID: 0}
     - target: {fileID: 8744719095426096057, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalPosition.x
