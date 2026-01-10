@@ -3750,6 +3750,17 @@ PrefabInstance:
       addedObject: {fileID: 1034145502}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59d3b3b7e53cb0f419eaad77db6e551f, type: 3}
+--- !u!114 &1320384479 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2494440601467848142, guid: aada586744cb73844bd866113a27d1a0, type: 3}
+  m_PrefabInstance: {fileID: 2759361147168293048}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1370434474
 GameObject:
   m_ObjectHideFlags: 0
@@ -5514,6 +5525,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2107436704}
   - component: {fileID: 2107436703}
+  - component: {fileID: 2107436705}
   m_Layer: 0
   m_Name: NavMeshRoot
   m_TagString: Untagged
@@ -5540,7 +5552,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 2048
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_GenerateLinks: 0
@@ -5551,7 +5563,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 289bdf1ac601c9e43908dd615fc0d7be, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &2107436704
 Transform:
@@ -5568,6 +5580,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2107436705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107436702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50775acc8cba74c47b5976299abd6dbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 734044962}
+  navMeshSurface: {fileID: 1320384479}
 --- !u!1 &2123026058
 GameObject:
   m_ObjectHideFlags: 0

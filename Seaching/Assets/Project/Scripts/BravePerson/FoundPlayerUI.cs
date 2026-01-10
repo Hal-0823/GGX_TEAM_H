@@ -33,7 +33,7 @@ public class FoundPlayerUI : MonoBehaviour
             startTime = Time.time;
 
             Vector3 personPos = person.transform.position;
-            personPos.y = 4f;
+            personPos.y = 8f;
             gameObject.transform.position = personPos;
 
             isFoundPlayer = true;
