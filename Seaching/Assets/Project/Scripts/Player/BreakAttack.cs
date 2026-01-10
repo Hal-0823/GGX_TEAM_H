@@ -1,7 +1,5 @@
 using System.Collections;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class BreakAttack : MonoBehaviour
 {

@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundLayer:
     serializedVersion: 2
-    m_Bits: 3072
+    m_Bits: 1024
   rayLength: 1
   rayStartOffset: {x: 0, y: 0.05, z: 0}
 --- !u!1 &7930883915725207860
@@ -255,6 +255,7 @@ MonoBehaviour:
   feverDiveSpeedMultiplier: 1.4
   feverJumpForceMultiplier: 1.5
   feverPlayerScaleMultiplier: 1.5
+  knockbackForce: 2000
   smashCameraControl: {fileID: 0}
   breakAttack: {fileID: 1713283152154113117}
 --- !u!114 &1713283152154113117

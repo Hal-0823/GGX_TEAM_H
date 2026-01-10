@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
-using Unity.VisualScripting;
 using System;
+using DG.Tweening;
+using NUnit.Framework;
 
 [RequireComponent(typeof(BreakAttack))]
 public class PlayerController : MonoBehaviour
@@ -39,6 +40,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float feverJumpForceMultiplier = 1.5f;
     [SerializeField] private float feverPlayerScaleMultiplier = 1.5f;
 
+    [Header("勇者に当たった時の吹き飛び力")]
+    [SerializeField] private float knockbackForce = 1000f;
+
     [SerializeField]
     private SmashCameraControl smashCameraControl;
 
@@ -53,6 +57,8 @@ public class PlayerController : MonoBehaviour
     private int lastJumpLevel = 0;
     private bool isJumping = false;
     private bool isStompTriggered = false;
+    private bool isDiving = false;
+    private bool isTakenDamage = false;
 
     private Rigidbody rb;
     private Animator animator;
@@ -278,7 +284,17 @@ public class PlayerController : MonoBehaviour
             isStompTriggered = false;
         }
 
-        yield return StartCoroutine(DiveCoroutine(jumpLevel));
+        Coroutine diveCoroutine = StartCoroutine(DiveCoroutine(jumpLevel));
+
+        // 急降下が完了するか、ダメージを受けるまで待機
+        yield return new WaitUntil(() => isDiving == false || isTakenDamage == true);
+
+        if (isDiving && isTakenDamage)
+        {
+            StopCoroutine(diveCoroutine);
+            isDiving = false;
+        }
+
     }
 
     private IEnumerator JumpCoroutine(int jumpLevel, float jumpForce)
@@ -335,6 +351,7 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator DiveCoroutine(int jumpLevel)
     {
+        isDiving = true;
         Debug.Log("Dive Start");
         animator.SetTrigger("Fall");
         // -----------------------------------------
@@ -382,18 +399,30 @@ public class PlayerController : MonoBehaviour
             smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Normal);
         }
         animator.SetTrigger("Standup");
+        isDiving = false;
     }
 
-    // 落下中に建物に衝突した場合の処理
+    
     public void OnCollisionEnter(Collision collision)
     {
-        if (IsGrounded()) return;
+        // 落下中に建物に衝突した場合の処理
 
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Debris"))
+        // 空中にいるとき
+        if (!IsGrounded())
         {
-            return;
+            // 建物に衝突した場合
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Building"))
+            {
+                breakAttack.DoBreak(3f, false);
+            }
         }
-        breakAttack.DoBreak(1f, false);
+        
+        // 敵に衝突した場合
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            TakenDamage(collision.transform.position);
+        }
+        
     }
 
     public void EnablePlayerControl()
@@ -405,5 +434,31 @@ public class PlayerController : MonoBehaviour
     {
         isFever = value;
         UpdateVisuals(currentJumpLevel);
+    }
+
+    private void TakenDamage(Vector3 enemyPos)
+    {
+        isTakenDamage = true;
+        animator.SetTrigger("Standup");
+        if (smashCameraControl != null)
+        {
+            smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Normal);
+        }
+        // 吹っ飛び処理
+        // 敵から自分への方向を計算
+        Vector3 awayFromEnemy = (transform.position - enemyPos).normalized;
+        // 斜め上方向に飛ばす（少し上に浮かせると吹っ飛び感が出る）
+        Vector3 knockbackDir = (awayFromEnemy + Vector3.up * 0.8f).normalized;
+
+        // 現在の速度を一度リセット
+        rb.linearVelocity = Vector3.zero;
+
+        // 瞬間的な力を加える
+        rb.AddForce(knockbackDir * knockbackForce, ForceMode.Impulse);
+
+        ResetCharge();
+
+        isTakenDamage = false;
+
     }
 }

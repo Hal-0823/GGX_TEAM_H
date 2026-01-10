@@ -2459,7 +2459,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5946772869077902832, guid: 59d3b3b7e53cb0f419eaad77db6e551f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5966203856612910912, guid: 59d3b3b7e53cb0f419eaad77db6e551f, type: 3}
       propertyPath: spawnPoints.Array.size
