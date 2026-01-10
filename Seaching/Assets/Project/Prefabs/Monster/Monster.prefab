@@ -240,7 +240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputChannel: {fileID: 11400000, guid: f4c0f13b0fc12ba45b186b8161e2e1af, type: 2}
-  baseHoverDuration: 1
+  baseHoverDuration: 0.5
   baseMoveSpeedAir: 7
   baseDiveSpeed: 60
   baseStage1Threshold: 0.5
@@ -250,8 +250,7 @@ MonoBehaviour:
   baseChargeScaleLv3: {x: 1, y: 0.5, z: 1}
   baseJumpForceLv1: 15
   baseJumpForceLv2: 30
-  baseJumpForceLv3: 55
-  feverJumpMultiplier: 1.5
+  baseJumpForceLv3: 45
   feverMoveSpeedMultiplier: 2
   feverDiveSpeedMultiplier: 1.4
   feverJumpForceMultiplier: 1.5
@@ -270,15 +269,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb05d8e275bd7a245a4068474ad5e3f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstImpactRadius: 6
-  secondImpactRadius: 9
-  thirdImpactRadius: 13
+  baseFirstImpactRadius: 6
+  baseSecondImpactRadius: 9
+  baseThirdImpactRadius: 13
   impactPower: 10000
   destructibleLayer:
     serializedVersion: 2
     m_Bits: 2560
   stompEffectPrefab: {fileID: 8423376225423762548, guid: 9678237a4a2970e4a8d29df8d3e6de1d, type: 3}
   stompEffectSpawnPoint: {fileID: 7765756766160841804}
+  feverImpactRadiusMultiplier: 1.5
 --- !u!136 &3545210909242772500
 CapsuleCollider:
   m_ObjectHideFlags: 0
