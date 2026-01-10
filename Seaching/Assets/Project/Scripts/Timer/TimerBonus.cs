@@ -9,7 +9,8 @@ public class TimeBonusItem : MonoBehaviour
     private void Start()
     {
         magnet.OnCollected += HandleCollected;  // Magnetクラスの収集イベントに登録
-        Invoke(nameof(EnableMagnet), 1.5f); // 1.5秒後に磁力を有効化
+        magnet.ChangeIsActive(false);
+        Invoke(nameof(EnableMagnet), 1.5f);
     }
 
     private void HandleCollected()
@@ -25,7 +26,7 @@ public class TimeBonusItem : MonoBehaviour
 
     private void EnableMagnet()
     {
-        magnet.enabled = true;
+        magnet.ChangeIsActive(true);
     }
 
     private void OnDisable()
