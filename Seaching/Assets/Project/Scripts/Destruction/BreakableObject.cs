@@ -66,6 +66,13 @@ public class BreakableObject : MonoBehaviour
             }
 
         }
+
+        // アイテム生成
+        if (TryGetComponent<ItemSpawnObject>(out ItemSpawnObject itemSpawner))
+        {
+            itemSpawner.SpawnItem();
+        }
+
         Destroy(gameObject); // 元のオブジェクトを削除
     }
 }
