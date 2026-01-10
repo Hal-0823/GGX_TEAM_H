@@ -14,9 +14,10 @@ public class BravePersonController : MonoBehaviour
   
     public float viewAngle = 45f;       //����p�i���E�̊p�x�j
     public float viewDistance = 10f;    //���싗���̌��x
-    public float moveSpeed = 3f;        //�ړ����x.
+    public float moveSpeed = 4f;        //�ړ����x.
     public float wanderRadius = 10f;    //���͂ɂǂꂾ��������.
-    public float wanderTimerMax = 5f;      //���ɓ����܂ł̍ő厞��.
+    public float wanderTimerMax = 3f;      //���ɓ����܂ł̍ő厞��.
+    public float attackRange = 4f;
 
     private bool isChasing = false;
 
@@ -30,18 +31,21 @@ public class BravePersonController : MonoBehaviour
         anim = GetComponent<Animator>();
 
         agent = GetComponent<NavMeshAgent>();
+        agent.stoppingDistance = attackRange;
+        agent.updateRotation = false;          // 自前で回転するため
+        agent.autoBraking = true;
 
         player = GameObject.FindGameObjectWithTag("Player").transform;
         foundUI = GetComponentInChildren<FoundPlayerUI>(true);
-
-        float walkTime = UnityEngine.Random.Range(0, wanderTimerMax);
-        timer = walkTime;
     }
 
     // Update is called once per frame
     void Update()
     {
         if (agent.enabled == false) return;
+        
+        UpdateMoveAnimation();
+        
         //�v���C���[�������Ă���ꍇ.
         if (CanSeePlayer())
         {
@@ -106,19 +110,20 @@ public class BravePersonController : MonoBehaviour
     //�v���C���[�����������̓���.
     private void FindPlayer()
     {
-        //�U�������ȊO�Ȃ�v���C���[��ǂ�.
-        if (DistanceToPlayer() > 2f)
+        agent.SetDestination(player.position);
+
+        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
-            agent.SetDestination(player.position);  //NavMeshAgent�Œǐ�.
-            anim.SetBool("IsAttack", false);
+            // 攻撃距離に入った
+            anim.SetBool("IsAttack", true);
+            agent.velocity = Vector3.zero;
         }
         else
         {
-            agent.ResetPath(); // �߂Â�����~�߂�
-            anim.SetBool("IsAttack", true);
+            anim.SetBool("IsAttack", false);
         }
 
-        // �v���C���[�̕���������
+        // プレイヤーの方向を見る
         transform.rotation = Quaternion.Slerp(
             transform.rotation,
             Quaternion.LookRotation(DirectionToPlayer()),
@@ -126,8 +131,9 @@ public class BravePersonController : MonoBehaviour
         );
     }
 
-    //�v���C���[�ւ̋���.
-    private float DistanceToPlayer()
+
+//�v���C���[�ւ̋���.
+private float DistanceToPlayer()
     {
         Vector3 thisPos = transform.position;
         thisPos.y = 0f;
@@ -171,5 +177,19 @@ public class BravePersonController : MonoBehaviour
             timer = 0;
         }
         anim.SetBool("IsAttack", false);
+    }
+    void UpdateMoveAnimation()
+    {
+        // NavMeshAgent の実速度を取得
+        float speed = agent.velocity.magnitude;
+
+        // 攻撃中は歩きアニメを止める
+        if (anim.GetBool("IsAttack"))
+        {
+            anim.SetFloat("Speed", 0f);
+            return;
+        }
+
+        anim.SetFloat("Speed", speed);
     }
 }
