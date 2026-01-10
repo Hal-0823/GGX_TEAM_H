@@ -14,10 +14,10 @@ public class BravePersonController : MonoBehaviour
   
     public float viewAngle = 45f;       //����p�i���E�̊p�x�j
     public float viewDistance = 10f;    //���싗���̌��x
-    public float moveSpeed = 3f;        //�ړ����x.
+    public float moveSpeed = 4f;        //�ړ����x.
     public float wanderRadius = 10f;    //���͂ɂǂꂾ��������.
-    public float wanderTimerMax = 5f;      //���ɓ����܂ł̍ő厞��.
-    public float attackRange = 5f;
+    public float wanderTimerMax = 3f;      //���ɓ����܂ł̍ő厞��.
+    public float attackRange = 4f;
 
     private bool isChasing = false;
 
