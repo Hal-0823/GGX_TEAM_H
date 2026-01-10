@@ -1,5 +1,7 @@
-using UnityEngine;
 using System.Collections;
+using UnityEditor.PackageManager;
+using UnityEngine;
+using UnityEngine.AI;
 
 public class BreakAttack : MonoBehaviour
 {
@@ -20,7 +22,7 @@ public class BreakAttack : MonoBehaviour
     private float thirdImpactRadius => isFever ? baseThirdImpactRadius * feverImpactRadiusMultiplier : baseThirdImpactRadius;
 
     private bool isStopping = false;
-    
+
     private void Start()
     {
         FeverManager.OnFeverModeChanged += (feverState) =>
