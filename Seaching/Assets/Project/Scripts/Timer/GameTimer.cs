@@ -7,6 +7,7 @@ public class GameTimer : MonoBehaviour
 {
     [Header("UI References")]
     [SerializeField] private TextMeshProUGUI timerText;
+    [SerializeField] private TextMeshProUGUI bonusText;
 
     [Header("Settings")]
     [SerializeField] private float timeLimit = 60.0f; // 制限時間
@@ -29,6 +30,7 @@ public class GameTimer : MonoBehaviour
     private void Start()
     {
         // 初期化
+        bonusText.text = "";
         currentTime = timeLimit;
         previousDisplayTime = Mathf.CeilToInt(timeLimit);
         
@@ -100,9 +102,18 @@ public class GameTimer : MonoBehaviour
     // 時間を延長するメソッド（敵を倒したボーナスなどで使う）
     public void AddTime(float amount)
     {
+        bonusText.text = $"+{amount:F0}";
+        Sequence bonusSeq = DOTween.Sequence();
+        bonusSeq.Append(bonusText.transform.DOPunchScale(Vector3.one * 0.5f, 0.5f));
+        bonusSeq.AppendInterval(0.5f);
+        bonusSeq.Append(bonusText.DOFade(0f, 0.5f));
+        bonusSeq.OnComplete(() =>
+        {
+            bonusText.text = "";
+        });
+
         currentTime += amount;
-        // 上限を超えないようにするならここでClamp
-        // currentTime = Mathf.Min(currentTime, timeLimit);
+        
         
         // 時間が増えた演出（緑色に光らせるなど）を入れると親切
         timerText.transform.DOPunchScale(Vector3.one * 0.5f, 0.3f);
