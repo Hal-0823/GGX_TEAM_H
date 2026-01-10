@@ -12,6 +12,7 @@ public class Magnet : MonoBehaviour
     [SerializeField] private float itemspeed = 15f;//移動速度
     private MagnetManager magnetmanager;
     private bool isCollected = false;
+    private bool isActive = false;
 
     void Start()
     {
@@ -40,7 +41,7 @@ public class Magnet : MonoBehaviour
             Mag();
         }
 
-        if(DistanceToTarget < 1f)
+        if(DistanceToTarget < 2.5f)
         {
             OnCollected?.Invoke();
             isCollected = true;
@@ -51,6 +52,8 @@ public class Magnet : MonoBehaviour
 
     void Mag() //吸収される判定
     {
+        if (!isActive) return;
+
         transform.position = Vector3.MoveTowards(
         transform.position,
         target.position,
@@ -62,8 +65,13 @@ public class Magnet : MonoBehaviour
     {
         get
         {
-            if(target == null) return float.MaxValue;
+            if (target == null) return float.MaxValue;
             return Vector3.Distance(transform.position, target.position);
         }
+    }
+    
+    public void ChangeIsActive(bool value)
+    {
+        isActive = value;
     }
 }

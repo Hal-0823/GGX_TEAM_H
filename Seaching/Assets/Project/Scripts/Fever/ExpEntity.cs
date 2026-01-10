@@ -54,7 +54,7 @@ public class ExpEntity : MonoBehaviour
     /// <param name="position"></param>
     public void SpawnAt(Vector3 position)
     {
-        magnet.enabled = false; // 最初は磁力を無効化
+        magnet.ChangeIsActive(false); // 最初は磁力を無効化
         transform.position = position;
 
         // 1.5秒後に磁力を有効化
@@ -73,7 +73,7 @@ public class ExpEntity : MonoBehaviour
 
     private void EnableMagnet()
     {
-        magnet.enabled = true;
+        magnet.ChangeIsActive(true);
     }
 
     private void OnDisable()

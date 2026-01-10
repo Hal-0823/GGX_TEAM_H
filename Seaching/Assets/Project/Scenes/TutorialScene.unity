@@ -1481,7 +1481,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5754831478122459507, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: field of view
-      value: 60
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 5754831478122459507, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: far clip plane
@@ -1509,27 +1509,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8287251485150333403, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 21.24613
+      value: 45.24613
       objectReference: {fileID: 0}
     - target: {fileID: 8287251485150333403, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.17457
+      value: -93.82543
       objectReference: {fileID: 0}
     - target: {fileID: 8287251485150333403, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.77334213
+      value: 0.9930066
       objectReference: {fileID: 0}
     - target: {fileID: 8287251485150333403, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.633989
+      value: 0.11805908
       objectReference: {fileID: 0}
     - target: {fileID: 8287251485150333403, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00000012676074
+      value: -0.0000000035066419
       objectReference: {fileID: 0}
     - target: {fileID: 8287251485150333403, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.00000010391897
+      value: 4.1690654e-10
       objectReference: {fileID: 0}
     - target: {fileID: 8744719095426096057, guid: 6242d02acba9ff3428261358e522d381, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2021,6 +2021,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8519725922553223680}
+  - component: {fileID: 8519725922553223681}
   m_Layer: 0
   m_Name: Maou
   m_TagString: Untagged
@@ -2171,6 +2172,28 @@ Transform:
   - {fileID: 3228844790338061963}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!95 &8519725922553223681
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7184001186435646787}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 53ac65fb953df5045923d19a4579332b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

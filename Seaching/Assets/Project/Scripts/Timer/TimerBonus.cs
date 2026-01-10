@@ -1,20 +1,41 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Magnet))]
 public class TimeBonusItem : MonoBehaviour
 {
-    public float bonusTime = 10f;
+    [SerializeField] private float bonusTime = 10f;
+    [SerializeField] private Magnet magnet;
 
-    private void OnTriggerEnter(Collider other)
+    private void Start()
     {
-        if (other.CompareTag("Player"))
-        {
-            GameTimer timer = FindObjectOfType<GameTimer>();
-            if (timer != null)
-            {
-                timer.AddTime(bonusTime);
-            }
+        magnet.OnCollected += HandleCollected;  // Magnetã‚¯ãƒ©ã‚¹ã®åé›†ã‚¤ãƒ™ãƒ³ãƒˆã«ç™»éŒ²
+        magnet.ChangeIsActive(false);
+        Invoke(nameof(EnableMagnet), 1.5f);
+    }
 
-            Destroy(gameObject); // ƒAƒCƒeƒ€‚ğÁ‚·
+    private void HandleCollected()
+    {
+        GameTimer timer = FindFirstObjectByType<GameTimer>();
+        if (timer != null)
+        {
+            AudioManager.Instance.PlaySE("SE_ItemGet6");
+            timer.AddTime(bonusTime);
         }
+        Destroy(gameObject);
+    }
+
+    private void EnableMagnet()
+    {
+        magnet.ChangeIsActive(true);
+    }
+
+    private void OnDisable()
+    {
+        CancelInvoke(nameof(EnableMagnet));
+    }
+
+    private void OnDestroy()
+    {
+        magnet.OnCollected -= HandleCollected; // ã‚¤ãƒ™ãƒ³ãƒˆç™»éŒ²è§£é™¤
     }
 }
