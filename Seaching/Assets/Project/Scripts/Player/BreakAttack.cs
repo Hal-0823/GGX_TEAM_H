@@ -50,29 +50,36 @@ public class BreakAttack : MonoBehaviour
                 if (!isStopping)
                 {
                     // ヒットストップを開始
-                    StartCoroutine(DoHitStop(0.1f)); // 0.6秒間ヒットストップ
+                    StartCoroutine(DoHitStop(0.1f)); // 0.1秒間ヒットストップ
                 }
                 building.Shatter(transform.position, impactPower, impactRadius);
                 breakCount++;
                 continue;
             }
 
-            // 相手が「勇者」か確認
-            var brave = hit.GetComponent<BravePersonController>();
-            if (brave != null)
+            // フィーバー中は勇者を倒せる
+            if (isFever)
             {
-                if (HitCounterUI.instance != null)
+                // 相手が「勇者」か確認
+                var brave = hit.GetComponent<BravePersonController>();
+                if (brave != null)
                 {
-                    HitCounterUI.instance.AddHit();
+                    if (HitCounterUI.instance != null)
+                    {
+                        HitCounterUI.instance.AddHit();
+                    }
+                    if (!isStopping)
+                    {
+                        // ヒットストップを開始
+                        StartCoroutine(DoHitStop(0.1f)); // 0.1秒間ヒットストップ
+                    }
+                    brave.GetDamage(transform.position, impactPower, impactRadius);
+                    AudioManager.Instance.PlaySE("SE_HeroDeath4");
+                    
+                    continue;
                 }
-                if (!isStopping)
-                {
-                    // ヒットストップを開始
-                    StartCoroutine(DoHitStop(0.1f)); // 0.6秒間ヒットストップ
-                }
-                brave.GetDamage(transform.position, impactPower, impactRadius);
-                continue;
             }
+
         }
 
         AudioManager.Instance.PlaySE("SE_Destroy1");

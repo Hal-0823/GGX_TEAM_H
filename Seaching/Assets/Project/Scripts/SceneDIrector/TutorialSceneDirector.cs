@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class TutorialSceneDirector : MonoBehaviour
 {
+    [SerializeField] private InputChannel inputChannel;
     [SerializeField] private CanvasGroup fadeCanvasGroup;
 
     [SerializeField] private DialogueManager dialogueManager;
@@ -141,15 +142,33 @@ public class TutorialSceneDirector : MonoBehaviour
             // 建物が壊されるまで待機
             yield return new WaitUntil(() => buildingBreaked);
             Debug.Log("建物が壊されました", this);
-            string[] breakLines = new string[]
-            {
-                "よし、うまくやったな。",
-                "たかい ジャンプ を すれば\nよりたくさん の ものを こわせるぞ。"
-            };
 
-            dialogueManager.StartDialogue(breakLines);
-            yield return null;
-            yield return new WaitUntil(() => !dialogueManager.IsDialgoueActive());
+            if (Gamepad.current != null)
+            {
+                string[] breakLines = new string[]
+                {
+                    "よし、うまくやったな。",
+                    "たかい ジャンプ を すれば\nよりたくさん の ものを こわせるぞ。",
+                    "すぐに おちたくなった ときは\nもういちど <sprite=94>か<sprite=96>を おせば よい。",
+                };
+
+                dialogueManager.StartDialogue(breakLines);
+                yield return null;
+                yield return new WaitUntil(() => !dialogueManager.IsDialgoueActive());
+            }
+            else
+            {
+                string[] breakLines = new string[]
+                {
+                    "よし、うまくやったな。",
+                    "たかい ジャンプ を すれば\nよりたくさん の ものを こわせるぞ。",
+                    "すぐに おちたくなった ときは\nもういちど Spaceキー を おせば よい。",
+                };
+
+                dialogueManager.StartDialogue(breakLines);
+                yield return null;
+                yield return new WaitUntil(() => !dialogueManager.IsDialgoueActive());
+            }
         }
         else
         {
@@ -164,6 +183,18 @@ public class TutorialSceneDirector : MonoBehaviour
             yield return null;
             yield return new WaitUntil(() => !dialogueManager.IsDialgoueActive());
         }
+
+        string[] hintLines = new string[]
+        {
+            "にんげんかいの たてもの を はかいすると\nまりょく の けっしょう が てにはいる。",
+            "その けっしょう を あつめると\nわれわれ は すこしのあいだ つよく なる。",
+            "ゆうしゃ にも まけない ちから が\nてにはいるぞ。"
+        };
+
+        dialogueManager.StartDialogue(hintLines);
+
+        yield return null;
+        yield return new WaitUntil(() => !dialogueManager.IsDialgoueActive());
 
         // チュートリアル終了の会話
         string[] endingLines = new string[]
@@ -215,6 +246,7 @@ public class TutorialSceneDirector : MonoBehaviour
 
     private IEnumerator FinishTutorial()
     {
+        inputChannel.SwitchToNone();
         isFinished = true;
 
         tutorialCamera.Priority = 15;

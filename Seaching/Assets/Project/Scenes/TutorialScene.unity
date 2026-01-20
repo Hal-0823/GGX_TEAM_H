@@ -494,6 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5d96b306ae2f2b44b71f10cf6ecc8cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputChannel: {fileID: 11400000, guid: f4c0f13b0fc12ba45b186b8161e2e1af, type: 2}
   fadeCanvasGroup: {fileID: 89227315}
   dialogueManager: {fileID: 1844518175}
   playerController: {fileID: 2075446304}

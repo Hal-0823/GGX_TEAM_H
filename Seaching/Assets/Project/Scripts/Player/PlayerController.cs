@@ -49,6 +49,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private BreakAttack breakAttack;
 
+    [SerializeField]
+    private Renderer renderer;
+
     private Vector2 movementInput;
 
     private bool isCharging = false;
@@ -436,8 +439,11 @@ public class PlayerController : MonoBehaviour
         UpdateVisuals(currentJumpLevel);
     }
 
-    private void TakenDamage(Vector3 enemyPos)
+    public void TakenDamage(Vector3 enemyPos)
     {
+        // 空中にいるとき、ダメージを受けているとき、フィーバー中は無効
+        if (!IsGrounded() || isTakenDamage || isFever) return;
+        AudioManager.Instance.PlaySE("SE_Land3");
         isTakenDamage = true;
         animator.SetTrigger("Standup");
         if (smashCameraControl != null)
@@ -458,7 +464,19 @@ public class PlayerController : MonoBehaviour
 
         ResetCharge();
 
-        isTakenDamage = false;
+        // 点滅させる
+        HitBlink();
+    }
 
+    private void HitBlink()
+    {
+        Sequence blinkSequence = DOTween.Sequence();
+        blinkSequence.AppendCallback(() => renderer.enabled = false);
+        blinkSequence.AppendInterval(0.07f);
+        blinkSequence.AppendCallback(() => renderer.enabled = true);
+        blinkSequence.AppendInterval(0.07f);
+        blinkSequence.SetLoops(4);
+        blinkSequence.AppendCallback(() => isTakenDamage = false);
+        blinkSequence.Play();
     }
 }

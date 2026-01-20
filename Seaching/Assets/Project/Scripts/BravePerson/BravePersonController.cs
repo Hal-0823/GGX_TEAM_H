@@ -116,6 +116,7 @@ public class BravePersonController : MonoBehaviour
         {
             // 攻撃距離に入った
             anim.SetBool("IsAttack", true);
+            player.GetComponent<PlayerController>().TakenDamage(transform.position);
             agent.velocity = Vector3.zero;
         }
         else

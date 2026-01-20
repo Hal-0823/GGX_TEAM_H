@@ -91,12 +91,13 @@ public class FeverManager : MonoBehaviour
             }
         }
 
+        AudioManager.Instance.PlaySE("SE_BonusAppear2");
         AudioManager.Instance.ChangeBGMPitch(1.2f, 0.5f); // BGMのピッチを上げる
         feverGaugeUI.PlayFeverStartAnimation(0.5f);
         feverGaugeUI.PlayFeverGaugeDecreaseAnimation(10f);
 
         // フィーバーモードの持続時間
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(20f);
 
         // フィーバーモード演出終了
         if (postProcessingVolume != null)

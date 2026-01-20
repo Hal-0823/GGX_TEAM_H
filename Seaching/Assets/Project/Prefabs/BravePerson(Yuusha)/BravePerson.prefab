@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2379131085428015317}
   - component: {fileID: 3350901030440561965}
   - component: {fileID: 4546719292935786053}
-  m_Layer: 9
+  m_Layer: 13
   m_Name: BravePerson
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,11 +144,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a35739e92323a94496961c79e5de380, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreValue: 100
+  scoreValue: 1000
   viewAngle: 360
-  viewDistance: 20
-  moveSpeed: 7
-  wanderRadius: 5
+  viewDistance: 40
+  moveSpeed: 6
+  wanderRadius: 10
   wanderTimerMax: 5
   attackRange: 5
 --- !u!1001 &7550745367854879934
@@ -159,6 +159,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8219395451755123921}
     m_Modifications:
+    - target: {fileID: 2263055335390011781, guid: f5719194c2077e944b78cf01f4630905, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 3430520911806509932, guid: f5719194c2077e944b78cf01f4630905, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -211,6 +215,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FoundUI
       objectReference: {fileID: 0}
+    - target: {fileID: 4764202461038051184, guid: f5719194c2077e944b78cf01f4630905, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -229,6 +237,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8219395451755123921}
     m_Modifications:
+    - target: {fileID: -9141735197031073235, guid: ff4ea69d8f92c2146abcc5944a7781c2, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ff4ea69d8f92c2146abcc5944a7781c2, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -281,6 +293,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8408898652214169182, guid: ff4ea69d8f92c2146abcc5944a7781c2, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: -6247814676056638803, guid: ff4ea69d8f92c2146abcc5944a7781c2, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: -4706452340541456491, guid: ff4ea69d8f92c2146abcc5944a7781c2, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: -3976966589390390101, guid: ff4ea69d8f92c2146abcc5944a7781c2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.2513345
@@ -293,9 +317,25 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.1868166
       objectReference: {fileID: 0}
+    - target: {fileID: -259972160606440404, guid: ff4ea69d8f92c2146abcc5944a7781c2, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 635547659545568360, guid: ff4ea69d8f92c2146abcc5944a7781c2, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ff4ea69d8f92c2146abcc5944a7781c2, type: 3}
       propertyPath: m_Name
       value: Yuusha_ForUnityAnimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ff4ea69d8f92c2146abcc5944a7781c2, type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 2058741485653296453, guid: ff4ea69d8f92c2146abcc5944a7781c2, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 4167280743394806330, guid: ff4ea69d8f92c2146abcc5944a7781c2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -308,6 +348,10 @@ PrefabInstance:
     - target: {fileID: 7512281513308713651, guid: ff4ea69d8f92c2146abcc5944a7781c2, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.9068063
+      objectReference: {fileID: 0}
+    - target: {fileID: 7803407436844761574, guid: ff4ea69d8f92c2146abcc5944a7781c2, type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 7876023681238672744, guid: ff4ea69d8f92c2146abcc5944a7781c2, type: 3}
       propertyPath: m_LocalPosition.x

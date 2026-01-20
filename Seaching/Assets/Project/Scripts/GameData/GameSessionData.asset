@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cc18a5438c2b7b48b42401743279cbe, type: 3}
   m_Name: GameSessionData
   m_EditorClassIdentifier: 
-  currentScore: 420000
+  currentScore: 510000

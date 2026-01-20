@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f632296c147c81d49822fa5b7b5b52e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreValue: 100
+  scoreValue: 5000
   brokenModel: {fileID: 977837542476928967, guid: cf35e21188532e5428d50fa91042631c, type: 3}
   expCount: 1
 --- !u!208 &5881070888764414313

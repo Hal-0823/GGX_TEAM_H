@@ -46,3 +46,6 @@ MonoBehaviour:
   - rankName: DEVIL
     threshold: 400000
     rankColor: {r: 0.7490196, g: 0, b: 0.3254902, a: 1}
+  - rankName: <size=60%>DEVIL-KING</size>
+    threshold: 500000
+    rankColor: {r: 0.8862745, g: 0, b: 0.3351413, a: 1}

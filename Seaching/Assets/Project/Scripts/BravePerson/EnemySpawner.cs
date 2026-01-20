@@ -11,12 +11,20 @@ public class EnemySpawner : MonoBehaviour
 
     private Transform player;
     private PlayerController playerController;
+    private List<GameObject> enemies = new List<GameObject>();
+    private int maxEnemies = 1;
 
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         playerController = player.GetComponent<PlayerController>();
-        playerController.OnLanded += SpawnEnemy;
+        //playerController.OnLanded += SpawnEnemy;
+
+        SpawnEnemy();
+        InvokeRepeating(nameof(SpawnEnemy), 5f, 30f);
+        InvokeRepeating(nameof(SpawnEnemy), 20f, 45f);
+        InvokeRepeating(nameof(SpawnEnemy), 60f, 30f);
+        InvokeRepeating(nameof(SpawnEnemy), 100f, 10f);
     }
 
     void OnDestroy()
@@ -25,11 +33,8 @@ public class EnemySpawner : MonoBehaviour
         {
             playerController.OnLanded -= SpawnEnemy;
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
+        CancelInvoke(nameof(SpawnEnemy));
     }
 
     //�X�|�[���������Ƃ��ɌĂ�.
@@ -57,8 +62,7 @@ public class EnemySpawner : MonoBehaviour
         }
 
         int randomIndex = Random.Range(0, validPoints.Count);
-        Instantiate(enemyPrefab, validPoints[randomIndex].position, Quaternion.identity);
-        Instantiate(enemyPrefab, validPoints[(randomIndex + Random.Range(1, validPoints.Count)) % validPoints.Count].position, Quaternion.identity);
-
+        var enemy = Instantiate(enemyPrefab, validPoints[randomIndex].position, Quaternion.identity);
+        enemies.Add(enemy);
     }
 }

@@ -14,6 +14,7 @@ public class ResultSceneDirector : MonoBehaviour
     [SerializeField] ScoreDisplay scoreDisplay;
     [SerializeField] private List<BreakableObject> buildings;
     [SerializeField] private PlayerController playerController;
+    [SerializeField] private PlayerController maouController;
     [SerializeField] private GameObject firstSelectedButton;
     [SerializeField] private GameObject secondSelectedButton;
 
@@ -29,6 +30,10 @@ public class ResultSceneDirector : MonoBehaviour
         scoreDisplay.OnRankUp += AppearBuildings;
         inputChannel.SwitchToNone();
         playerController.gameObject.SetActive(false);
+
+        maouController.enabled = false;
+        maouController.gameObject.SetActive(false);
+
         buildings.ForEach(b => originalScales[b] = b.transform.localScale);
 
         firstSelectedButton.SetActive(false);
@@ -63,9 +68,22 @@ public class ResultSceneDirector : MonoBehaviour
         yield return new WaitForSeconds(1.1f);
         scoreDisplay.ConfirmRank();
 
-        playerController.gameObject.SetActive(true);
-        StartCoroutine(playerController.StompActionCoroutine(1, 0));
-        yield return new WaitForSeconds(1.5f);
+        // 最大値の場合魔王が落下
+        if (currentBuildingIndex == buildings.Count)
+        {
+            maouController.enabled = true;
+            maouController.gameObject.SetActive(true);
+            StartCoroutine(maouController.StompActionCoroutine(1, 0));
+            yield return new WaitForSeconds(2.5f);
+        }
+        else
+        {
+            playerController.gameObject.SetActive(true);
+            StartCoroutine(playerController.StompActionCoroutine(1, 0));
+            yield return new WaitForSeconds(1.5f);
+        }
+        
+
 
         AudioManager.Instance.PlayBGM("BGM_Result");
 

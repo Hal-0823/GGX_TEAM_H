@@ -58,5 +58,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f4f4493b53f72b4c9ccbab2f4797cf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxValue: 30
+  maxValue: 80
   postProcessingVolume: {fileID: 0}
