@@ -102,6 +102,9 @@ public class GameTimer : MonoBehaviour
     // 時間を延長するメソッド（敵を倒したボーナスなどで使う）
     public void AddTime(float amount)
     {
+        // 透明度をリセット
+        bonusText.alpha = 1f;
+        
         bonusText.text = $"+{amount:F0}";
         Sequence bonusSeq = DOTween.Sequence();
         bonusSeq.Append(bonusText.transform.DOPunchScale(Vector3.one * 0.5f, 0.5f));
