@@ -21,6 +21,12 @@ public class FeverManager : MonoBehaviour
     private bool isFever = false;
     private int currentValue = 0;
 
+    // フィーバーモード終了時にイベント登録解除
+    private void OnDestroy()
+    {
+        ExpEntity.OnExpCollected -= IncreaseFeverGauge;
+    }
+
     private void Start()
     {
         feverGaugeUI = GetComponent<FeverGaugeUI>();
