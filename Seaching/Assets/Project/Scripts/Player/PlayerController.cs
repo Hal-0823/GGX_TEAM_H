@@ -356,6 +356,10 @@ public class PlayerController : MonoBehaviour
     {
         isDiving = true;
         Debug.Log("Dive Start");
+        // 落下を開始した時点で前のトリガーが残っていたらリセットする
+        animator.ResetTrigger("Land");
+        animator.ResetTrigger("Standup");
+        
         animator.SetTrigger("Fall");
         // -----------------------------------------
         // 3. 急降下フェーズ (Dive)
