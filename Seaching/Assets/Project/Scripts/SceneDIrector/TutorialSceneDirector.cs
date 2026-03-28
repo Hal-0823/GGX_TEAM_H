@@ -184,18 +184,6 @@ public class TutorialSceneDirector : MonoBehaviour
             yield return new WaitUntil(() => !dialogueManager.IsDialgoueActive());
         }
 
-        string[] hintLines = new string[]
-        {
-            "にんげんかいの たてもの を はかいすると\nまりょく の けっしょう が てにはいる。",
-            "その けっしょう を あつめると\nわれわれ は すこしのあいだ つよく なる。",
-            "ゆうしゃ にも まけない ちから が\nてにはいるぞ。"
-        };
-
-        dialogueManager.StartDialogue(hintLines);
-
-        yield return null;
-        yield return new WaitUntil(() => !dialogueManager.IsDialgoueActive());
-
         // チュートリアル終了の会話
         string[] endingLines = new string[]
         {
