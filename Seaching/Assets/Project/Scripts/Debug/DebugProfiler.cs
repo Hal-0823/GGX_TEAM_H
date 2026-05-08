@@ -8,6 +8,11 @@ public class DebugProfiler : MonoBehaviour
     private float prevTime = 0f;
     private float fps = 0f;
 
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     private void Start()
     {
         if (debugPanel == null)

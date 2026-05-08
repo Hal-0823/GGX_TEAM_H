@@ -19,7 +19,6 @@ public class GameSceneDirector : MonoBehaviour
 
     private void Awake()
     {
-        Application.targetFrameRate = 60;
         gameOverZone.OnGameOver += OnGameOver;
     }
 
