@@ -27,6 +27,7 @@ public class TitleSceneDirector : MonoBehaviour
 
     void Start()
     {
+        Application.targetFrameRate = 90;
         blackPanel.alpha = 1.0f; // 最初は真っ黒
         // フェードイン
         blackPanel.DOFade(0.0f, 1.0f);
