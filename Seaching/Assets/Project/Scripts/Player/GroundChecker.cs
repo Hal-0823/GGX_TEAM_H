@@ -16,6 +16,7 @@ public class GroundChecker : MonoBehaviour
         // Rayの方向ベクトル (真下へ rayLength 分の長さ)
         Vector3 rayDirection = Vector3.down * rayLength;
         
+        /*
         // レイをシーンビューに描画して可視化する
         Debug.DrawRay(
             rayStart, 
@@ -23,6 +24,7 @@ public class GroundChecker : MonoBehaviour
             Color.green,    // レイの色
             1000f           // 描画時間
         );
+        */
 
         // 実際のRaycast判定
         return Physics.Raycast(
