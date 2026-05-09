@@ -50,8 +50,9 @@ Material:
     - _QueueOffset: 0
     - _TimeScale: 0.05
     m_Colors:
-    - _WaveScrollVector: {r: 0.05, g: 0.05, b: 0, a: 0}
-    - _WaveScrollVectorSub: {r: -1, g: -0.6, b: 0, a: 0}
+    - _WaveColor: {r: 0, g: 0.64256555, b: 0.9716981, a: 1}
+    - _WaveScrollVector: {r: -0.5, g: 0, b: 0, a: 0}
+    - _WaveScrollVectorSub: {r: 0.5, g: -1, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &8721214460077600469
