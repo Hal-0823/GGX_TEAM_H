@@ -446,8 +446,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Credit:OtoLogic
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8cfdfdba231093048b234059bf742cce, type: 2}
-  m_sharedMaterial: {fileID: -6319660454089174644, guid: 8cfdfdba231093048b234059bf742cce, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 960211e209c2dd641a00098cb559febc, type: 2}
+  m_sharedMaterial: {fileID: 7733584465447664124, guid: 960211e209c2dd641a00098cb559febc, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
