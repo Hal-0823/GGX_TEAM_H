@@ -90,10 +90,10 @@ public class DebrisManager : MonoBehaviour
             // 一番古い（最初に入れた）瓦礫を取り出す
             GameObject oldDebris = solidifiedDebrisQueue.Dequeue();
             
-            // DOTweenで小さくして消す（パッと消えると不自然なので）
             if (oldDebris != null)
             {
-                oldDebris.AddComponent<DebrisShrinker>();
+                //oldDebris.AddComponent<DebrisShrinker>();
+                Destroy(oldDebris);
             }
         }
     }
