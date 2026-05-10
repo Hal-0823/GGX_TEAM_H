@@ -4478,6 +4478,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9020423640936926959, guid: 522ee7dc35eca9a4faaa927b10ac808c, type: 3}
+      propertyPath: maxSolidDebrisCount
+      value: 1000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
