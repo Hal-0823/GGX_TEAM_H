@@ -39,6 +39,7 @@ public class TitleSceneDirector : MonoBehaviour
 
     void Start()
     {
+        QualitySettings.vSyncCount = 1;
         Application.targetFrameRate = 60;
         blackPanel.alpha = 1.0f; // 最初は真っ黒
         // フェードイン
