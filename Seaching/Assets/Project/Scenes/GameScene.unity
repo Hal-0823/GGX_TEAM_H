@@ -4300,6 +4300,10 @@ PrefabInstance:
       propertyPath: m_LayerMask.m_Bits
       value: 1024
       objectReference: {fileID: 0}
+    - target: {fileID: 4934669059039291115, guid: aada586744cb73844bd866113a27d1a0, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: db7008a692ba03a44b779b34671575f1, type: 2}
     - target: {fileID: 6434354319859678026, guid: aada586744cb73844bd866113a27d1a0, type: 3}
       propertyPath: m_LocalScale.y
       value: 5
