@@ -35,7 +35,6 @@ public class DebugProfiler : MonoBehaviour
         }
 
         string debugInfo = $"FPS: {fps:F0}";
-        string memoryInfo = $"Memory: {System.GC.GetTotalMemory(false) / (1024 * 1024):F2} MB";
-        debugPanel.UpdateDebugText(debugInfo, memoryInfo);
+        debugPanel.UpdateDebugText(debugInfo);
     }
 }

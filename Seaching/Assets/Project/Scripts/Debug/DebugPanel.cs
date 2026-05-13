@@ -25,8 +25,8 @@ public class DebugPanel : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void UpdateDebugText(string _fpsText, string _memoryText)
+    public void UpdateDebugText(string _fpsText)
     {
-        debugText.text = $"{_fpsText}\t{_memoryText}";
+        debugText.text = _fpsText;
     }
 }
