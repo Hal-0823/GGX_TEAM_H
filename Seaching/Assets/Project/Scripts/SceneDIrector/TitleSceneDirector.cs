@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Rendering;
+using UnityEngine.InputSystem;
 using DG.Tweening;
+using TMPro;
 
 public class TitleSceneDirector : MonoBehaviour
 {
@@ -8,6 +11,10 @@ public class TitleSceneDirector : MonoBehaviour
     [SerializeField] private RectTransform logoRect;       // ロゴのRectTransform
     [SerializeField] private CanvasGroup blackPanel;       // 暗転用の黒背景パネル
     [SerializeField] private RectTransform startTextRect;   // ボタンを押してスタート のテキスト
+
+    [Header("Option")]
+    [SerializeField] private RenderPipelineAsset highQualityPipeline; // 高品質レンダーパイプライン
+    [SerializeField] private RenderPipelineAsset lowQualityPipeline;  // 低品質レンダーパイプライン
 
     private PlayerInput playerInput;
 
@@ -17,6 +24,11 @@ public class TitleSceneDirector : MonoBehaviour
         Screen.SetResolution(1920, 1080, FullScreenMode.FullScreenWindow);
         playerInput = new PlayerInput();
         playerInput.Title.Next.performed += OnNextPressed;
+
+        // GraphicsOption
+        playerInput.Title.Option1.performed += OnOptionPressed;
+        playerInput.Title.Option2.performed += OnOptionPressed;
+
         playerInput.Enable();
     }
 
@@ -36,6 +48,15 @@ public class TitleSceneDirector : MonoBehaviour
         startTextRect.DOScale(1.1f, 0.8f)
                     .SetEase(Ease.InOutQuad)
                     .SetLoops(-1, LoopType.Yoyo);
+
+        if (Gamepad.current != null)
+        {
+            startTextRect.GetComponent<TextMeshProUGUI>().text = "ボタンを押してスタート";
+        } 
+        else
+        {
+            startTextRect.GetComponent<TextMeshProUGUI>().text = "Spaceキーを押してスタート";
+        }
     }
 
     private void OnNextPressed(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -65,5 +86,20 @@ public class TitleSceneDirector : MonoBehaviour
 
         // 遷移
         seq.OnComplete(() => SceneManager.LoadScene("TutorialScene"));
+    }
+
+    private void OnOptionPressed(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        AudioManager.Instance.PlaySE("SE_Click6");
+
+        switch (context.action.name)
+        {
+            case "Option1":
+                QualitySettings.renderPipeline = highQualityPipeline;
+                break;
+            case "Option2":
+                QualitySettings.renderPipeline = lowQualityPipeline;
+                break;
+        }
     }
 }
