@@ -120,13 +120,11 @@ public class PlayerController : MonoBehaviour
         FeverManager.OnFeverModeChanged -= SetIsFever;
     }
 
-    // プレイヤーの操作を有効化
     private void EnableControl()
     {
         playerInput.Player.Enable();
     }
 
-    // プレイヤーの操作を無効化
     private void DisableControl()
     {
         playerInput.Player.Disable();
@@ -146,7 +144,6 @@ public class PlayerController : MonoBehaviour
     {
         if (IsGrounded())
         {
-            // rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             if (context.started)
             {
                 isCharging = true;
@@ -163,7 +160,6 @@ public class PlayerController : MonoBehaviour
                     ResetCharge();
                 }
             }
-            //smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Jumping);
         }
     }
 
@@ -200,8 +196,8 @@ public class PlayerController : MonoBehaviour
 
             if (currentJumpLevel != lastJumpLevel)
             {
-                UpdateVisuals(currentJumpLevel); // チャージ中の見た目更新
-                PlayChargeSE(currentJumpLevel); // チャージ音再生
+                UpdateVisuals(currentJumpLevel);
+                PlayChargeSE(currentJumpLevel);
                 lastJumpLevel = currentJumpLevel;
             }
         }
@@ -271,7 +267,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // // 一連の動作を管理するコルーチン
     public IEnumerator StompActionCoroutine(int jumpLevel, float jumpForce)
     {
         Coroutine jumpCoroutine = StartCoroutine(JumpCoroutine(jumpLevel, jumpForce));
@@ -307,31 +302,21 @@ public class PlayerController : MonoBehaviour
         {
             HitCounterUI.instance.ForceReset();
         }
-        //isActionActive = true;
 
-        // -----------------------------------------
-        // 1. 上昇フェーズ (Jump)
-        // -----------------------------------------
-        // 上方向への初速を与える
         rb.linearVelocity = Vector3.up * jumpForce;
 
         if (smashCameraControl != null)
         {
             smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Jumping);
         }
-        // 上昇中は待機（Y速度が落ちてくるまで、または一定時間）
-        // ここでは簡易的に「Y速度が0に近づくまで」待ちます
+
         while (rb.linearVelocity.y > 0.5f)
         {
             yield return null;
         }
 
-        // -----------------------------------------
-        // 2. 滞空・狙いフェーズ (Hover & Aim)
-        // -----------------------------------------
-        // 物理演算の「嘘」をつくパート
-        rb.useGravity = false;    // 重力を切る
-        rb.linearVelocity = Vector3.zero; // 慣性を消してピタッと止める
+        rb.useGravity = false;
+        rb.linearVelocity = Vector3.zero;
 
         // カメラをエイムモードに切り替え
         if (smashCameraControl != null)
@@ -356,16 +341,13 @@ public class PlayerController : MonoBehaviour
     {
         isDiving = true;
         Debug.Log("Dive Start");
+
         // 落下を開始した時点で前のトリガーが残っていたらリセットする
         animator.ResetTrigger("Land");
         animator.ResetTrigger("Standup");
         
         animator.SetTrigger("Fall");
-        // -----------------------------------------
-        // 3. 急降下フェーズ (Dive)
-        // -----------------------------------------
-        rb.useGravity = true; // 重力を戻す
-        // 下方向に強力な初速を与える
+        rb.useGravity = true;
         rb.linearVelocity = Vector3.down * diveSpeed;
 
         // カメラを落下モードに切り替え
@@ -374,18 +356,11 @@ public class PlayerController : MonoBehaviour
             smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Falling);
         }
 
-        // 着地するまで待機（接地判定はCollisionなどを利用しても良い）
-        // 今回は簡易的に「Y座標が一定以下」または「速度が0になる」までとします
-        // 本来は OnCollisionEnter で着地エフェクトを出してフラグを折るのがベスト
         while (!IsGrounded())
         {
             yield return null;
         }
 
-        // -----------------------------------------
-        // 終了処理
-        // -----------------------------------------
-        // 着地時の振動や破壊処理をここで呼ぶ
         animator.SetTrigger("Land");
         OnLanded?.Invoke(); // 着地イベントを発火
 
@@ -394,13 +369,14 @@ public class PlayerController : MonoBehaviour
             smashCameraControl.ShakeCamera();
         }
         StartCoroutine(breakAttack.DoStompCoroutine(jumpLevel));
-        //isActionActive = false;
+
         if (smashCameraControl != null)
         {
             smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Impact);
         }
 
         yield return new WaitForSeconds(1.1f); // 少し待ってから通常モードへ
+        
         if (smashCameraControl != null)
         {
             smashCameraControl.UpdateCameraState(SmashCameraControl.SmashState.Normal);
@@ -412,8 +388,6 @@ public class PlayerController : MonoBehaviour
     
     public void OnCollisionEnter(Collision collision)
     {
-        // 落下中に建物に衝突した場合の処理
-
         // 空中にいるとき
         if (!IsGrounded())
         {
@@ -457,13 +431,10 @@ public class PlayerController : MonoBehaviour
         // 吹っ飛び処理
         // 敵から自分への方向を計算
         Vector3 awayFromEnemy = (transform.position - enemyPos).normalized;
-        // 斜め上方向に飛ばす（少し上に浮かせると吹っ飛び感が出る）
         Vector3 knockbackDir = (awayFromEnemy + Vector3.up * 0.8f).normalized;
 
-        // 現在の速度を一度リセット
         rb.linearVelocity = Vector3.zero;
 
-        // 瞬間的な力を加える
         rb.AddForce(knockbackDir * knockbackForce, ForceMode.Impulse);
 
         ResetCharge();

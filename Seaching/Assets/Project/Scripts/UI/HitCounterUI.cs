@@ -20,7 +20,7 @@ public class HitCounterUI : MonoBehaviour
     public struct HitColorRank
     {
         public int threshold;        // 閾値
-        public float targetFontSize; // ★このランクでのフォントサイズ
+        public float targetFontSize; // このランクでのフォントサイズ
         public Color topColor;
         public Color bottomColor;
     }
@@ -45,7 +45,7 @@ public class HitCounterUI : MonoBehaviour
         {
             canvasGroup.alpha = 0f;
             hitText.enableVertexGradient = true;
-            // 重要：Auto SizeがONだとスクリプトからサイズ変更できないためOFFにする
+            // Auto SizeがONだとスクリプトからサイズ変更できないためOFFにする
             hitText.enableAutoSizing = false; 
         }
     }
@@ -72,24 +72,21 @@ public class HitCounterUI : MonoBehaviour
             canvasGroup.DOKill();
             canvasGroup.alpha = 1f;
 
-            // --- 1. ランク情報の取得 ---
+            // ランク情報の取得
             HitColorRank currentRank = GetCurrentRank(currentHits);
 
-            // --- 2. 色の更新 ---
+            // 色の更新
             hitText.colorGradient = new VertexGradient(
                 currentRank.topColor, currentRank.topColor, 
                 currentRank.bottomColor, currentRank.bottomColor
             );
 
-            // --- 3. フォントサイズの変更（DOTween.Toを使用） ---
-            // いきなり変わるとカクつくので、滑らかに変化させる
             if (hitText.fontSize != currentRank.targetFontSize)
             {
                 // 前のサイズ変更アニメーションがあれば止める
                 if (fontSizeTween != null && fontSizeTween.IsActive()) fontSizeTween.Kill();
 
                 // 現在のサイズから目標サイズへアニメーション
-                // DOTween.To(getter, setter, endValue, duration)
                 fontSizeTween = DOTween.To(
                     () => hitText.fontSize, 
                     x => hitText.fontSize = x, 
@@ -98,10 +95,8 @@ public class HitCounterUI : MonoBehaviour
                 ).SetEase(Ease.OutCubic);
             }
 
-            // --- 4. パンチ演出（跳ねる動きはスケールで行う） ---
-            // ※フォントサイズを変えているので、スケールのベースは常に「1」でOK
             hitText.transform.DOKill(); // 重複防止
-            hitText.transform.localScale = Vector3.one; // 一旦戻す
+            hitText.transform.localScale = Vector3.one;
             hitText.transform.DOPunchScale(Vector3.one * (punchScale - 1f), 0.2f, 10, 1f);
         }
     }

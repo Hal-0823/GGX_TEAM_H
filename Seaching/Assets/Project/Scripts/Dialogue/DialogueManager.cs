@@ -128,14 +128,14 @@ public class DialogueManager : MonoBehaviour
         // 文字送り or 次の文章へ
         if (isTyping)
         {
-            // 文字送り中なら：全文を一気に表示してスキップ
+            // 文字送り中なら全文を一気に表示してスキップ
             if (typingCoroutine != null) StopCoroutine(typingCoroutine);
             dialogueText.text = currentSentence;
             isTyping = false;
         }
         else
         {
-            // 文字送りが終わっていれば：次の文章へ
+            // 文字送りが終わっていれば次の文章へ
             DisplayNextSentence();
         }
     }
@@ -191,10 +191,7 @@ public class DialogueManager : MonoBehaviour
 
     private void EndDialogue()
     {
-        // 1. UIを消す
         dialogueBox.SetActive(false);
-
-        // 3. ActionMapを「Player」に戻す（移動操作などの復活）
         inputChannel.SwitchToPlayer();
     }
 }

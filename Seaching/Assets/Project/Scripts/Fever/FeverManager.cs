@@ -81,9 +81,6 @@ public class FeverManager : MonoBehaviour
         // フィーバーモード演出開始
         if (postProcessingVolume != null)
         {
-
-            // 例: 色調補正を強調するなど
-            // 実際のエフェクト設定はプロジェクトに合わせて調整してください
             ChromaticAberration chromaticAberration;
             if (postProcessingVolume.profile.TryGet<ChromaticAberration>(out chromaticAberration))
             {

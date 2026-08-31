@@ -33,16 +33,15 @@ public class BreakAttack : MonoBehaviour
     public void DoBreak(float impactRadius, bool isPlayEffect)
     {
         int breakCount = 0;
-        // 指定範囲内のコライダを全て取得（SphereColliderを作る代わり）
+        
+        // 指定範囲内のコライダを全て取得
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, impactRadius, destructibleLayer);
 
         foreach (Collider hit in hitColliders)
         {
-            // 相手が「壊せるもの」か確認
             var building = hit.GetComponent<BreakableObject>();
             if (building != null)
             {
-                // 破壊命令を出す（爆発の中心と威力を渡す）
                 if (HitCounterUI.instance != null)
                 {
                     HitCounterUI.instance.AddHit();
@@ -50,7 +49,7 @@ public class BreakAttack : MonoBehaviour
                 if (!isStopping)
                 {
                     // ヒットストップを開始
-                    StartCoroutine(DoHitStop(0.1f)); // 0.1秒間ヒットストップ
+                    StartCoroutine(DoHitStop(0.1f));
                 }
                 building.Shatter(transform.position, impactPower, impactRadius);
                 breakCount++;
@@ -60,7 +59,6 @@ public class BreakAttack : MonoBehaviour
             // フィーバー中は勇者を倒せる
             if (isFever)
             {
-                // 相手が「勇者」か確認
                 var brave = hit.GetComponent<BravePersonController>();
                 if (brave != null)
                 {
@@ -71,7 +69,7 @@ public class BreakAttack : MonoBehaviour
                     if (!isStopping)
                     {
                         // ヒットストップを開始
-                        StartCoroutine(DoHitStop(0.1f)); // 0.1秒間ヒットストップ
+                        StartCoroutine(DoHitStop(0.1f));
                     }
                     brave.GetDamage(transform.position, impactPower, impactRadius);
                     AudioManager.Instance.PlaySE("SE_HeroDeath4");
@@ -79,29 +77,29 @@ public class BreakAttack : MonoBehaviour
                     continue;
                 }
             }
-
         }
 
         AudioManager.Instance.PlaySE("SE_Destroy1");
 
-        // ここにカメラシェイクや土煙エフェクトの処理を追加
         if (isPlayEffect && stompEffectPrefab != null)
         {
             var stompEffect = Instantiate(stompEffectPrefab, stompEffectSpawnPoint.position, Quaternion.identity);
             stompEffect.Play();
-            
         }
     }
 
     public IEnumerator DoStompCoroutine(int level)
     {
-
         DoBreak(firstImpactRadius, true);
+
         if (level < 2)  yield break;
-        yield return new WaitForSeconds(0.2f); // 少し待ってから実行
+
+        yield return new WaitForSeconds(0.2f);
         DoBreak(secondImpactRadius, true);
+
         if (level < 3)  yield break;
-        yield return new WaitForSeconds(0.2f); // 少し待ってから
+
+        yield return new WaitForSeconds(0.2f);
         DoBreak(thirdImpactRadius, true);
     }
 
@@ -109,16 +107,11 @@ public class BreakAttack : MonoBehaviour
     {
         isStopping = true;
 
-        // 1. 時間を止める
         float originalTimeScale = Time.timeScale;
         Time.timeScale = 0.1f;
 
-        // 2. 指定時間待つ
-        // 重要: 普通のWaitForSecondsだと止まった時間のまま永久に待ってしまうため、
-        // Realtime（現実時間）を使って計測する
         yield return new WaitForSecondsRealtime(duration);
 
-        // 3. 時間を元に戻す
         Time.timeScale = originalTimeScale;
         
         isStopping = false;

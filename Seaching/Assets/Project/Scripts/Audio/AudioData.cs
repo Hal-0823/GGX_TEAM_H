@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq; // リスト操作に便利
+using System.Linq;
 
 #if UNITY_EDITOR
-using UnityEditor; // エディタ拡張機能を使うために必要
+using UnityEditor;
 #endif
 
 [CreateAssetMenu(fileName = "AudioData", menuName = "Game/Audio Data")]
@@ -27,9 +27,6 @@ public class AudioData : ScriptableObject
         [Range(-3f, 3f)] public float pitch = 1.0f;
     }
 
-    // =================================================================
-    // エディタ拡張機能：インスペクターの歯車アイコンから実行できる機能
-    // =================================================================
 #if UNITY_EDITOR
 
     [ContextMenu("Load BGM & SE")]

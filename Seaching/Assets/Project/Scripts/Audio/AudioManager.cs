@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening; // DOTween必須
+using DG.Tweening;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
     [Header("Data")]
-    [SerializeField] private AudioData audioData; // 作ったSOをセット
+    [SerializeField] private AudioData audioData;
 
     [Header("Sources")]
     [SerializeField] private AudioSource bgmSource;
@@ -38,7 +38,6 @@ public class AudioManager : MonoBehaviour
 
     private void Initialize()
     {
-        // 辞書生成（検索を高速化）
         foreach (var entry in audioData.bgmList) bgmMap[entry.key] = entry;
         foreach (var entry in audioData.seList) seMap[entry.key] = entry;
     }
@@ -60,7 +59,7 @@ public class AudioManager : MonoBehaviour
             }
             else
             {
-                // ピッチが違う場合は、音が混ざらないように「使い捨てAudioSource」を作る
+                // ピッチが違う場合は、音が混ざらないように使い捨てのAudioSourceを作る
                 PlayClipWithVariablePitch(entry.clip, finalVol, entry.pitch);
             }
         }
@@ -88,7 +87,7 @@ public class AudioManager : MonoBehaviour
             }
             else
             {
-                // ピッチが違う場合は、音が混ざらないように「使い捨てAudioSource」を作る
+                // ピッチが違う場合は、音が混ざらないように使い捨てのAudioSourceを作る
                 PlayClipWithVariablePitch(entry.clip, finalVol, pitch);
             }
         }
@@ -103,24 +102,18 @@ public class AudioManager : MonoBehaviour
     {
         // 空のオブジェクトを作る
         GameObject tempObj = new GameObject("TempSE");
-        tempObj.transform.position = Camera.main.transform.position; // カメラ位置で鳴らす（2D的に聞こえるように）
+        tempObj.transform.position = Camera.main.transform.position;
 
         // AudioSourceをつけて設定
         AudioSource tempSource = tempObj.AddComponent<AudioSource>();
         tempSource.clip = clip;
         tempSource.volume = volume;
         tempSource.pitch = pitch;
-        
-        // 再生！
         tempSource.Play();
 
-        // 鳴り終わった頃にオブジェクトごと削除する (クリップの長さ / ピッチ = 再生時間)
         Destroy(tempObj, clip.length / pitch + 0.1f);
     }
 
-    // ==========================================================
-    // BGM再生（クロスフェード付き）
-    // ==========================================================
     public void PlayBGM(string key, float fadeDuration = 0.5f)
     {
         if (!bgmMap.TryGetValue(key, out var entry))
@@ -132,19 +125,15 @@ public class AudioManager : MonoBehaviour
         // 既に同じ曲が流れていたら何もしない
         if (bgmSource.clip == entry.clip && bgmSource.isPlaying) return;
 
-        // 音量を計算
         float targetVolume = entry.volume * BgmVolume * MasterVolume;
 
-        // DOTweenシーケンスで「フェードアウト → 曲変更 → フェードイン」
         Sequence seq = DOTween.Sequence();
 
-        // 1. 今流れているならフェードアウト
         if (bgmSource.isPlaying)
         {
             seq.Append(bgmSource.DOFade(0f, fadeDuration));
         }
 
-        // 2. 曲を入れ替えて再生開始
         seq.AppendCallback(() =>
         {
             bgmSource.clip = entry.clip;
@@ -152,10 +141,7 @@ public class AudioManager : MonoBehaviour
             bgmSource.Play();
         });
 
-        // 3. フェードイン
         seq.Append(bgmSource.DOFade(targetVolume, fadeDuration));
-
-        // ※シーン遷移などでオブジェクトが消えてもエラーにならないようLinkしておく
         seq.SetLink(gameObject);
     }
     
@@ -166,26 +152,21 @@ public class AudioManager : MonoBehaviour
     /// <param name="fadeDuration"></param>
     public void ChangeBGMPitch(float newPitch, float fadeDuration = 0.5f)
     {
-        // DOTweenシーケンスで「フェードアウト → ピッチ変更 → フェードイン」
         Sequence seq = DOTween.Sequence();
 
-        // 1. フェードアウト
         if (bgmSource.isPlaying)
         {
             seq.Append(bgmSource.DOFade(0f, fadeDuration));
         }
 
-        // 2. ピッチ変更
         seq.AppendCallback(() =>
         {
             bgmSource.pitch = newPitch;
         });
 
-        // 3. フェードイン
         float targetVolume = BgmVolume * MasterVolume;
         seq.Append(bgmSource.DOFade(targetVolume, fadeDuration));
 
-        // ※シーン遷移などでオブジェクトが消えてもエラーにならないようLinkしておく
         seq.SetLink(gameObject);
     }
 

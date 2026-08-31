@@ -64,28 +64,18 @@ public class TitleSceneDirector : MonoBehaviour
     {
         AudioManager.Instance.PlaySE("SE_Click6");
 
-        startTextRect.DOKill(); // アニメーション停止
-        //startTextRect.localScale = Vector3.zero; // スケールを0にして消す
-        playerInput.Disable(); // 入力受付停止
+        startTextRect.DOKill();
+        playerInput.Disable();
 
         AudioManager.Instance.StopBGM(2.0f);
 
         Sequence seq = DOTween.Sequence();
 
         seq.AppendInterval(0.5f);
-        seq.Join(startTextRect.DOPunchScale(new Vector3(1.2f, 1.2f, 1.2f), 0.3f)); // スケール0にして消す
-        // 1. 激しい振動（シェイク）
-        // duration:時間, strength:揺れ幅, vibrato:振動数
+        seq.Join(startTextRect.DOPunchScale(new Vector3(1.2f, 1.2f, 1.2f), 0.3f));
         seq.Append(logoRect.DOShakeAnchorPos(3.0f, strength: 30, vibrato: 30));
         seq.JoinCallback(() => AudioManager.Instance.PlaySE("SE_Impact"));
-
-        // // 2. 振動が終わったら一瞬で消す（スケール0にする）
-        // seq.Append(logoRect.DOScale(Vector3.zero, 0.05f));
-        
-        // 3. 同時に暗転開始
         seq.Join(blackPanel.DOFade(1.0f, 2.5f));
-
-        // 遷移
         seq.OnComplete(() => SceneManager.LoadScene("TutorialScene"));
     }
 

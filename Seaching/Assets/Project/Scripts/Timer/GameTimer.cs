@@ -61,11 +61,8 @@ public class GameTimer : MonoBehaviour
             return;
         }
 
-        // 現在の「表示用の整数時間」を計算（切り上げ）
-        // 例: 59.9秒 -> 60, 0.1秒 -> 1, 0.0秒 -> 0
         int currentDisplayTime = Mathf.CeilToInt(currentTime);
 
-        // ★ここがポイント：秒数の整数値が変わった瞬間だけ更新＆アニメーション
         if (currentDisplayTime != previousDisplayTime)
         {
             UpdateDisplay(currentDisplayTime);
@@ -77,32 +74,23 @@ public class GameTimer : MonoBehaviour
     {
         if (timerText == null) return;
 
-        // テキスト更新
         timerText.text = timeToShow.ToString();
 
-        // ピンチ（残り時間が少ない）判定
+        // 残り時間が少ない判定
         bool isUrgent = currentTime <= urgencyThreshold;
 
-        // 色の変更
         timerText.color = isUrgent ? urgentColor : normalColor;
 
-        // アニメーション設定
         Vector3 punchPower = isUrgent ? punchScaleUrgent : punchScaleNormal;
         float duration = 0.3f;
-
-        // 既存のアニメーションをリセットして跳ねさせる
         timerText.transform.DOKill();
-        timerText.transform.localScale = Vector3.one; // サイズを戻す
+        timerText.transform.localScale = Vector3.one;
         timerText.transform.DOPunchScale(punchPower, duration, 10, 1);
-
-        // 残り時間が少ないときは、さらに音を鳴らすなどをここに追加すると良い
-        // if (isUrgent) SoundManager.Play("TickTock");
     }
 
     // 時間を延長するメソッド（敵を倒したボーナスなどで使う）
     public void AddTime(float amount)
     {
-        // 透明度をリセット
         bonusText.alpha = 1f;
         
         bonusText.text = $"+{amount:F0}";
@@ -116,9 +104,6 @@ public class GameTimer : MonoBehaviour
         });
 
         currentTime += amount;
-        
-        
-        // 時間が増えた演出（緑色に光らせるなど）を入れると親切
         timerText.transform.DOPunchScale(Vector3.one * 0.5f, 0.3f);
     }
 }

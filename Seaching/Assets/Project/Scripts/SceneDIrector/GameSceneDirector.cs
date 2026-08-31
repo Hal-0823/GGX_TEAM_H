@@ -4,7 +4,6 @@ using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
-using Unity.Cinemachine;
 
 public class GameSceneDirector : MonoBehaviour
 {
@@ -38,10 +37,8 @@ public class GameSceneDirector : MonoBehaviour
 
     private IEnumerator GameStartSequence()
     {
-        // フェードイン
         fadeCanvasGroup.DOFade(0f, 2f);
 
-        // プレイヤーの操作を有効化
         inputChannel.SwitchToPlayer();
 
         // プレイヤーの落下からスタート
@@ -50,10 +47,8 @@ public class GameSceneDirector : MonoBehaviour
         // 地面に着地するまで待機
         yield return new WaitUntil(() => playerController.IsGrounded());
 
-        // タイマー開始
         AudioManager.Instance.PlaySE("SE_GameStart1");
         gameTimer.StartTimer();
-
         AudioManager.Instance.PlayBGM("BGM_Game1");
     }
 
@@ -84,7 +79,6 @@ public class GameSceneDirector : MonoBehaviour
 
         yield return new WaitForSeconds(2.5f);
 
-        // 最初は白パネルを非表示・透明にしておく
         whitePanel.gameObject.SetActive(true);
         whitePanel.color = new Color(1, 1, 1, 0);
 
@@ -92,7 +86,6 @@ public class GameSceneDirector : MonoBehaviour
 
         seq.Join(whitePanel.DOFade(1.0f, 0.5f).SetUpdate(true));
 
-        // 3. 完全に白くなったらシーン遷移
         seq.OnComplete(() =>
         {
             SceneManager.LoadScene("ResultScene");
@@ -109,7 +102,6 @@ public class GameSceneDirector : MonoBehaviour
         // 操作無効化
         inputChannel.SwitchToNone();
 
-        
         yield return new WaitForSeconds(0.5f);
 
         AudioManager.Instance.StopBGM();
@@ -118,7 +110,6 @@ public class GameSceneDirector : MonoBehaviour
         // ヒットカウンターリセット
         HitCounterUI.instance.ForceReset();
 
-        // 最初は白パネルを非表示・透明にしておく
         whitePanel.gameObject.SetActive(true);
         whitePanel.color = new Color(1, 1, 1, 0);
 
@@ -126,7 +117,6 @@ public class GameSceneDirector : MonoBehaviour
 
         seq.Join(whitePanel.DOFade(1.0f, 0.5f).SetUpdate(true));
 
-        // 3. 完全に白くなったらシーン遷移
         seq.OnComplete(() =>
         {
             SceneManager.LoadScene("ResultScene");

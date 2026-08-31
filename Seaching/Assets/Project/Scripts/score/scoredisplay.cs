@@ -89,11 +89,11 @@ public class ScoreDisplay : MonoBehaviour
 
             //大きさを変えるアニメーション
             rankText.transform.DOScale(1.3f, 0.1f).From(1f).OnComplete(() =>
-             {
-                 rankText.transform.DOScale(1f, 0.1f);
-             });
+            {
+                rankText.transform.DOScale(1f, 0.1f);
+            });
 
-             nextRankIndex++;
+            nextRankIndex++;
         }
     }
 
@@ -103,19 +103,13 @@ public class ScoreDisplay : MonoBehaviour
         if (Time.unscaledTime - lastSoundTime >= soundInterval)
         {
             float pitch = 1.0f;
-
-            // ゴールに近づくにつれて音程を高くする
             float progress = (float)current / target; // 0.0 ~ 1.0
             pitch = 0.8f + (progress * 0.3f); // 0.8 ~ 1.3倍まで上がる
 
             // // ピッチをランダムに変化させる
             // pitch += UnityEngine.Random.Range(-pitchRandomRange, pitchRandomRange);
 
-
-            // 音を鳴らす (PlaySEWithPitchメソッドがある前提)
-            // ない場合は PlaySE(countSeKey) だけでOK
             AudioManager.Instance.PlaySE("SE_Tick1", pitch); 
-            // ※もしPlaySEWithPitchの引数が(key, range)ではなく(key, pitch)ならそちらに合わせてください
 
             lastSoundTime = Time.unscaledTime;
         }

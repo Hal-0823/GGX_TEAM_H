@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using DG.Tweening; // DOTweenを使います
 
 public class DebrisManager : MonoBehaviour
 {
@@ -17,7 +16,7 @@ public class DebrisManager : MonoBehaviour
     // 監視中の動いている破片リスト
     private List<DebrisData> activeDebris = new List<DebrisData>(1000);
 
-    // 既に固まって背景化した破片の「待ち行列」（古い順に並ぶ）
+    // 既に固まって背景化した破片の待ち行列（古い順に並ぶ）
     private Queue<GameObject> solidifiedDebrisQueue = new Queue<GameObject>();
 
     private struct DebrisData
@@ -67,27 +66,25 @@ public class DebrisManager : MonoBehaviour
             {
                 if (elapsed >= maxLifetime || data.rb.IsSleeping())
                 {
-                    SolidifyAndQueue(data); // ★変更：固めて、履歴リストへ
+                    SolidifyAndQueue(data);
                     RemoveAtFast(i);
                 }
             }
         }
     }
 
-    // 物理演算を削除し、定員チェックを行う
+    // 物理演算を削除して定員チェックを行う
     private void SolidifyAndQueue(DebrisData data)
     {
-        // 1. 物理と判定を消す（軽量化）
+        // 物理と判定を消す（軽量化）
         if (data.rb != null) Destroy(data.rb);
         if (data.col != null) Destroy(data.col);
 
-        // 2. 履歴（Queue）に追加
         solidifiedDebrisQueue.Enqueue(data.gameObject);
 
-        // 3. 定員オーバーしてる？
         if (solidifiedDebrisQueue.Count > maxSolidDebrisCount)
         {
-            // 一番古い（最初に入れた）瓦礫を取り出す
+            // 一番古い瓦礫を取り出す
             GameObject oldDebris = solidifiedDebrisQueue.Dequeue();
             
             if (oldDebris != null)

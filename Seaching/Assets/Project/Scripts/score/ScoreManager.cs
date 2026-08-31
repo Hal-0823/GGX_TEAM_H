@@ -60,33 +60,29 @@ public class ScoreManager : MonoBehaviour
     // トータルスコアに合算する
     private void AddTotalScore(int amount)
     {
-        // 1. 目標スコアを更新
         currentTotalScore += amount;
         sessionData.currentScore = currentTotalScore;
 
-        // 2. 前のアニメーションが途中なら止める（これがないと動きがおかしくなる）
         if (scoreTween != null && scoreTween.IsActive())
         {
             scoreTween.Kill();
         }
 
-        // 3. 表示用の数値を、目標値までアニメーションさせる
-        // DOTween.To(getter, setter, endValue, duration)
         scoreTween = DOTween.To(
-            () => displayedTotalScore,      // 今の値を渡す
+            () => displayedTotalScore,
             x =>
-            {                          // DOTweenが計算した値をどうするか
-                displayedTotalScore = x;    // 変数を更新して...
-                UpdateText();               // テキストも書き換える
+            {
+                displayedTotalScore = x;
+                UpdateText();
             },
-            currentTotalScore,              // 目標の値
-            animationDuration               // かかる時間
+            currentTotalScore,
+            animationDuration
         )
-        .SetEase(currentTotalScoreEase); // イージング設定
+        .SetEase(currentTotalScoreEase);
 
         currentTotalScoreText.transform.DOKill(); // 重複防止
         currentTotalScoreText.transform.localScale = Vector3.one; // リセット
-        currentTotalScoreText.transform.DOPunchScale(Vector3.one * 0.3f, 0.2f); // 0.2秒だけ大きく跳ねる
+        currentTotalScoreText.transform.DOPunchScale(Vector3.one * 0.3f, 0.2f);
     }
 
     // 保留中のスコアを加算する
@@ -100,7 +96,7 @@ public class ScoreManager : MonoBehaviour
 
         pendingScoreText.transform.DOKill(); // 重複防止
         pendingScoreText.transform.localScale = Vector3.one; // リセット
-        pendingScoreText.transform.DOPunchScale(Vector3.one * 0.3f, 0.2f); // 0.2秒だけ大きく跳ねる
+        pendingScoreText.transform.DOPunchScale(Vector3.one * 0.3f, 0.2f);
     }
 
     // 保留中のスコアに倍率をかけて確定させる
@@ -146,7 +142,7 @@ public class ScoreManager : MonoBehaviour
     // コンボ終了時に保留中のスコアを確定させる
     private void FinalizeCombo(int hitCount)
     {
-        float bonusMultiplier = 1.0f + hitCount * 0.1f; // 例: ヒット数に応じて10%ずつボーナス
+        float bonusMultiplier = 1.0f + hitCount * 0.1f; // ヒット数に応じて10%ずつボーナス
         if (pendingScore > 0)
         {
             MulScore(bonusMultiplier);

@@ -21,8 +21,8 @@ public class GroundChecker : MonoBehaviour
         Debug.DrawRay(
             rayStart, 
             rayDirection, 
-            Color.green,    // レイの色
-            1000f           // 描画時間
+            Color.green,
+            1000f
         );
         */
 

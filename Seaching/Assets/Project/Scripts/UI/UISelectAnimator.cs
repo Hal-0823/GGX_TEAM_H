@@ -19,31 +19,25 @@ public class UISelectAnimator : MonoBehaviour, ISelectHandler, IDeselectHandler,
         originalScale = rectTransform.localScale;
     }
 
-    // --- インターフェース実装部分 ---
-
-    // 1. コントローラー/キーボードで「選択」されたとき
     public void OnSelect(BaseEventData eventData)
     {
         PlaySelectAnimation();
     }
 
-    // 2. 選択が外れたとき
     public void OnDeselect(BaseEventData eventData)
     {
         PlayDeselectAnimation();
     }
 
-    // 3. マウスカーソルが乗ったとき（Hover）
     public void OnPointerEnter(PointerEventData eventData)
     {
-        // 選択状態でない場合のみアニメーション（二重実行防止）
+        // 選択状態でない場合のみアニメーション
         if (EventSystem.current.currentSelectedGameObject != gameObject)
         {
             PlaySelectAnimation();
         }
     }
 
-    // 4. マウスカーソルが離れたとき
     public void OnPointerExit(PointerEventData eventData)
     {
         if (EventSystem.current.currentSelectedGameObject != gameObject)
@@ -52,26 +46,21 @@ public class UISelectAnimator : MonoBehaviour, ISelectHandler, IDeselectHandler,
         }
     }
 
-    // --- アニメーション処理 ---
-
     private void PlaySelectAnimation()
     {
         AudioManager.Instance.PlaySE("SE_Select");
 
-        // アニメーション
-        rectTransform.DOKill(); // 前の動きをキャンセル
+        rectTransform.DOKill();
         
         if (useLoop)
         {
-            // ふわふわループさせる場合
             rectTransform.DOScale(scaleAmount, duration)
                 .SetEase(Ease.InOutSine)
                 .SetLoops(-1, LoopType.Yoyo)
-                .SetUpdate(true); // ポーズ中でも動くように
+                .SetUpdate(true);
         }
         else
         {
-            // パッと大きくする場合
             rectTransform.DOScale(scaleAmount, duration)
                 .SetEase(Ease.OutBack)
                 .SetUpdate(true);
@@ -80,7 +69,6 @@ public class UISelectAnimator : MonoBehaviour, ISelectHandler, IDeselectHandler,
 
     private void PlayDeselectAnimation()
     {
-        // 元に戻す
         rectTransform.DOKill();
         rectTransform.DOScale(originalScale, duration)
             .SetEase(Ease.OutQuad)
